@@ -79,6 +79,7 @@ export default {
 .foot {
   position: relative;
   bottom: 0;
+  left: 0;
   width: 100%;
   height: 385px;
   flex-shrink: 0;

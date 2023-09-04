@@ -4,7 +4,13 @@
       <div class="img"><img src="@/assets/child.png" alt="" /></div>
       <div class="container">
         <center>
-          <div class="btn">
+          <div
+            class="btn"
+            @click="
+              toggleLogin();
+              toggleSignup();
+            "
+          >
             <div class="btn-slct">Login</div>
           </div>
           <h4>login page</h4>
@@ -18,7 +24,7 @@
         <center>
           <input class="email" type="password" />
 
-          <div class="btn2" @click="toggleLogin">Login</div>
+          <button class="btn2" @click="toggleLogin">Login</button>
         </center>
       </div>
     </div>
@@ -33,13 +39,16 @@ export default {
   data() {
     return {};
   },
-  props: ["isopen", "toggleLogin"],
+  props: ["isopen", "toggleLogin", "isopen1", "toggleSignup"],
 };
 </script>
 
 
 
 <style  scoped>
+button {
+  border: 0ch;
+}
 .login-page {
   position: fixed;
   width: 100%;

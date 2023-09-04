@@ -1,20 +1,48 @@
 <template>
   <div class="nav">
-    <div class="img"> <img src="@/assets/logo.png" alt="">  </div>
-    <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" />
-    <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" />
-    <table class="home">
-      <tr>
-        <td><router-link to="/blog">Home</router-link></td>
-        <td>Courses</td>
-        <td>Careers</td>
-        <td>Blog</td>
-        <td>About Us</td>
-      </tr>
-    </table>
-    <div class="login" @click="toggleLogin">Login</div>
-    <div class="signup" @click="toggleSignup">Sign Up</div>
+    <div class="img"><img src="@/assets/logo.png" alt="" /></div>
+    <loginComponent
+      :isopen="isopen"
+      :toggleLogin="toggleLogin"
+      :isopen1="isopen1"
+      :toggleSignup="toggleSignup"
+    />
+    <signupComponent
+      :isopen1="isopen1"
+      :toggleSignup="toggleSignup"
+      :isopen="isopen"
+      :toggleLogin="toggleLogin"
+    />
+
+    <ul>
+      <li>
+        <a href="#"><router-link to="/">Home</router-link></a>
+      </li>
+      <li>
+        <a href="#"><router-link to="/courses">Courses</router-link></a>
+      </li>
+      <li><a href="#">Careers</a></li>
+      <li>
+        <a href="#"><router-link to="/blog">Blog</router-link></a>
+      </li>
+      <li><a href="#">About Us</a></li>
+    </ul>
+
+    <button class="login" @click="toggleLogin">Login</button>
+    <button class="signup" @click="toggleSignup">Sign Up</button>
   </div>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300&display=swap"
+    rel="stylesheet"
+  />
 </template>
 
 
@@ -49,16 +77,20 @@ export default {
 </script>
 
 <style  scoped>
-.img{
-  position:absolute;
-  top:16%;
-  left:9%;
-  width:70px;
-  height:49px;
+button {
+  border: 0ch;
 }
-img{
-  width:100%;
-  height:100%;
+
+.img {
+  position: absolute;
+  bottom: 20%;
+  left: 50px;
+  width: 70px;
+  height: 49px;
+}
+img {
+  width: 100%;
+  height: 100%;
 }
 .nav {
   width: 100%;
@@ -66,23 +98,8 @@ img{
   background-color: #49BBBD;
   position: fixed;
   top: 0%;
+  left: 0;
   z-index: 5;
-}
-.home {
-  position: absolute;
-  top: 25%;
-  left: 26%;
-}
-.home td {
-  padding-left: 50px;
-  text-align: left;
-  color: #FFF;
-  font-family: Poppins;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: normal;
-  letter-spacing: 0.44px;
 }
 .login {
   position: absolute;
@@ -125,13 +142,61 @@ img{
 .login:hover,
 .login:active,
 .login:focus {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transform: scale(1.1);
 }
 .signup:hover,
 .signup:active,
 .signup:focus {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transform: scale(1.1);
+}
+ul {
+  position: absolute;
+  left: 300px;
+  top: 25px;
+  margin: 0px;
+  padding: 0;
+  list-style: none;
+  display: inline;
+  text-align: center;
+}
+li {
+  display: table-cell;
+  position: relative;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: 0.44px;
+}
+a {
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 0.15em;
+
+  display: inline-block;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 5px;
+
+  position: inline;
+}
+a:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #fff;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+a:hover:after {
+  width: 100%;
+  left: 0;
 }
 </style>
