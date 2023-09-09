@@ -4,13 +4,10 @@
       <div class="img"><img src="@/assets/child2.png" alt="" /></div>
       <div class="container">
         <center>
-          <div
-            class="btn"
-            @click="
-              toggleLogin();
-              toggleSignup();
-            "
-          >
+          <div class="btn" @click="
+            toggleLogin();
+          toggleSignup();
+          ">
             <button class="btn-slct">Signup</button>
           </div>
           <h4>signup page</h4>
@@ -26,9 +23,14 @@
         <h3>Password</h3>
         <center>
           <input class="email" type="password" />
+        </center>
+        <h3>Re-enter password</h3>
+        <center>
+          <input class="email" type="password" />
 
           <button class="btn2" @click="toggleSignup">Register</button>
         </center>
+
       </div>
     </div>
   </div>
@@ -53,12 +55,14 @@ export default {
 button {
   border: 0ch;
 }
+
 .signup-page {
   position: fixed;
   width: 100%;
   height: 100%;
   z-index: 3;
 }
+
 .signup-vue {
   background: #FFFEFC;
   position: fixed;
@@ -71,6 +75,7 @@ button {
   display: flex;
   z-index: 10;
 }
+
 .img {
   position: relative;
   height: 91.5%;
@@ -79,6 +84,7 @@ button {
   left: 20px;
   border-radius: 30px;
 }
+
 .container {
   position: relative;
   left: 8%;
@@ -86,6 +92,7 @@ button {
   width: 35%;
   height: 80%;
 }
+
 .btn {
   position: relative;
   width: 70%;
@@ -95,6 +102,7 @@ button {
   background: rgba(73, 187, 189, 0.6);
   margin-bottom: 25px;
 }
+
 .btn-slct {
   position: absolute;
   right: 3%;
@@ -112,6 +120,7 @@ button {
   line-height: normal;
   border-radius: 33px;
 }
+
 h3 {
   position: relative;
   left: 7%;
@@ -123,6 +132,7 @@ h3 {
   font-weight: 400;
   line-height: normal;
 }
+
 .email {
   width: 84%;
   height: 40px;
@@ -132,6 +142,7 @@ h3 {
   padding-left: 3%;
   padding-right: 3%;
 }
+
 .btn2 {
   margin-top: 30px;
   width: 40%;
@@ -146,6 +157,7 @@ h3 {
   border-radius: 36px;
   background: #49BBBD;
 }
+
 .btn2:hover,
 .btn2:active,
 .btn2:focus {
@@ -153,6 +165,7 @@ h3 {
   transform: scale(1.1);
   background-color: rgb(40, 161, 163);
 }
+
 img {
   width: 100%;
   height: 100%;
