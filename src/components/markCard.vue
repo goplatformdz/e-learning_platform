@@ -30,7 +30,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .circle1 h1 {
   margin-top: 3px;
   margin-left: 120px;
@@ -42,6 +42,7 @@ export default {
   line-height: normal;
   letter-spacing: 0.48px;
 }
+
 .circle1 h6 {
   margin-top: 7px;
   margin-left: 10px;
@@ -53,6 +54,7 @@ export default {
   line-height: normal;
   letter-spacing: 0.36px;
 }
+
 .circle1 {
   margin-top: 10px;
   margin-left: 17px;
@@ -62,6 +64,7 @@ export default {
   background-color: #D9D9D9;
   display: flex;
 }
+
 .markcard h5 {
   margin-top: 3px;
   margin-left: 17px;
@@ -70,11 +73,13 @@ export default {
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: 180%; /* 32.4px */
+  line-height: 180%;
+  /* 32.4px */
   letter-spacing: 0.36px;
   grid-row: 4;
   margin-bottom: 0;
 }
+
 .markcard h4 {
   color: #252641;
   font-family: Poppins;
@@ -86,32 +91,36 @@ export default {
   grid-row: 3;
   grid-column: 1;
 }
+
 .markcard p {
   color: #696984;
   font-family: Poppins;
   font-size: 11px;
   font-style: normal;
   font-weight: 500;
-  line-height: 180%; /* 25.2px */
+  line-height: 180%;
+  /* 25.2px */
   letter-spacing: 0.28px;
 }
+
 .markcard {
   width: 250px;
   height: 380px;
   border-radius: 15px;
   background: #FFF;
-  box-shadow: 0px 18.829999923706055px 47.08000183105469px 0px
-    rgba(47, 50, 125, 0.1);
+  box-shadow: 0px 18.829999923706055px 47.08000183105469px 0px rgba(47, 50, 125, 0.1);
   display: grid;
   grid-template-rows: 4fr 1fr 1.5fr 2fr 1.5fr;
   grid-template-columns: 1fr;
   margin-right: 72px;
 }
+
 .markcard:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transform: scale(1.1);
   transition: ease-in-out 0.2s;
 }
+
 .markcard .img {
   margin-top: 12px;
   margin-left: 5%;
@@ -121,15 +130,17 @@ export default {
   border-radius: 20px;
   background-color: #171B41;
 }
+
 .d {
   grid-row: 2;
   margin-left: 17px;
 }
+
 .m3 {
   margin-left: 130px;
   grid-row: 2;
 }
+
 .m3d {
   display: flex;
-}
-</style>
+}</style>

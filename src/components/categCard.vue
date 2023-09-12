@@ -19,7 +19,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .main p {
   color: #696984;
   text-align: center;
@@ -31,6 +31,7 @@ export default {
   letter-spacing: 0.36px;
   grid-row: 2;
 }
+
 .main h1 {
   margin-top: 50px;
   color: #000;
@@ -41,6 +42,7 @@ export default {
   line-height: normal;
   letter-spacing: 0.6px;
 }
+
 .iconcateg {
   margin-top: 30px;
   margin-bottom: 20px;
@@ -49,6 +51,7 @@ export default {
   background-color: rgba(73, 187, 189, 0.3);
   grid-row: 1;
 }
+
 .main {
   margin-top: 30px;
   margin-left: 60px;
@@ -60,9 +63,9 @@ export default {
   display: grid;
   grid-template-rows: 1fr 1fr;
 }
+
 .main:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transform: scale(1.1);
   transition: ease-in-out 0.1s;
-}
-</style>
+}</style>

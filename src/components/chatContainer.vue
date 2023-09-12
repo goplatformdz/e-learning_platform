@@ -33,7 +33,7 @@ export default {
 };
 </script>
   
-<style>
+<style scoped>
 .card {
     width: 260px;
     background-color: #fff;
