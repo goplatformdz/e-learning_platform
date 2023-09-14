@@ -13,6 +13,7 @@ const routes = [
   { path: "/coursedetail", component: coursedetail },
   { path: "/coursesByCategory/:categoryName", name: "coursesByCategory", component: coursesByCategory },
 
+
 ];
 const router = createRouter({
   history: createWebHistory(),

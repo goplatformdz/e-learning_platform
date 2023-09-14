@@ -30,7 +30,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .main p {
   color: #696984;
   text-align: center;
@@ -79,5 +79,4 @@ export default {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transform: scale(1.1);
   transition: ease-in-out 0.1s;
-}
-</style>
+}</style>

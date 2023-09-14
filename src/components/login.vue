@@ -1,3 +1,4 @@
+
 <template>
   <div class="login-page" v-if="isopen" @click="toggleLogin">
     <div class="login-vue" @click.stop>
@@ -14,14 +15,16 @@
         </center>
         <h3>Email Address</h3>
         <center>
-          <input class="email" type="Email" v-model="email" />
+
+          <input class="email" type="Email" v-model="inputEmail" />
         </center>
         <br />
         <h3>Password</h3>
         <center>
-          <input class="email" type="password" v-model="password" />
 
-          <button class="btn2" @click="login">Login</button>
+          <input class="email" type="password" v-model="inputPassword" />
+
+          <button class="btn2" @click="fetchData">Login</button>
         </center>
       </div>
     </div>
@@ -31,38 +34,44 @@
 
 
 <script>
-import axios from 'axios';
+
+import axios from 'axios'
 export default {
   name: "loginComponent",
   data() {
+    
     return {
-      email: "",
-      password: "",
+    inputEmail : "" , 
+    inputPassword : "" ,
+    email : "" ,
+    password : "" 
     };
   },
   props: ["isopen", "toggleLogin", "isopen1", "toggleSignup"],
-  methods: {
-    async login() {
-      try {
-        // Make an Axios POST request to your login API
-        const response = await axios.post('http://localhost:8000/api/users/loginUser', {
-          email: this.email,
-          password: this.password,
-        }, {
-          withCredentials: true, // Include this option
-        });
-        console.log(response.data);
-
-        // Toggle the login component using the prop
-        this.toggleLogin();
-
-      } catch (error) {
-        // Handle login error, e.g., show error message
-        console.error(error);
+  methods : {
+    fetchData() {
+      console.log(this.inputEmail , this.inputPassword);
+      const data = {
+      email: this.inputEmail,
+      password: this.inputPassword
       }
-    },
-  },
+      axios.post('http://localhost:3000/api/users/loginUser', data)
+      .then(response => {
+        // Handle the successful response here
+        console.log(response.data);
+        document.cookie = `access-token=${response.data.token}; path=/; `;
+
+        // localStorage.setItem('token' , response.data.token)
+      })
+      .catch(error => {
+        // Handle any errors here
+        console.log(error);
+      });
+    }
+  }
 };
+
+
 </script>
 
 

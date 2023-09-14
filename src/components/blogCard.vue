@@ -17,7 +17,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .blogtitle {
   position: absolute;
   border-radius: 12px;
@@ -35,6 +35,7 @@ export default {
   font-weight: 700;
   line-height: normal;
 }
+
 .card {
   width: 256px;
   height: 227px;
@@ -43,13 +44,14 @@ export default {
   background: #171B41;
   margin: 0%;
 }
+
 .card:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transform: scale(1.1);
   transition: ease-in-out 0.2s;
 }
+
 img {
   width: 100%;
   height: 100%;
-}
-</style>
+}</style>
