@@ -1,8 +1,8 @@
 <template>
-  <div class="main">
+  <div class="main" @click="navigateToCoursesByCategoryPage">
     <center>
       <div class="iconcateg"></div>
-      <h1>Design</h1>
+      <h1>{{ categoryData.name }}</h1>
       <p>
         Lorem ipsum dolor sit amet, <br />
         consectetur adipiscing elit, <br />
@@ -16,6 +16,17 @@
 <script>
 export default {
   name: "categCard",
+  props: {
+    categoryData: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: {
+    navigateToCoursesByCategoryPage() {
+      this.$router.push({ name: 'coursesByCategory', params: { categoryName: this.categoryData.name } });
+    }
+  }
 };
 </script>
 
