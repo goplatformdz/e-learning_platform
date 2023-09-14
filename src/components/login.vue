@@ -1,3 +1,4 @@
+
 <template>
   <div class="login-page" v-if="isopen" @click="toggleLogin">
     <div class="login-vue" @click.stop>
@@ -17,14 +18,14 @@
         </center>
         <h3>Email Address</h3>
         <center>
-          <input class="email" type="Email" />
+          <input class="email" type="Email" v-model="inputEmail" />
         </center>
         <br />
         <h3>Password</h3>
         <center>
-          <input class="email" type="password" />
+          <input class="email" type="password" v-model="inputPassword" />
 
-          <button class="btn2" @click="toggleLogin">Login</button>
+          <button class="btn2" @click="fetchData">Login</button>
         </center>
       </div>
     </div>
@@ -34,13 +35,43 @@
 
 
 <script>
+import axios from 'axios'
 export default {
   name: "loginComponent",
   data() {
-    return {};
+    
+    return {
+    inputEmail : "" , 
+    inputPassword : "" ,
+    email : "" ,
+    password : "" 
+    };
   },
   props: ["isopen", "toggleLogin", "isopen1", "toggleSignup"],
+  methods : {
+    fetchData() {
+      console.log(this.inputEmail , this.inputPassword);
+      const data = {
+      email: this.inputEmail,
+      password: this.inputPassword
+      }
+      axios.post('http://localhost:3000/api/users/loginUser', data)
+      .then(response => {
+        // Handle the successful response here
+        console.log(response.data);
+        document.cookie = `access-token=${response.data.token}; path=/; `;
+
+        // localStorage.setItem('token' , response.data.token)
+      })
+      .catch(error => {
+        // Handle any errors here
+        console.log(error);
+      });
+    }
+  }
 };
+
+
 </script>
 
 
