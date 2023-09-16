@@ -11,9 +11,10 @@
           ">
             <div class="btn-slct">Login</div>
           </div>
-          <h4>login page</h4>
+          <h4>Login to your TOTC account</h4>
         </center>
-        <h3>Email Address</h3>
+        <h3>Email Address </h3>
+
         <center>
 
           <input class="email" type="Email" v-model="inputEmail" />
@@ -21,9 +22,8 @@
         <br />
         <h3>Password</h3>
         <center>
-
           <input class="email" type="password" v-model="inputPassword" />
-
+          <div v-if="alert" class="alert">{{ alert }}</div>
           <button class="btn2" @click="fetchData">Login</button>
         </center>
       </div>
@@ -39,34 +39,42 @@ import axios from 'axios'
 export default {
   name: "loginComponent",
   data() {
-    
+
     return {
-    inputEmail : "" , 
-    inputPassword : "" ,
-    email : "" ,
-    password : "" 
+      inputEmail: "",
+      inputPassword: "",
+      email: "",
+      password: "",
+      alert: "",
     };
   },
-  props: ["isopen", "toggleLogin", "isopen1", "toggleSignup"],
-  methods : {
+  props: ["isopen", "toggleLogin", "isopen1", "toggleSignup", "getCurrentUser"],
+  methods: {
     fetchData() {
-      console.log(this.inputEmail , this.inputPassword);
-      const data = {
-      email: this.inputEmail,
-      password: this.inputPassword
+      if (!this.inputEmail || !this.inputPassword) {
+        this.alert = "Please enter all fields"; // Set the alert message
+        return;
       }
-      axios.post('http://localhost:3000/api/users/loginUser', data)
-      .then(response => {
-        // Handle the successful response here
-        console.log(response.data);
-        document.cookie = `access-token=${response.data.token}; path=/; `;
 
-        // localStorage.setItem('token' , response.data.token)
-      })
-      .catch(error => {
-        // Handle any errors here
-        console.log(error);
-      });
+      this.alert = "";
+      console.log(this.inputEmail, this.inputPassword);
+      const data = {
+        email: this.inputEmail,
+        password: this.inputPassword
+      }
+      axios.post('http://localhost:8000/api/users/loginUser', data)
+        .then(response => {
+          // Handle the successful response here
+          console.log(response.data);
+          document.cookie = `access-token=${response.data.token}; path=/; `;
+
+
+          // localStorage.setItem('token' , response.data.token)
+        }).then(() => this.getCurrentUser())
+        .catch(error => {
+          // Handle any errors here
+          console.log(error);
+        });
     }
   }
 };
@@ -79,6 +87,17 @@ export default {
 <style  scoped>
 button {
   border: 0ch;
+}
+
+.alert {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .login-page {
@@ -133,7 +152,7 @@ button {
   left: 3%;
   top: 13%;
   width: 45%;
-  padding-top: 2%;
+  padding-top: 3%;
   padding-bottom: 2%;
   flex-shrink: 0;
   background-color: #49BBBD;
@@ -149,6 +168,7 @@ button {
 h3 {
   position: relative;
   left: 7%;
+  margin-bottom: 5px;
   margin-top: 20px;
   color: #000;
   font-family: Poppins;
@@ -166,6 +186,18 @@ h3 {
   background: #FFF;
   padding-left: 3%;
   padding-right: 3%;
+
+}
+
+h4 {
+  margin-bottom: 30px;
+
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: #000;
 }
 
 .btn2 {

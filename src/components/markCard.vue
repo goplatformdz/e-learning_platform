@@ -4,21 +4,15 @@
       <img src="" alt="" />
     </div>
     <div class="m3d">
-      <p class="d">Design</p>
-      <p class="m3">3 Month</p>
+      <p class="d">{{ courseData.category.name }}</p>
     </div>
     <h4>
-      AWS Certified solutions <br />
-      Architect
+      {{ courseData.courseName }}
     </h4>
-    <h5>
-      Lorem ipsum dolor sit amet, <br />
-      consectetur adipising elit, sed do <br />
-      eiusmod tempor
-    </h5>
     <div class="circle1">
-      <img src="@/assets/teengirl1.png" alt="" />
-      <h6>lina</h6>
+      <h6>{{ courseData.instructor }}</h6>
+    </div>
+    <div class="price">
       <h1>$80</h1>
     </div>
   </div>
@@ -27,13 +21,25 @@
 <script>
 export default {
   name: "markCard1",
+  props: {
+    courseData: {
+      type: Object,
+      required: true
+    }
+  },
 };
 </script>
 
 <style scoped>
-.circle1 h1 {
+.price {
+  bottom: 10px;
+  right: 10px;
+  position: absolute;
+}
+
+.price h1 {
   margin-top: 3px;
-  margin-left: 120px;
+  margin-left: 200px;
   color: #49BBBD;
   font-family: Poppins;
   font-size: 18px;
@@ -44,8 +50,7 @@ export default {
 }
 
 .circle1 h6 {
-  margin-top: 7px;
-  margin-left: 10px;
+  margin-top: 30px;
   color: #000;
   font-family: Poppins;
   font-size: 12px;
@@ -58,11 +63,11 @@ export default {
 .circle1 {
   margin-top: 10px;
   margin-left: 17px;
-  width: 30px;
+  width: 100%;
   height: 30px;
   border-radius: 50%;
-  background-color: #D9D9D9;
   display: flex;
+  bottom: 5px;
 }
 
 .markcard h5 {
@@ -105,19 +110,19 @@ export default {
 
 .markcard {
   width: 250px;
-  height: 380px;
+  height: 400px;
   border-radius: 15px;
   background: #FFF;
   box-shadow: 0px 18.829999923706055px 47.08000183105469px 0px rgba(47, 50, 125, 0.1);
-  display: grid;
-  grid-template-rows: 4fr 1fr 1.5fr 2fr 1.5fr;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   margin-right: 72px;
+  position: relative;
 }
 
 .markcard:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  transform: scale(1.1);
+  transform: scale(1.05);
   transition: ease-in-out 0.2s;
 }
 
@@ -143,4 +148,6 @@ export default {
 
 .m3d {
   display: flex;
-}</style>
+  flex-direction: row;
+}
+</style>

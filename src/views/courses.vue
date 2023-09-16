@@ -13,21 +13,15 @@
         <categCard v-for="(category, index) in fetchedCategories" :key="index" :category-data="category" />
       </div>
     </div>
-    <div class="recomended">
-      <h4 class="m">Marketing Articles</h4>
-      <p class="s">See all</p>
-      <div class="Rcard">
-        <markCard v-for="index in 4" :key="index" />
-      </div>
-    </div>
   </main>
 </template>
 
 <script>
 import lessons from "@/components/lessons.vue";
 import categCard from "@/components/categCard.vue";
-import markCard from "@/components/markCard.vue";
+//import markCard from "@/components/markCard.vue";
 import axios from 'axios';
+//import Cookies from 'js-cookie';
 export default {
   data() {
     return {
@@ -38,12 +32,12 @@ export default {
   components: {
     lessons,
     categCard,
-    markCard,
+    // markCard,
   },
   mounted() {
 
 
-    axios.get('http://localhost:8000/api/categories/all-categories')
+    axios.get('http://localhost:8000/api/categories/all-categories', { withCredentials: true })
       .then(response => {
         this.fetchedCategories = response.data; // Update the courses data property with the fetched data
 
@@ -53,7 +47,6 @@ export default {
       });
   },
   methods: {
-
 
   },
 };

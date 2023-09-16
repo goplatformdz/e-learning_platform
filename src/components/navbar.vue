@@ -1,7 +1,8 @@
 <template>
   <div class="nav">
     <div class="img"><img src="@/assets/logo.png" alt="" /></div>
-    <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup" />
+    <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup"
+      :getCurrentUser="getCurrentUser" />
     <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin" />
 
     <ul>
@@ -20,9 +21,13 @@
         <router-link to="/chatroom">Chatroom</router-link>
       </li>
     </ul>
-
-    <button class="login" @click="toggleLogin">Login</button>
-    <button class="signup" @click="toggleSignup">Sign Up</button>
+    <div v-if="firstname">
+      {{ firstname }} {{ lastname }}
+    </div>
+    <div v-else>
+      <button class="login" @click="toggleLogin">Login</button>
+      <button class="signup" @click="toggleSignup">Sign Up</button>
+    </div>
   </div>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,6 +43,7 @@
 <script>
 import loginComponent from "./login.vue";
 import signupComponent from "./signup.vue";
+import axios from "axios";
 export default {
   name: "navbar",
 
@@ -45,6 +51,8 @@ export default {
     return {
       isopen: false,
       isopen1: false,
+      firstname: "",
+      lastname: ""
     };
   },
 
@@ -55,11 +63,26 @@ export default {
     toggleSignup() {
       this.isopen1 = !this.isopen1;
     },
+    getCurrentUser() {
+      axios.get('http://localhost:8000/api/users/getCurrentUser', { withCredentials: true })
+        .then(response => {
+          this.firstname = response.data.firstname; // Update the courses data property with the fetched data
+          this.lastname = response.data.lastname;
+          console.log(this.firstname, this.lastname) // Update the courses data property with the fetched data
+
+        })
+        .catch(error => {
+          console.error('Error fetching user', error);
+        });
+    }
   },
   components: {
     loginComponent,
     signupComponent,
   },
+  mounted() {
+    this.getCurrentUser();
+  }
 };
 </script>
 

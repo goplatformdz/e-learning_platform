@@ -10,7 +10,7 @@
           ">
             <button class="btn-slct">Signup</button>
           </div>
-          <h4>signup page</h4>
+          <h4>Sign up and start learning</h4>
         </center>
         <h3>Email Address</h3>
         <center>
@@ -63,6 +63,16 @@ button {
   z-index: 3;
 }
 
+h4 {
+  margin-bottom: 30px;
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: #000;
+}
+
 .signup-vue {
   background: #FFFEFC;
   position: fixed;
@@ -108,7 +118,7 @@ button {
   right: 3%;
   top: 13%;
   width: 45%;
-  padding-top: 2%;
+  padding-top: 3%;
   padding-bottom: 2%;
   flex-shrink: 0;
   background-color: #49BBBD;
@@ -125,6 +135,7 @@ h3 {
   position: relative;
   left: 7%;
   margin-top: 20px;
+  margin-bottom: 5px;
   color: #000;
   font-family: Poppins;
   font-size: 12px;

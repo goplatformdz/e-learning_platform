@@ -3,7 +3,7 @@
         <div class="courses-container">
             <h3>{{ categoryName }} Courses</h3>
             <div class="grid-container">
-                <courseCard v-for="(course, index) in fetchedCourses" :key="index" :course-data="course" />
+                <markCard v-for="(course, index) in fetchedCourses" :key="index" :course-data="course" />
             </div>
         </div>
     </main>
@@ -11,7 +11,7 @@
 
 <script>
 
-import courseCard from "@/components/courseCard.vue";
+import markCard from "@/components/markCard.vue";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 export default {
@@ -23,7 +23,7 @@ export default {
     },
     name: "coursesByCategory",
     components: {
-        courseCard,
+        markCard
 
     },
     mounted() {
@@ -56,10 +56,12 @@ export default {
     height: auto;
     margin-bottom: 60px;
     margin-top: 60px;
+    margin-left: 70px;
 }
 
 .courses-container h3 {
     margin-left: 60px;
+    padding-bottom: 40px;
     padding-top: 80px;
     color: #252641;
     font-family: Poppins;

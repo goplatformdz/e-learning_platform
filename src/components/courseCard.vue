@@ -2,7 +2,7 @@
     <div class="main">
         <center>
             <div class="iconcateg"></div>
-            <h1>{{ courseData.name }}</h1>
+            <h1>{{ courseData.courseName }}</h1>
             <p>
                 {{ courseData.description }}
             </p>
@@ -36,7 +36,7 @@ export default {
     font-weight: 400;
     line-height: normal;
     letter-spacing: 0.36px;
-    grid-row: 2;
+
 }
 
 .main h1 {
