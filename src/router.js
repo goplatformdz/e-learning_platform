@@ -6,6 +6,8 @@ import blogdetail from "@/views/blogdetail.vue";
 import coursedetail from "@/views/coursedetail.vue";
 import search from "@/views/search.vue";
 import fullcourse from "@/views/fullcourse.vue";
+import coursesByCategory from "@/views/coursesByCategory.vue";
+
 const routes = [
   { path: "/", component: home },
   { path: "/blog", component: blog },
@@ -13,7 +15,9 @@ const routes = [
   { path: "/blogdetail", component: blogdetail },
   { path: "/coursedetail", component: coursedetail },
   { path: "/search", component: search },
-  { path: "/fullcourse", component: fullcourse }
+  { path: "/fullcourse", component: fullcourse },
+  { path: "/coursesByCategory/:categoryName", name: "coursesByCategory", component: coursesByCategory },
+
 ];
 const router = createRouter({
   history: createWebHistory(),

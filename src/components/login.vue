@@ -1,28 +1,27 @@
+
 <template>
   <div class="login-page" v-if="isopen" @click="toggleLogin">
     <div class="login-vue" @click.stop>
-      <div class="img2"><img src="@/assets/child.png" alt="" /></div>
+      <div class="img"><img src="@/assets/child.png" alt="" /></div>
       <div class="container">
         <center>
-          <div
-            class="btn"
-            @click="
-              toggleLogin();
-              toggleSignup();
-            "
-          >
+          <div class="btn" @click="
+            toggleLogin();
+          toggleSignup();
+          ">
             <div class="btn-slct">Login</div>
           </div>
-          <h4>login page</h4>
+          <h4>Login to your TOTC account</h4>
         </center>
-        <h3>Email Address</h3>
+        <h3>Email Address </h3>
+
         <center>
-          <input class="email" type="Email" />
+
+          <input class="email" type="Email" v-model="inputEmail" />
         </center>
         <br />
         <h3>Password</h3>
         <center>
-
           <input class="email" type="password" v-model="inputPassword" />
           <button class="btn2" @click="fetchData">Login</button>
         </center>
@@ -34,10 +33,11 @@
 
 
 <script>
+
+import axios from 'axios'
 export default {
   name: "loginComponent",
   data() {
-
 
     return {
       inputEmail: "",
@@ -74,6 +74,8 @@ export default {
     }
   }
 };
+
+
 </script>
 
 
@@ -83,12 +85,15 @@ button {
   border: 0ch;
 }
 
+
+
 .login-page {
   position: fixed;
   width: 100%;
   height: 100%;
   z-index: 3;
 }
+
 .login-vue {
   background: #FFFEFC;
   position: fixed;
@@ -101,7 +106,8 @@ button {
   display: flex;
   z-index: 10;
 }
-.img2 {
+
+.img {
   position: relative;
   height: 91.5%;
   width: 51%;
@@ -109,6 +115,7 @@ button {
   left: 20px;
   border-radius: 30px;
 }
+
 .container {
   position: relative;
   left: 8%;
@@ -116,6 +123,7 @@ button {
   width: 35%;
   height: 80%;
 }
+
 .btn {
   position: relative;
   width: 70%;
@@ -125,12 +133,13 @@ button {
   background: rgba(73, 187, 189, 0.6);
   margin-bottom: 25px;
 }
+
 .btn-slct {
   position: absolute;
   left: 3%;
   top: 13%;
   width: 45%;
-  padding-top: 2%;
+  padding-top: 3%;
   padding-bottom: 2%;
   flex-shrink: 0;
   background-color: #49BBBD;
@@ -142,9 +151,11 @@ button {
   line-height: normal;
   border-radius: 33px;
 }
+
 h3 {
   position: relative;
   left: 7%;
+  margin-bottom: 5px;
   margin-top: 20px;
   color: #000;
   font-family: Poppins;
@@ -153,6 +164,7 @@ h3 {
   font-weight: 400;
   line-height: normal;
 }
+
 .email {
   width: 84%;
   height: 40px;
@@ -161,8 +173,20 @@ h3 {
   background: #FFF;
   padding-left: 3%;
   padding-right: 3%;
-  outline: none;
+
 }
+
+h4 {
+  margin-bottom: 30px;
+
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: #000;
+}
+
 .btn2 {
   margin-top: 30px;
   width: 40%;
@@ -178,6 +202,7 @@ h3 {
   border-radius: 36px;
   background: #49BBBD;
 }
+
 .btn2:hover,
 .btn2:active,
 .btn2:focus {
@@ -185,6 +210,7 @@ h3 {
   transform: scale(1.1);
   background-color: rgb(40, 161, 163);
 }
+
 img {
   width: 100%;
   height: 100%;
