@@ -23,7 +23,6 @@
         <h3>Password</h3>
         <center>
           <input class="email" type="password" v-model="inputPassword" />
-          <div v-if="alert" class="alert">{{ alert }}</div>
           <button class="btn2" @click="fetchData">Login</button>
         </center>
       </div>
@@ -45,23 +44,18 @@ export default {
       inputPassword: "",
       email: "",
       password: "",
-      alert: "",
+
     };
   },
   props: ["isopen", "toggleLogin", "isopen1", "toggleSignup", "getCurrentUser"],
   methods: {
     fetchData() {
-      if (!this.inputEmail || !this.inputPassword) {
-        this.alert = "Please enter all fields"; // Set the alert message
-        return;
-      }
 
-      this.alert = "";
-      console.log(this.inputEmail, this.inputPassword);
       const data = {
         email: this.inputEmail,
         password: this.inputPassword
       }
+
       axios.post('http://localhost:8000/api/users/loginUser', data)
         .then(response => {
           // Handle the successful response here
@@ -70,7 +64,9 @@ export default {
 
 
           // localStorage.setItem('token' , response.data.token)
-        }).then(() => this.getCurrentUser())
+        })
+        .then(() => this.getCurrentUser())
+        .then(() => this.toggleLogin())
         .catch(error => {
           // Handle any errors here
           console.log(error);
@@ -89,16 +85,7 @@ button {
   border: 0ch;
 }
 
-.alert {
-  color: red;
-  font-size: 12px;
-  margin-top: 5px;
-  font-family: Poppins;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
+
 
 .login-page {
   position: fixed;

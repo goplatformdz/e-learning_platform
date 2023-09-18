@@ -3,34 +3,49 @@
     <div class="signup-vue" @click.stop>
       <div class="img"><img src="@/assets/child2.png" alt="" /></div>
       <div class="container">
-        <center>
-          <div class="btn" @click="
-            toggleLogin();
-          toggleSignup();
-          ">
+        <div class="header">
+          <div class="btn" @click="toggleLogin(); toggleSignup();">
             <button class="btn-slct">Signup</button>
           </div>
           <h4>Sign up and start learning</h4>
-        </center>
-        <h3>Email Address</h3>
-        <center>
-          <input class="email" type="Email" />
-        </center>
-        <h3>User name</h3>
-        <center>
-          <input class="email" type="text" />
-        </center>
-        <h3>Password</h3>
-        <center>
-          <input class="email" type="password" />
-        </center>
-        <h3>Re-enter password</h3>
-        <center>
-          <input class="email" type="password" />
-
-          <button class="btn2" @click="toggleSignup">Register</button>
-        </center>
-
+        </div>
+        <div class="form">
+          <div class="container-two-inputs">
+            <div class="input-container">
+              <span v-for="error in v$.firstname.$errors" :key="error.$uid" class="span-error ">{{
+                error?.$message
+              }}</span>
+              <input class="names-input" placeholder="First Name" type="text" v-model="formData.firstname.value" />
+            </div>
+            <div class="input-container">
+              <span v-for="error in v$.lastname.$errors" :key="error.$uid" class="span-error problem-spans">{{
+                error?.$message }}</span>
+              <input class="names-input left-input" placeholder="Last Name" type="text"
+                v-model="formData.lastname.value" />
+            </div>
+          </div>
+          <div class="middle-container">
+            <span v-for="error in v$.email.$errors" :key="error.$uid" class="span-error ">{{ error?.$message
+            }}</span>
+            <input placeholder="Email Address" type="email" v-model="formData.email.value" />
+          </div>
+          <div class="container-two-inputs">
+            <div class="input-container">
+              <span v-for="error in v$.password.$errors" :key="error.$uid" class="span-error">{{ error?.$message }}</span>
+              <input class="names-input" placeholder="Password" type="password" v-model="formData.password.value" />
+            </div>
+            <div class="input-container">
+              <span v-for="error in v$.confirmPassword.$errors" :key="error.$uid" class="span-error problem-spans">
+                {{ error?.$message }}
+              </span>
+              <input class="names-input left-input" placeholder="Re-enter password" type="password"
+                v-model="formData.confirmPassword.value" />
+            </div>
+          </div>
+          <div class="btn-center">
+            <button class="btn2" @click="submit">Register</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -39,16 +54,59 @@
 
 
 <script>
+import useVuelidate from '@vuelidate/core'
+import { required, email } from '@vuelidate/validators'
+import { ref, computed } from 'vue' // Change reactive to ref
+import axios from 'axios'
+
 export default {
   name: "signupComponent",
-  data() {
-    return {};
-  },
+  props: ["isopen1", "toggleSignup", "isopen", "toggleLogin", "getCurrentUser"],
 
-  props: ["isopen1", "toggleSignup", "isopen", "toggleLogin"],
-};
+  setup() {
+    const formData = {
+      firstname: ref(""),
+      lastname: ref(""),
+      email: ref(""),
+      password: ref(""),
+      confirmPassword: ref("")
+    }
+
+    const rules = computed(() => ({
+      email: { required, email },
+      firstname: { required },
+      lastname: { required },
+      password: { required },
+      confirmPassword: { required },
+    }))
+
+    const v$ = useVuelidate(rules, formData)
+
+    const submit = () => {
+      const data = {
+        email: formData.email,
+        firstname: formData.firstname,
+        lastname: formData.lastname,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword
+      }
+
+      v$.value.$validate()
+        .then(() => {
+          return axios.post('http://localhost:8000/api/users/registerUser', data)
+        })
+        .then(() => this.getCurrentUser())
+        .then(() => this.toggleSignup())
+        .catch(error => {
+          // Handle any errors here
+          console.log(error)
+        })
+    }
+
+    return { v$, submit, formData }
+  }
+}
 </script>
-
 
 
 <style  scoped>
@@ -63,8 +121,29 @@ button {
   z-index: 3;
 }
 
+.left-input {
+  margin-left: 18px;
+}
+
+.container {
+  position: relative;
+  left: 8%;
+  top: 7%;
+  width: 35%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 52px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
 h4 {
-  margin-bottom: 30px;
   font-family: Poppins;
   font-size: 20px;
   font-style: normal;
@@ -72,6 +151,76 @@ h4 {
   line-height: normal;
   color: #000;
 }
+
+.names-input {
+  width: 95%;
+  padding-left: 5%;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  /* Horizontal centering */
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.container-two-inputs {
+  display: flex;
+  margin-bottom: 50px;
+}
+
+input {
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  border: 1px solid #49BBBD;
+  background: #FFF;
+  padding-left: 3%;
+  padding-right: 3%;
+  margin: 0;
+}
+
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  margin-bottom: 0px;
+
+}
+
+.middle-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 50px;
+
+
+}
+
+.span-error {
+  color: rgb(201, 8, 8);
+  margin-left: 10px;
+  padding-right: 30px;
+  margin-bottom: 5px;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.middle-span {
+  margin-top: 20px;
+}
+
+.problem-spans {
+  margin-left: 28px;
+}
+
 
 .signup-vue {
   background: #FFFEFC;
@@ -95,13 +244,6 @@ h4 {
   border-radius: 30px;
 }
 
-.container {
-  position: relative;
-  left: 8%;
-  top: 15%;
-  width: 35%;
-  height: 80%;
-}
 
 .btn {
   position: relative;
@@ -131,31 +273,18 @@ h4 {
   border-radius: 33px;
 }
 
-h3 {
+.btn-center {
   position: relative;
-  left: 7%;
-  margin-top: 20px;
-  margin-bottom: 5px;
-  color: #000;
-  font-family: Poppins;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 
-.email {
-  width: 84%;
-  height: 40px;
-  border-radius: 40px;
-  border: 1px solid #49BBBD;
-  background: #FFF;
-  padding-left: 3%;
-  padding-right: 3%;
-}
+
 
 .btn2 {
-  margin-top: 30px;
+
   width: 40%;
   padding-top: 3%;
   padding-bottom: 3%;

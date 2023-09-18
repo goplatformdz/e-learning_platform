@@ -3,7 +3,8 @@
     <div class="img"><img src="@/assets/logo.png" alt="" /></div>
     <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup"
       :getCurrentUser="getCurrentUser" />
-    <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin" />
+    <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin"
+      :getCurrentUser="getCurrentUser" />
 
     <ul>
       <li>
@@ -21,7 +22,7 @@
         <router-link to="/chatroom">Chatroom</router-link>
       </li>
     </ul>
-    <div v-if="firstname">
+    <div class="user-infos" v-if="firstname">
       {{ firstname }} {{ lastname }}
     </div>
     <div v-else>
@@ -89,6 +90,21 @@ export default {
 <style  scoped>
 button {
   border: 0ch;
+}
+
+.user-infos {
+  position: absolute;
+  right: 80px;
+  top: 25px;
+  display: inline-block;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  color: #fff;
+  letter-spacing: 0.15em;
 }
 
 .img {
