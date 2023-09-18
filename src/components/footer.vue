@@ -78,13 +78,10 @@ export default {
 }
 .foot {
   position: relative;
-  bottom: 0;
-  left: 0;
   width: 100%;
-  height: 385px;
+  height: 405px;
   flex-shrink: 0;
   background: #252641;
-  margin-top: 150px;
 }
 .foot h4 {
   color: #B2B3CF;

@@ -63,7 +63,7 @@ export default {
 };
 </script>
 
-<style>
+<style scooped>
 .relatedCard1 {
   margin-top: 30px;
   display: flex;

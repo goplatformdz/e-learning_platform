@@ -1,8 +1,9 @@
 <template>
   <div class="signup-page" v-if="isopen1" @click="toggleSignup">
     <div class="signup-vue" @click.stop>
-      <div class="img"><img src="@/assets/child2.png" alt="" /></div>
+      <div class="img2"><img src="@/assets/child2.png" alt="" /></div>
       <div class="container">
+
         <div class="header">
           <div class="btn" @click="toggleLogin(); toggleSignup();">
             <button class="btn-slct">Signup</button>
@@ -113,13 +114,13 @@ export default {
 button {
   border: 0ch;
 }
-
 .signup-page {
   position: fixed;
   width: 100%;
   height: 100%;
   z-index: 3;
 }
+
 
 .left-input {
   margin-left: 18px;
@@ -234,14 +235,20 @@ input {
   display: flex;
   z-index: 10;
 }
-
-.img {
+.img2 {
   position: relative;
   height: 91.5%;
   width: 51%;
   top: 4%;
   left: 20px;
   border-radius: 30px;
+}
+.container {
+  position: relative;
+  left: 8%;
+  top: 15%;
+  width: 35%;
+  height: 80%;
 }
 
 
@@ -254,13 +261,12 @@ input {
   background: rgba(73, 187, 189, 0.6);
   margin-bottom: 25px;
 }
-
 .btn-slct {
   position: absolute;
   right: 3%;
   top: 13%;
   width: 45%;
-  padding-top: 3%;
+  padding-top: 2%;
   padding-bottom: 2%;
   flex-shrink: 0;
   background-color: #49BBBD;
@@ -272,6 +278,7 @@ input {
   line-height: normal;
   border-radius: 33px;
 }
+
 
 .btn-center {
   position: relative;
@@ -297,7 +304,6 @@ input {
   border-radius: 36px;
   background: #49BBBD;
 }
-
 .btn2:hover,
 .btn2:active,
 .btn2:focus {
@@ -305,7 +311,6 @@ input {
   transform: scale(1.1);
   background-color: rgb(40, 161, 163);
 }
-
 img {
   width: 100%;
   height: 100%;
