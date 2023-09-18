@@ -22,9 +22,9 @@
         <br />
         <h3>Password</h3>
         <center>
-          <input class="email" type="password" />
 
-          <button class="btn2" @click="toggleLogin">Login</button>
+          <input class="email" type="password" v-model="inputPassword" />
+          <button class="btn2" @click="fetchData">Login</button>
         </center>
       </div>
     </div>
@@ -37,9 +37,42 @@
 export default {
   name: "loginComponent",
   data() {
-    return {};
+
+
+    return {
+      inputEmail: "",
+      inputPassword: "",
+      email: "",
+      password: "",
+
+    };
   },
-  props: ["isopen", "toggleLogin", "isopen1", "toggleSignup"],
+  props: ["isopen", "toggleLogin", "isopen1", "toggleSignup", "getCurrentUser"],
+  methods: {
+    fetchData() {
+
+      const data = {
+        email: this.inputEmail,
+        password: this.inputPassword
+      }
+
+      axios.post('http://localhost:8000/api/users/loginUser', data)
+        .then(response => {
+          // Handle the successful response here
+          console.log(response.data);
+          document.cookie = `access-token=${response.data.token}; path=/; `;
+
+
+          // localStorage.setItem('token' , response.data.token)
+        })
+        .then(() => this.getCurrentUser())
+        .then(() => this.toggleLogin())
+        .catch(error => {
+          // Handle any errors here
+          console.log(error);
+        });
+    }
+  }
 };
 </script>
 
@@ -49,6 +82,7 @@ export default {
 button {
   border: 0ch;
 }
+
 .login-page {
   position: fixed;
   width: 100%;

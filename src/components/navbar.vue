@@ -1,18 +1,12 @@
 <template>
   <div class="nav">
     <div class="img"><img src="@/assets/logo.png" alt="" /></div>
-    <loginComponent
-      :isopen="isopen"
-      :toggleLogin="toggleLogin"
-      :isopen1="isopen1"
-      :toggleSignup="toggleSignup"
-    />
-    <signupComponent
-      :isopen1="isopen1"
-      :toggleSignup="toggleSignup"
-      :isopen="isopen"
-      :toggleLogin="toggleLogin"
-    />
+
+    <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup"
+      :getCurrentUser="getCurrentUser" />
+    <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin"
+      :getCurrentUser="getCurrentUser" />
+
 
     <ul>
       <li>
@@ -30,8 +24,14 @@
       <li><a href="#">About Us</a></li>
     </ul>
 
-    <button class="login" @click="toggleLogin">Login</button>
-    <button class="signup" @click="toggleSignup">Sign Up</button>
+    <div class="user-infos" v-if="firstname">
+      {{ firstname }} {{ lastname }}
+    </div>
+    <div v-else>
+      <button class="login" @click="toggleLogin">Login</button>
+      <button class="signup" @click="toggleSignup">Sign Up</button>
+    </div>
+
   </div>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -81,6 +81,21 @@ export default {
 <style  scoped>
 button {
   border: 0ch;
+}
+
+.user-infos {
+  position: absolute;
+  right: 80px;
+  top: 25px;
+  display: inline-block;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  color: #fff;
+  letter-spacing: 0.15em;
 }
 
 .img {
