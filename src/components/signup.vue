@@ -1,9 +1,8 @@
 <template>
   <div class="signup-page" v-if="isopen1" @click="toggleSignup">
     <div class="signup-vue" @click.stop>
-      <div class="img2"><img src="@/assets/child2.png" alt="" /></div>
+      <div class="img"><img src="@/assets/child2.png" alt="" /></div>
       <div class="container">
-
         <div class="header">
           <div class="btn" @click="toggleLogin(); toggleSignup();">
             <button class="btn-slct">Signup</button>
@@ -13,33 +12,50 @@
         <div class="form">
           <div class="container-two-inputs">
             <div class="input-container">
-              <input class="names-input" placeholder="First Name" type="text" v-model="formData.firstname.value" />
-              <span v-for="error in v$.firstname.$errors" :key="error.$uid" class="span-error ">{{ error?.$message
-              }}</span>
+              <span class="input-description ">First Name</span>
+              <div class="input-wrapper">
+                <input class="names-input" type="text" v-model="formData.firstname.value" />
+                <span v-for="error in v$.firstname.$errors" :key="error.$uid" class="span-error">
+                  {{ error.$message === 'Value is required' ? 'This field is required' : error.$message }}
+
+                </span>
+              </div>
             </div>
             <div class="input-container">
-              <input class="names-input left-input" placeholder="Last Name" type="text"
-                v-model="formData.lastname.value" />
-              <span v-for="error in v$.lastname.$errors" :key="error.$uid" class="span-error problem-spans">{{
-                error?.$message }}</span>
+              <span class="input-description side-spans">Last Name</span>
+              <div class="input-wrapper">
+                <input class="names-input left-input" type="text" v-model="formData.lastname.value" />
+                <span v-for="error in v$.lastname.$errors" :key="error.$uid" class="span-error problem-spans">
+                  {{ error.$message === 'Value is required' ? 'This field is required' : error.$message }}
+                </span>
+              </div>
             </div>
           </div>
           <div class="middle-container">
-            <input placeholder="Email Address" type="email" v-model="formData.email.value" />
-            <span v-for="error in v$.email.$errors" :key="error.$uid" class="span-error ">{{ error?.$message
-            }}</span>
+            <span class="input-description">Email Address</span>
+            <input type="email" v-model="formData.email.value" />
+            <span v-for="error in v$.email.$errors" :key="error.$uid" class="span-error">
+              {{ error.$message === 'Value is required' ? 'This field is required' : 'Email not valid' }}
+            </span>
           </div>
           <div class="container-two-inputs">
             <div class="input-container">
-              <input class="names-input" placeholder="Password" type="password" v-model="formData.password.value" />
-              <span v-for="error in v$.password.$errors" :key="error.$uid" class="span-error">{{ error?.$message }}</span>
+              <span class="input-description">Password</span>
+              <div class="input-wrapper">
+                <input class="names-input" type="password" v-model="formData.password.value" />
+                <span v-for="error in v$.password.$errors" :key="error.$uid" class="span-error">
+                  {{ error.$message === 'Value is required' ? 'This field is required' : 'Password too short' }}
+                </span>
+              </div>
             </div>
             <div class="input-container">
-              <input class="names-input left-input" placeholder="Re-enter password" type="password"
-                v-model="formData.confirmPassword.value" />
-              <span v-for="error in v$.confirmPassword.$errors" :key="error.$uid" class="span-error problem-spans">
-                {{ error?.$message }}
-              </span>
+              <span class="input-description side-spans">Re-enter password</span>
+              <div class="input-wrapper">
+                <input class="names-input left-input" type="password" v-model="formData.confirmPassword.value" />
+                <span v-for="error in v$.confirmPassword.$errors" :key="error.$uid" class="span-error problem-spans">
+                  {{ error.$message === 'Value is required' ? 'This field is required' : 'Doesnt match Password' }}
+                </span>
+              </div>
             </div>
           </div>
           <div class="btn-center">
@@ -53,9 +69,10 @@
 
 
 
+
 <script>
 import useVuelidate from '@vuelidate/core'
-import { required, email } from '@vuelidate/validators'
+import { required, email, minLength, sameAs } from '@vuelidate/validators'
 import { ref, computed } from 'vue' // Change reactive to ref
 import axios from 'axios'
 
@@ -76,8 +93,8 @@ export default {
       email: { required, email },
       firstname: { required },
       lastname: { required },
-      password: { required },
-      confirmPassword: { required },
+      password: { required, minLength: minLength(10) },
+      confirmPassword: { required, sameAs: sameAs(formData.password.value) },
     }))
 
     const v$ = useVuelidate(rules, formData)
@@ -121,6 +138,9 @@ button {
   z-index: 3;
 }
 
+.input-wrapper {
+  position: relative;
+}
 
 .left-input {
   margin-left: 18px;
@@ -134,6 +154,7 @@ button {
   height: 80%;
   display: flex;
   flex-direction: column;
+  padding-top: 52px;
 }
 
 .form {
@@ -141,6 +162,23 @@ button {
   flex-direction: column;
   width: 100%;
   height: 100%;
+}
+
+.input-description {
+  position: absolute;
+  top: -20px;
+  left: 10px;
+  color: #000;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.side-spans {
+  position: absolute;
+  left: 28px;
 }
 
 h4 {
@@ -155,6 +193,7 @@ h4 {
 .names-input {
   width: 95%;
   padding-left: 5%;
+  margin-bottom: 0;
 }
 
 .header {
@@ -163,12 +202,12 @@ h4 {
   /* Horizontal centering */
   align-items: center;
   flex-direction: column;
-  margin-bottom: 30px;
+  margin-bottom: 45px;
 }
 
 .container-two-inputs {
   display: flex;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 }
 
 input {
@@ -184,6 +223,7 @@ input {
 
 
 .input-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -196,7 +236,8 @@ input {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
+  position: relative;
 
 
 }
@@ -205,6 +246,9 @@ input {
   color: rgb(201, 8, 8);
   margin-left: 10px;
   padding-right: 30px;
+  position: absolute;
+  bottom: -20px;
+  /* Adjust this value as needed to position the error message */
   font-family: Poppins;
   font-size: 12px;
   font-style: normal;
@@ -213,7 +257,8 @@ input {
 }
 
 .middle-span {
-  margin-top: 20px;
+  position: absolute;
+  bottom: -20px;
 }
 
 .problem-spans {
@@ -234,22 +279,13 @@ input {
   z-index: 10;
 }
 
-.img2 {
+.img {
   position: relative;
   height: 91.5%;
   width: 51%;
   top: 4%;
   left: 20px;
   border-radius: 30px;
-}
-
-.container {
-  position: relative;
-  left: 8%;
-  top: 15%;
-  width: 35%;
-  height: 80%;
-
 }
 
 
@@ -268,7 +304,7 @@ input {
   right: 3%;
   top: 13%;
   width: 45%;
-  padding-top: 2%;
+  padding-top: 3%;
   padding-bottom: 2%;
   flex-shrink: 0;
   background-color: #49BBBD;
@@ -280,7 +316,6 @@ input {
   line-height: normal;
   border-radius: 33px;
 }
-
 
 .btn-center {
   position: relative;

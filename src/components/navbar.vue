@@ -1,29 +1,27 @@
 <template>
   <div class="nav">
     <div class="img"><img src="@/assets/logo.png" alt="" /></div>
-
     <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup"
       :getCurrentUser="getCurrentUser" />
     <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin"
       :getCurrentUser="getCurrentUser" />
 
-
     <ul>
       <li>
-        <a href="#"><router-link to="/">Home</router-link></a>
+        <router-link to="/">Home</router-link>
       </li>
       <li>
-        <a href="#"><router-link to="/courses">Courses</router-link></a>
+        <router-link to="/courses">Courses</router-link>
       </li>
+      <li><a href="#">Careers</a></li>
       <li>
-        <a href="#"><router-link to="/search">Search</router-link></a>
-      </li>
-      <li>
-        <a href="#"><router-link to="/blog">Blog</router-link></a>
+        <router-link to="/blog">Blog</router-link>
       </li>
       <li><a href="#">About Us</a></li>
+      <li>
+        <router-link to="/search">Search</router-link>
+      </li>
     </ul>
-
     <div class="user-infos" v-if="firstname">
       {{ firstname }} {{ lastname }}
     </div>
@@ -31,20 +29,13 @@
       <button class="login" @click="toggleLogin">Login</button>
       <button class="signup" @click="toggleSignup">Sign Up</button>
     </div>
-
   </div>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300&display=swap" rel="stylesheet" />
 </template>
 
 
@@ -53,6 +44,7 @@
 <script>
 import loginComponent from "./login.vue";
 import signupComponent from "./signup.vue";
+import axios from "axios";
 export default {
   name: "navbar",
 
@@ -60,6 +52,8 @@ export default {
     return {
       isopen: false,
       isopen1: false,
+      firstname: "",
+      lastname: ""
     };
   },
 
@@ -70,11 +64,26 @@ export default {
     toggleSignup() {
       this.isopen1 = !this.isopen1;
     },
+    getCurrentUser() {
+      axios.get('http://localhost:8000/api/users/getCurrentUser', { withCredentials: true })
+        .then(response => {
+          this.firstname = response.data.firstname; // Update the courses data property with the fetched data
+          this.lastname = response.data.lastname;
+          console.log(this.firstname, this.lastname) // Update the courses data property with the fetched data
+
+        })
+        .catch(error => {
+          console.error('Error fetching user', error);
+        });
+    }
   },
   components: {
     loginComponent,
     signupComponent,
   },
+  mounted() {
+    this.getCurrentUser();
+  }
 };
 </script>
 
@@ -105,10 +114,12 @@ button {
   width: 70px;
   height: 49px;
 }
+
 img {
   width: 100%;
   height: 100%;
 }
+
 .nav {
   width: 100%;
   height: 80px;
@@ -118,6 +129,8 @@ img {
   left: 0;
   z-index: 5;
 }
+
+
 .login {
   position: absolute;
   top: 25%;
@@ -136,7 +149,9 @@ img {
   line-height: normal;
   letter-spacing: 0.44px;
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .signup {
   position: absolute;
   top: 25%;
@@ -155,19 +170,23 @@ img {
   line-height: normal;
   letter-spacing: 0.44px;
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .login:hover,
 .login:active,
 .login:focus {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transform: scale(1.1);
 }
+
 .signup:hover,
 .signup:active,
 .signup:focus {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transform: scale(1.1);
 }
+
 ul {
   position: absolute;
   left: 300px;
@@ -178,6 +197,7 @@ ul {
   display: inline;
   text-align: center;
 }
+
 li {
   display: table-cell;
   position: relative;
@@ -188,6 +208,7 @@ li {
   line-height: normal;
   letter-spacing: 0.44px;
 }
+
 a {
   color: #fff;
   text-decoration: none;
@@ -200,6 +221,7 @@ a {
 
   position: inline;
 }
+
 a:after {
   background: none repeat scroll 0 0 transparent;
   bottom: 0;
@@ -212,6 +234,7 @@ a:after {
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
 }
+
 a:hover:after {
   width: 100%;
   left: 0;
