@@ -1,16 +1,19 @@
 <template>
   <div class="signup-page" v-if="isopen1" @click="toggleSignup">
     <div class="signup-vue" @click.stop>
-      <div class="img"><img src="@/assets/child2.png" alt="" /></div>
+      <div class="img2"><img src="@/assets/child2.png" alt="" /></div>
       <div class="container">
         <center>
-          <div class="btn" @click="
-            toggleLogin();
-          toggleSignup();
-          ">
+          <div
+            class="btn"
+            @click="
+              toggleLogin();
+              toggleSignup();
+            "
+          >
             <button class="btn-slct">Signup</button>
           </div>
-          <h4>Sign up and start learning</h4>
+          <h4>signup page</h4>
         </center>
         <h3>Email Address</h3>
         <center>
@@ -23,14 +26,9 @@
         <h3>Password</h3>
         <center>
           <input class="email" type="password" />
-        </center>
-        <h3>Re-enter password</h3>
-        <center>
-          <input class="email" type="password" />
 
           <button class="btn2" @click="toggleSignup">Register</button>
         </center>
-
       </div>
     </div>
   </div>
@@ -55,24 +53,12 @@ export default {
 button {
   border: 0ch;
 }
-
 .signup-page {
   position: fixed;
   width: 100%;
   height: 100%;
   z-index: 3;
 }
-
-h4 {
-  margin-bottom: 30px;
-  font-family: Poppins;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  color: #000;
-}
-
 .signup-vue {
   background: #FFFEFC;
   position: fixed;
@@ -85,8 +71,7 @@ h4 {
   display: flex;
   z-index: 10;
 }
-
-.img {
+.img2 {
   position: relative;
   height: 91.5%;
   width: 51%;
@@ -94,7 +79,6 @@ h4 {
   left: 20px;
   border-radius: 30px;
 }
-
 .container {
   position: relative;
   left: 8%;
@@ -102,7 +86,6 @@ h4 {
   width: 35%;
   height: 80%;
 }
-
 .btn {
   position: relative;
   width: 70%;
@@ -112,13 +95,12 @@ h4 {
   background: rgba(73, 187, 189, 0.6);
   margin-bottom: 25px;
 }
-
 .btn-slct {
   position: absolute;
   right: 3%;
   top: 13%;
   width: 45%;
-  padding-top: 3%;
+  padding-top: 2%;
   padding-bottom: 2%;
   flex-shrink: 0;
   background-color: #49BBBD;
@@ -130,12 +112,10 @@ h4 {
   line-height: normal;
   border-radius: 33px;
 }
-
 h3 {
   position: relative;
   left: 7%;
   margin-top: 20px;
-  margin-bottom: 5px;
   color: #000;
   font-family: Poppins;
   font-size: 12px;
@@ -143,7 +123,6 @@ h3 {
   font-weight: 400;
   line-height: normal;
 }
-
 .email {
   width: 84%;
   height: 40px;
@@ -152,8 +131,8 @@ h3 {
   background: #FFF;
   padding-left: 3%;
   padding-right: 3%;
+  outline: none;
 }
-
 .btn2 {
   margin-top: 30px;
   width: 40%;
@@ -168,7 +147,6 @@ h3 {
   border-radius: 36px;
   background: #49BBBD;
 }
-
 .btn2:hover,
 .btn2:active,
 .btn2:focus {
@@ -176,7 +154,6 @@ h3 {
   transform: scale(1.1);
   background-color: rgb(40, 161, 163);
 }
-
 img {
   width: 100%;
   height: 100%;

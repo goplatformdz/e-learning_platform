@@ -25,11 +25,10 @@
 export default {};
 </script>
 
-<style scoped>
+<style scooped>
 a {
   text-decoration: none;
 }
-
 .circle {
   width: 40px;
   height: 40px;
@@ -39,7 +38,6 @@ a {
   margin-top: 5px;
   display: flex;
 }
-
 .circle h3 {
   color: #000;
   font-family: Poppins;
@@ -51,15 +49,13 @@ a {
   margin-left: 10px;
   margin-top: 8px;
 }
-
 .card1 p {
   color: #696984;
   font-family: Poppins;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: 180%;
-  /* 36px */
+  line-height: 180%; /* 36px */
   letter-spacing: 0.4px;
   margin-left: 15px;
 }
@@ -71,30 +67,27 @@ a {
   flex-shrink: 0;
   border-radius: 20px;
   background: #FFF;
-  box-shadow: 0px 18.829999923706055px 47.08000183105469px 0px rgba(47, 50, 125, 0.1);
+  box-shadow: 0px 18.829999923706055px 47.08000183105469px 0px
+    rgba(47, 50, 125, 0.1);
   display: grid;
   grid-template-rows: 4fr 1fr 1fr 1fr 1fr;
 }
-
 .card1:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transform: scale(1.1);
   transition: ease-in-out 0.1s;
 }
-
 .card1 h4 {
   color: #252641;
   font-family: Poppins;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
-  line-height: 180%;
-  /* 46.8px */
+  line-height: 180%; /* 46.8px */
   grid-row: 2;
   margin-left: 15px;
   margin-top: 5px;
 }
-
 .img {
   grid-row: 1;
   width: 420px;
@@ -102,8 +95,8 @@ a {
   margin-top: 20px;
   margin-left: 15px;
 }
-
 img {
   width: 100%;
   height: 100%;
-}</style>
+}
+</style>
