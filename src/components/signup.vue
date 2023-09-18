@@ -13,34 +13,33 @@
         <div class="form">
           <div class="container-two-inputs">
             <div class="input-container">
-              <span v-for="error in v$.firstname.$errors" :key="error.$uid" class="span-error ">{{
-                error?.$message
-              }}</span>
               <input class="names-input" placeholder="First Name" type="text" v-model="formData.firstname.value" />
+              <span v-for="error in v$.firstname.$errors" :key="error.$uid" class="span-error ">{{ error?.$message
+              }}</span>
             </div>
             <div class="input-container">
-              <span v-for="error in v$.lastname.$errors" :key="error.$uid" class="span-error problem-spans">{{
-                error?.$message }}</span>
               <input class="names-input left-input" placeholder="Last Name" type="text"
                 v-model="formData.lastname.value" />
+              <span v-for="error in v$.lastname.$errors" :key="error.$uid" class="span-error problem-spans">{{
+                error?.$message }}</span>
             </div>
           </div>
           <div class="middle-container">
+            <input placeholder="Email Address" type="email" v-model="formData.email.value" />
             <span v-for="error in v$.email.$errors" :key="error.$uid" class="span-error ">{{ error?.$message
             }}</span>
-            <input placeholder="Email Address" type="email" v-model="formData.email.value" />
           </div>
           <div class="container-two-inputs">
             <div class="input-container">
-              <span v-for="error in v$.password.$errors" :key="error.$uid" class="span-error">{{ error?.$message }}</span>
               <input class="names-input" placeholder="Password" type="password" v-model="formData.password.value" />
+              <span v-for="error in v$.password.$errors" :key="error.$uid" class="span-error">{{ error?.$message }}</span>
             </div>
             <div class="input-container">
+              <input class="names-input left-input" placeholder="Re-enter password" type="password"
+                v-model="formData.confirmPassword.value" />
               <span v-for="error in v$.confirmPassword.$errors" :key="error.$uid" class="span-error problem-spans">
                 {{ error?.$message }}
               </span>
-              <input class="names-input left-input" placeholder="Re-enter password" type="password"
-                v-model="formData.confirmPassword.value" />
             </div>
           </div>
           <div class="btn-center">
@@ -114,6 +113,7 @@ export default {
 button {
   border: 0ch;
 }
+
 .signup-page {
   position: fixed;
   width: 100%;
@@ -134,7 +134,6 @@ button {
   height: 80%;
   display: flex;
   flex-direction: column;
-  padding-top: 52px;
 }
 
 .form {
@@ -169,7 +168,7 @@ h4 {
 
 .container-two-inputs {
   display: flex;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 input {
@@ -197,7 +196,7 @@ input {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 
 
 }
@@ -206,7 +205,6 @@ input {
   color: rgb(201, 8, 8);
   margin-left: 10px;
   padding-right: 30px;
-  margin-bottom: 5px;
   font-family: Poppins;
   font-size: 12px;
   font-style: normal;
@@ -235,6 +233,7 @@ input {
   display: flex;
   z-index: 10;
 }
+
 .img2 {
   position: relative;
   height: 91.5%;
@@ -243,12 +242,14 @@ input {
   left: 20px;
   border-radius: 30px;
 }
+
 .container {
   position: relative;
   left: 8%;
   top: 15%;
   width: 35%;
   height: 80%;
+
 }
 
 
@@ -261,6 +262,7 @@ input {
   background: rgba(73, 187, 189, 0.6);
   margin-bottom: 25px;
 }
+
 .btn-slct {
   position: absolute;
   right: 3%;
@@ -304,6 +306,7 @@ input {
   border-radius: 36px;
   background: #49BBBD;
 }
+
 .btn2:hover,
 .btn2:active,
 .btn2:focus {
@@ -311,6 +314,7 @@ input {
   transform: scale(1.1);
   background-color: rgb(40, 161, 163);
 }
+
 img {
   width: 100%;
   height: 100%;

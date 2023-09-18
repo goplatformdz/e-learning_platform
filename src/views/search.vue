@@ -1,28 +1,16 @@
 <template>
   <div class="searchcont">
     <div>
-      <input
-        type="search"
-        name=""
-        class="search"
-        placeholder="Search your favourite course" 
-        v-model="courseName"
-      />
+      <input type="search" name="" class="search" placeholder="Search your favourite course" v-model="courseName" />
       <button class="srchbtn" @click="searchCourse">Search</button>
       <img src="@/assets/searchimg.png" alt="" />
     </div>
   </div>
   <div class="courses-searched">
-    <markCard v-for=" course in searchData" :key="course" :course-data = "course"/>
+    <markCard v-for=" course in searchData" :key="course" :course-data="course" />
   </div>
 
-  <div class="recomended">
-    <h4 class="m">Recomended for you</h4>
-    <p class="s">See all</p>
-    <div class="Rcard">
-      <markCard v-for="index in 4" :key="index" />
-    </div>
-  </div>
+
 
   <div class="topoffre">
     <h4>Top Education offers and deals are listed here</h4>
@@ -55,16 +43,16 @@ export default {
   },
   components: {
     markCard,
-    
+
   },
   methods: {
     async searchCourse() {
-    const courseName=this.courseName;
+      //const courseName = this.courseName;
       try {
-        const response = await axios.post("http://localhost:8000/api/courses/search_course", courseName)
+        const response = await axios.post("http://localhost:8000/api/courses/search_course", { courseName: this.courseName })
         this.searchData = response.data.result;
-        }
-        catch(error) {
+      }
+      catch (error) {
         console.error(error);
       }
     },
@@ -90,9 +78,11 @@ export default {
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 180%; /* 43.2px */
+  line-height: 180%;
+  /* 43.2px */
   letter-spacing: 0.48px;
 }
+
 .offre h5 {
   margin-left: 30px;
   margin-top: 130px;
@@ -105,6 +95,7 @@ export default {
   font-weight: 600;
   line-height: normal;
 }
+
 .perce {
   margin-top: 30px;
   margin-left: 30px;
@@ -123,6 +114,7 @@ export default {
   line-height: normal;
   text-align: center;
 }
+
 .topoffre h4 {
   padding-top: 0px;
   margin-left: 60px;
@@ -135,6 +127,7 @@ export default {
   grid-row: 1;
   display: inline;
 }
+
 .topoffre p {
   display: inline;
 
@@ -148,15 +141,18 @@ export default {
   line-height: normal;
   grid-row: 1;
 }
+
 img {
   width: 100%;
   height: 100%;
 }
+
 .topoffre {
   margin-top: 40px;
   height: 500px;
   grid-template-rows: 1fr 9fr;
 }
+
 .offre {
   width: 370px;
   height: 320.419px;
@@ -166,6 +162,7 @@ img {
   margin-top: 20px;
   transition: ease-in-out 0.2s;
 }
+
 .offrecont {
   display: relative;
   margin-top: 30px;
@@ -174,6 +171,7 @@ img {
   flex-wrap: wrap;
   grid-row: 2;
 }
+
 .m {
   margin-top: 20px;
   margin-left: 60px;
@@ -185,6 +183,7 @@ img {
   line-height: normal;
   grid-row: 1;
 }
+
 .s {
   margin-top: 25px;
   position: absolute;
@@ -197,6 +196,7 @@ img {
   line-height: normal;
   grid-row: 1;
 }
+
 .Rcard {
   margin-top: 30px;
   display: flex;
@@ -205,6 +205,7 @@ img {
   padding-left: 50px;
   grid-row: 2;
 }
+
 .recomended {
   margin-top: 50px;
   width: 100%;
@@ -213,11 +214,13 @@ img {
   gap: 0;
   grid-template-rows: 1fr 9fr;
 }
+
 .courses-searched {
   display: flex;
   flex-wrap: wrap;
   margin-left: 4.5%;
 }
+
 .search {
   border-radius: 10px;
   background: #FFF;
@@ -238,9 +241,11 @@ img {
   letter-spacing: 0.8px;
   outline: none;
 }
+
 .searchcont {
   margin-top: 80px;
 }
+
 .srchbtn {
   color: #FFF;
   font-family: Poppins;
@@ -257,6 +262,7 @@ img {
   margin-top: 11%;
   margin-left: 46%;
 }
+
 .srchbtn:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transform: scale(1.1);
