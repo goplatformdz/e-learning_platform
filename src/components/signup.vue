@@ -4,56 +4,65 @@
       <div class="img"><img src="@/assets/child2.png" alt="" /></div>
       <div class="container">
         <div class="header">
-          <div class="btn" @click="toggleLogin(); toggleSignup();">
-            <button class="btn-slct">Signup</button>
+          <div class="btn">
+            <button class="btn-signup" @click="toggleLogin(); toggleSignup();">Signup</button>
+            <button class="btn-login" @click="toggleLogin(); toggleSignup();">Login</button>
           </div>
           <h4>Sign up and start learning</h4>
         </div>
         <div class="form">
           <div class="container-two-inputs">
             <div class="input-container">
-              <span class="input-description ">First Name</span>
+              <span class="input-description "><font-awesome-icon class="font-icon" icon="fa-solid fa-user" /> First Name
+              </span>
               <div class="input-wrapper">
-                <input class="names-input" type="text" v-model="formData.firstname.value" />
+                <input :class="v$.firstname.$error === true ? 'names-input-error' : 'names-input'" type="text"
+                  v-model="formData.firstname.value" />
                 <span v-for="error in v$.firstname.$errors" :key="error.$uid" class="span-error">
-                  {{ error.$message === 'Value is required' ? 'This field is required' : error.$message }}
-
-                </span>
+                  {{ error.$message === 'Value is required' ? 'First name is required' : error.$message }} </span>
               </div>
             </div>
             <div class="input-container">
-              <span class="input-description side-spans">Last Name</span>
+              <span class="input-description side-spans"><font-awesome-icon class="font-icon" icon="fa-solid fa-user" />
+                Last Name</span>
               <div class="input-wrapper">
-                <input class="names-input left-input" type="text" v-model="formData.lastname.value" />
+                <input :class="v$.lastname.$error === true ? 'names-input-left-error' : 'names-input-left'" type="text"
+                  v-model="formData.lastname.value" />
                 <span v-for="error in v$.lastname.$errors" :key="error.$uid" class="span-error problem-spans">
-                  {{ error.$message === 'Value is required' ? 'This field is required' : error.$message }}
-                </span>
+                  {{ error.$message === 'Value is required' ? 'Last name is required' : error.$message }} </span>
               </div>
             </div>
           </div>
           <div class="middle-container">
-            <span class="input-description">Email Address</span>
-            <input type="email" v-model="formData.email.value" />
+            <span class="input-description "><font-awesome-icon class="font-icon email-icon"
+                icon="fa-solid fa-envelope" /> Email
+              Address</span>
+            <input type="email" :class="v$.email.$error === true ? 'input-error' : 'input'"
+              v-model="formData.email.value" />
             <span v-for="error in v$.email.$errors" :key="error.$uid" class="span-error">
-              {{ error.$message === 'Value is required' ? 'This field is required' : 'Email not valid' }}
+              {{ error.$message === 'Value is required' ? 'Email address is required' : 'Email is not valid' }}
             </span>
           </div>
           <div class="container-two-inputs">
             <div class="input-container">
-              <span class="input-description">Password</span>
+              <span class="input-description"><font-awesome-icon icon="fa-solid fa-key" /> Password</span>
               <div class="input-wrapper">
-                <input class="names-input" type="password" v-model="formData.password.value" />
+                <input :class="v$.password.$error === true ? 'names-input-error' : 'names-input'" type="password"
+                  v-model="formData.password.value" />
                 <span v-for="error in v$.password.$errors" :key="error.$uid" class="span-error">
-                  {{ error.$message === 'Value is required' ? 'This field is required' : 'Password too short' }}
+                  {{ error.$message === 'Value is required' ? 'Password is required' : 'Password too short (8 at least)'
+                  }}
                 </span>
               </div>
             </div>
             <div class="input-container">
-              <span class="input-description side-spans">Re-enter password</span>
+              <span class="input-description side-spans"><font-awesome-icon icon="fa-solid fa-key" /> Re-enter
+                password</span>
               <div class="input-wrapper">
-                <input class="names-input left-input" type="password" v-model="formData.confirmPassword.value" />
-                <span v-for="error in v$.confirmPassword.$errors" :key="error.$uid" class="span-error problem-spans">
-                  {{ error.$message === 'Value is required' ? 'This field is required' : 'Doesnt match Password' }}
+                <input :class="v$.confirmPassword.$error === true ? 'names-input-left-error' : 'names-input-left'"
+                  type="password" v-model="formData.confirmPassword.value" />
+                <span class="span-error problem-spans">
+                  {{ getConfirmPasswordError() }}
                 </span>
               </div>
             </div>
@@ -73,13 +82,18 @@
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength, sameAs } from '@vuelidate/validators'
-import { ref, computed } from 'vue' // Change reactive to ref
+import { ref, computed } from 'vue'
 import axios from 'axios'
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+
 
 export default {
   name: "signupComponent",
   props: ["isopen1", "toggleSignup", "isopen", "toggleLogin", "getCurrentUser"],
-
+  components: {
+    FontAwesomeIcon
+  },
   setup() {
     const formData = {
       firstname: ref(""),
@@ -119,8 +133,16 @@ export default {
           console.log(error)
         })
     }
+    console.log(v$)
 
     return { v$, submit, formData }
+
+  },
+  methods: {
+    getConfirmPasswordError() {
+      const errors = this.v$.confirmPassword.$errors;
+      return errors.length ? (errors[0].$message === 'The value must be equal to the other value' ? 'Doesnt match your password' : 'Confirm your password') : '';
+    },
   }
 }
 </script>
@@ -131,11 +153,24 @@ button {
   border: 0ch;
 }
 
+template {
+  position: relative;
+}
+
 .signup-page {
   position: fixed;
   width: 100%;
   height: 100%;
   z-index: 3;
+}
+
+.font-icon {
+  color: #000;
+  margin-bottom: 1px;
+}
+
+.email-icon {
+  margin-bottom: -0.5px;
 }
 
 .input-wrapper {
@@ -193,7 +228,50 @@ h4 {
 .names-input {
   width: 95%;
   padding-left: 5%;
-  margin-bottom: 0;
+  padding-right: 3%;
+  height: 40px;
+  border-radius: 40px;
+  border: 1px solid #49BBBD;
+  background: #FFF;
+  margin: 0;
+
+}
+
+.names-input-left {
+  width: 95%;
+  height: 40px;
+  border-radius: 40px;
+  border: 1px solid #49BBBD;
+  background: #FFF;
+  padding-left: 5%;
+  padding-right: 3%;
+  margin: 0;
+  margin-left: 18px;
+
+}
+
+.names-input-left-error {
+  width: 95%;
+  height: 40px;
+  border-radius: 40px;
+  background: #FFF;
+  padding-left: 5%;
+  padding-right: 3%;
+  margin: 0;
+  margin-left: 18px;
+  border: 1px solid rgb(201, 8, 8);
+
+}
+
+.names-input-error {
+  width: 95%;
+  padding-left: 5%;
+  padding-right: 3%;
+  height: 40px;
+  border-radius: 40px;
+  border: 1px solid rgb(201, 8, 8);
+  background: #FFF;
+  margin: 0;
 }
 
 .header {
@@ -210,7 +288,18 @@ h4 {
   margin-bottom: 50px;
 }
 
-input {
+.input-error {
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  background: #FFF;
+  padding-left: 3%;
+  padding-right: 3%;
+  margin: 0;
+  border: 1px solid rgb(201, 8, 8);
+}
+
+.input {
   width: 100%;
   height: 40px;
   border-radius: 40px;
@@ -219,6 +308,7 @@ input {
   padding-left: 3%;
   padding-right: 3%;
   margin: 0;
+
 }
 
 
@@ -248,12 +338,12 @@ input {
   padding-right: 30px;
   position: absolute;
   bottom: -20px;
-  /* Adjust this value as needed to position the error message */
   font-family: Poppins;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  white-space: nowrap;
 }
 
 .middle-span {
@@ -269,7 +359,7 @@ input {
 .signup-vue {
   background: #FFFEFC;
   position: fixed;
-  top: 15%;
+  top: 10%;
   width: 70%;
   height: 80%;
   left: 15%;
@@ -283,8 +373,8 @@ input {
   position: relative;
   height: 91.5%;
   width: 51%;
-  top: 4%;
-  left: 20px;
+  top: 10px;
+  left: 10px;
   border-radius: 30px;
 }
 
@@ -297,17 +387,18 @@ input {
   border-radius: 33px;
   background: rgba(73, 187, 189, 0.6);
   margin-bottom: 25px;
+  /* border: solid 1px rgba(73, 187, 189, 0.6);
+  background: #FFF;*/
 }
 
-.btn-slct {
+.btn-login {
   position: absolute;
-  right: 3%;
+  left: 3%;
   top: 13%;
   width: 45%;
   padding-top: 3%;
   padding-bottom: 2%;
   flex-shrink: 0;
-  background-color: #49BBBD;
   color: #FFF;
   font-family: Poppins;
   font-size: 12px;
@@ -315,13 +406,44 @@ input {
   font-weight: 400;
   line-height: normal;
   border-radius: 33px;
+  background: rgba(73, 187, 189, 0);
+  transition: background-color 0.3s;
+
 }
+
+.btn-login:hover {
+  background-color: rgba(73, 187, 189, 0.8);
+  /*color: #FFF;*/
+}
+
+.btn-signup {
+  position: absolute;
+  right: 3%;
+  top: 13%;
+  width: 45%;
+  padding-top: 3%;
+  padding-bottom: 2%;
+  flex-shrink: 0;
+  background: #49BBBD;
+  color: #FFF;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 33px;
+  transition: background-color 0.3s;
+
+
+}
+
 
 .btn-center {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: -10px;
 
 }
 
@@ -340,13 +462,17 @@ input {
   line-height: normal;
   border-radius: 36px;
   background: #49BBBD;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
 }
 
-.btn2:hover,
-.btn2:active,
-.btn2:focus {
+
+.btn2:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transform: scale(1.1);
+}
+
+.btn2:active {
   background-color: rgb(40, 161, 163);
 }
 

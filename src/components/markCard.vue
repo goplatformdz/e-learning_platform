@@ -95,7 +95,25 @@ export default {
   margin-left: 17px;
   grid-row: 3;
   grid-column: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* Number of lines to display */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
 }
+
+/*.markcard h4::after {
+  content: '...';
+
+  position: absolute;
+
+  bottom: 0;
+
+  right: 0;
+
+  background-color: white;
+}*/
 
 .markcard p {
   color: #696984;
@@ -110,7 +128,7 @@ export default {
 
 .markcard {
   width: 250px;
-  height: 400px;
+  height: 350px;
   border-radius: 15px;
   background: #FFF;
   box-shadow: 0px 18.829999923706055px 47.08000183105469px 0px rgba(47, 50, 125, 0.1);

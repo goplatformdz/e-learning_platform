@@ -3,12 +3,6 @@
     <center>
       <div class="iconcateg"></div>
       <h1>{{ categoryData.name }}</h1>
-      <p>
-        Lorem ipsum dolor sit amet, <br />
-        consectetur adipiscing elit, <br />
-        sed do eiusmodadipiscing elit, <br />
-        sed do eiusmod
-      </p>
     </center>
   </div>
 </template>
@@ -52,6 +46,7 @@ export default {
   font-weight: 600;
   line-height: normal;
   letter-spacing: 0.6px;
+
 }
 
 .iconcateg {
@@ -67,7 +62,7 @@ export default {
   margin-top: 30px;
   margin-left: 60px;
   width: 250px;
-  height: 280px;
+  height: 180px;
   border-radius: 20px;
   background: #FFF;
   box-shadow: 0px 30px 60px 0px rgba(47, 50, 125, 0.1);

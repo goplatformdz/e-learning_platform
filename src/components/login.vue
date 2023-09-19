@@ -5,26 +5,36 @@
       <div class="img"><img src="@/assets/child.png" alt="" /></div>
       <div class="container">
         <center>
-          <div class="btn" @click="
-            toggleLogin();
-          toggleSignup();
-          ">
-            <div class="btn-slct">Login</div>
+          <div class="btn">
+            <button class="btn-signup" @click="toggleLogin(); toggleSignup();">Signup</button>
+            <button class="btn-login" @click="toggleLogin(); toggleSignup();">Login</button>
           </div>
           <h4>Login to your TOTC account</h4>
         </center>
-        <h3>Email Address </h3>
+        <h3><font-awesome-icon class="font-icon email-icon" icon="fa-solid fa-envelope" /> Email Address </h3>
 
-        <center>
+        <div class="input-wrapper">
 
-          <input class="email" type="Email" v-model="inputEmail" />
-        </center>
+          <input :class="v$.inputEmail.$error === true ? 'input-error' : 'input'" type="Email"
+            v-model="formData.inputEmail.value" />
+          <span v-for="error in v$.inputEmail.$errors" :key="error.$uid" class="span-error">
+            {{ error.$message === 'Value is required' ? 'Email address is required' : error.$message }}
+          </span>
+
+        </div>
         <br />
-        <h3>Password</h3>
-        <center>
-          <input class="email" type="password" v-model="inputPassword" />
+        <h3><font-awesome-icon class="font-icon email-icon" icon="fa-solid fa-key" /> Password</h3>
+        <div class="input-wrapper">
+          <input :class="v$.inputPassword.$error === true ? 'input-error' : 'input'" type="password"
+            v-model="formData.inputPassword.value" />
+          <span v-for="error in v$.inputPassword.$errors" :key="error.$uid" class="span-error">
+            {{ error.$message === 'Value is required' ? 'Password is required' : error.$message }}
+          </span>
+        </div>
+        <div class="btn-container">
           <button class="btn2" @click="fetchData">Login</button>
-        </center>
+        </div>
+
       </div>
     </div>
   </div>
@@ -35,43 +45,50 @@
 <script>
 
 import axios from 'axios'
+import useVuelidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
+import { ref, computed } from 'vue'
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
 export default {
   name: "loginComponent",
-  data() {
-
-    return {
-      inputEmail: "",
-      inputPassword: "",
-      email: "",
-      password: "",
-
-    };
-  },
   props: ["isopen", "toggleLogin", "isopen1", "toggleSignup", "getCurrentUser"],
-  methods: {
-    fetchData() {
+  components: {
+    FontAwesomeIcon
+  },
+  setup() {
+    const formData = {
+      inputEmail: ref(""),
+      inputPassword: ref(""),
+    }
 
+    const rules = computed(() => ({
+      inputEmail: { required },
+      inputPassword: { required },
+
+    }))
+
+    const v$ = useVuelidate(rules, formData)
+
+    const fetchData = () => {
       const data = {
-        email: this.inputEmail,
-        password: this.inputPassword
+        inputEmail: formData.inputEmail,
+        inputPassword: formData.inputPassword,
       }
 
-      axios.post('http://localhost:8000/api/users/loginUser', data)
-        .then(response => {
-          // Handle the successful response here
-          console.log(response.data);
-          document.cookie = `access-token=${response.data.token}; path=/; `;
-
-
-          // localStorage.setItem('token' , response.data.token)
+      v$.value.$validate()
+        .then(() => {
+          axios.post('http://localhost:8000/api/users/loginUser', data)
         })
         .then(() => this.getCurrentUser())
-        .then(() => this.toggleLogin())
+        .then(() => this.toggleSignup())
         .catch(error => {
           // Handle any errors here
-          console.log(error);
-        });
+          console.log(error)
+        })
     }
+
+    return { v$, fetchData, formData }
   }
 };
 
@@ -97,7 +114,7 @@ button {
 .login-vue {
   background: #FFFEFC;
   position: fixed;
-  top: 15%;
+  top: 10%;
   width: 70%;
   height: 80%;
   left: 15%;
@@ -107,12 +124,17 @@ button {
   z-index: 10;
 }
 
+.font-icon {
+  color: #000;
+  margin-bottom: -0.5px;
+}
+
 .img {
   position: relative;
   height: 91.5%;
   width: 51%;
-  top: 4%;
-  left: 20px;
+  top: 10px;
+  left: 10px;
   border-radius: 30px;
 }
 
@@ -134,7 +156,7 @@ button {
   margin-bottom: 25px;
 }
 
-.btn-slct {
+.btn-login {
   position: absolute;
   left: 3%;
   top: 13%;
@@ -142,7 +164,6 @@ button {
   padding-top: 3%;
   padding-bottom: 2%;
   flex-shrink: 0;
-  background-color: #49BBBD;
   color: #FFF;
   font-family: Poppins;
   font-size: 12px;
@@ -150,6 +171,54 @@ button {
   font-weight: 400;
   line-height: normal;
   border-radius: 33px;
+  background: #49BBBD;
+  transition: background-color 0.3s;
+
+}
+
+.btn-signup {
+  position: absolute;
+  right: 3%;
+  top: 13%;
+  width: 45%;
+  padding-top: 3%;
+  padding-bottom: 2%;
+  flex-shrink: 0;
+  background: rgba(73, 187, 189, 0);
+  color: #FFF;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 33px;
+  transition: background-color 0.3s;
+
+}
+
+.btn-signup:hover {
+  background-color: rgba(73, 187, 189, 0.8);
+}
+
+.input-error {
+  width: 84%;
+  height: 40px;
+  border-radius: 40px;
+  border: 1px solid rgb(201, 8, 8);
+  background: #FFF;
+  padding-left: 3%;
+  padding-right: 3%;
+}
+
+.input {
+  width: 84%;
+  height: 40px;
+  border-radius: 40px;
+  border: 1px solid #49BBBD;
+  background: #FFF;
+  padding-left: 3%;
+  padding-right: 3%;
+
 }
 
 h3 {
@@ -165,16 +234,28 @@ h3 {
   line-height: normal;
 }
 
-.email {
-  width: 84%;
-  height: 40px;
-  border-radius: 40px;
-  border: 1px solid #49BBBD;
-  background: #FFF;
-  padding-left: 3%;
-  padding-right: 3%;
-
+.span-error {
+  color: rgb(201, 8, 8);
+  white-space: nowrap;
+  position: absolute;
+  left: 25px;
+  bottom: -20px;
+  /* Adjust this value as needed to position the error message */
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 
 h4 {
   margin-bottom: 30px;
@@ -201,6 +282,15 @@ h4 {
   background: #49BBBD;
   border-radius: 36px;
   background: #49BBBD;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
 }
 
 .btn2:hover,
