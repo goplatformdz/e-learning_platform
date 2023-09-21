@@ -2,8 +2,11 @@
     <main>
         <div class="courses-container">
             <h3>{{ categoryName }} Courses</h3>
-            <div class="grid-container">
+            <div v-if="!loading" class="grid-container">
                 <markCard v-for="(course, index) in fetchedCourses" :key="index" :course-data="course" />
+            </div>
+            <div v-else class="grid-container">
+                <markCardSkeleton v-for="index in 4" :key="index" />
             </div>
         </div>
     </main>
@@ -12,6 +15,7 @@
 <script>
 
 import markCard from "@/components/markCard.vue";
+import markCardSkeleton from "@/components/markCardSkeleton.vue";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 export default {
@@ -19,19 +23,24 @@ export default {
         return {
             categoryName: '',
             fetchedCourses: [],
+            loading: true,
         }
     },
     name: "coursesByCategory",
     components: {
-        markCard
+        markCard,
+        markCardSkeleton
 
     },
     mounted() {
 
         axios.post('http://localhost:8000/api/courses/coursesByCategory', { categoryName: this.categoryName })
             .then(response => {
-                this.fetchedCourses = response.data; // Update the courses data property with the fetched data
-
+                // Simulate a delay of 2 seconds (2000 milliseconds)
+                setTimeout(() => {
+                    this.fetchedCourses = response.data;
+                    this.loading = false; // Set loading to false after the delay
+                }, 10000); // Adjust the delay time as needed (in milliseconds)
             })
             .catch(error => {
                 console.error('Error fetching courses:', error);

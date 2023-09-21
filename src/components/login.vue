@@ -15,22 +15,25 @@
 
         <div class="input-wrapper">
 
-          <input :class="v$.inputEmail.$error === true ? 'input-error' : 'input'" type="Email"
-            v-model="formData.inputEmail.value" />
+          <input :class="(v$.inputEmail.$error || credentials.invalidCredentials.value) ? 'input-error' : 'input'"
+            type="Email" v-model="formData.inputEmail.value" />
           <span v-for="error in v$.inputEmail.$errors" :key="error.$uid" class="span-error">
-            {{ error.$message === 'Value is required' ? 'Email address is required' : error.$message }}
+            {{ error.$message === 'Value is required' ? 'Email address is required' : 'Email is not valid' }}
           </span>
 
         </div>
         <br />
         <h3><font-awesome-icon class="font-icon email-icon" icon="fa-solid fa-key" /> Password</h3>
         <div class="input-wrapper">
-          <input :class="v$.inputPassword.$error === true ? 'input-error' : 'input'" type="password"
-            v-model="formData.inputPassword.value" />
+          <input :class="(v$.inputEmail.$error || credentials.invalidCredentials.value) ? 'input-error' : 'input'"
+            type="password" v-model="formData.inputPassword.value" />
           <span v-for="error in v$.inputPassword.$errors" :key="error.$uid" class="span-error">
             {{ error.$message === 'Value is required' ? 'Password is required' : error.$message }}
           </span>
         </div>
+
+        <span v-if="credentials.invalidCredentials.value" class="invalid-credentials"> Invalid Credentials </span>
+
         <div class="btn-container">
           <button class="btn2" @click="fetchData">Login</button>
         </div>
@@ -46,49 +49,66 @@
 
 import axios from 'axios'
 import useVuelidate from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
+import { required, email } from '@vuelidate/validators'
 import { ref, computed } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 export default {
   name: "loginComponent",
+  /*data() {
+    return {
+      invalidCredentials: false
+    }
+  },*/
   props: ["isopen", "toggleLogin", "isopen1", "toggleSignup", "getCurrentUser"],
   components: {
     FontAwesomeIcon
   },
-  setup() {
+  setup(props) {
     const formData = {
       inputEmail: ref(""),
       inputPassword: ref(""),
     }
 
+    const credentials = {
+      invalidCredentials: ref(false)
+    }
+
     const rules = computed(() => ({
-      inputEmail: { required },
+      inputEmail: { required, email },
       inputPassword: { required },
 
     }))
 
     const v$ = useVuelidate(rules, formData)
 
-    const fetchData = () => {
-      const data = {
-        inputEmail: formData.inputEmail,
-        inputPassword: formData.inputPassword,
+    const fetchData = async () => {
+      await v$.value.$validate();
+      if (!v$.value.$pending) {
+        if (v$.value.$invalid) {
+          return;
+        }
       }
 
-      v$.value.$validate()
-        .then(() => {
-          axios.post('http://localhost:8000/api/users/loginUser', data)
-        })
-        .then(() => this.getCurrentUser())
-        .then(() => this.toggleSignup())
-        .catch(error => {
-          // Handle any errors here
-          console.log(error)
-        })
-    }
+      const data = {
+        email: formData.inputEmail.value,
+        password: formData.inputPassword.value,
+      };
 
-    return { v$, fetchData, formData }
+      try {
+        await axios.post('http://localhost:8000/api/users/loginUser', data, { withCredentials: true });
+        await props.getCurrentUser();
+        await props.toggleLogin();
+      } catch (error) {
+        console.error(error)
+        if (error.response.data.message === "Invalid Credentials") {
+          credentials.invalidCredentials.value = true;
+        }
+      }
+    };
+
+
+    return { v$, fetchData, formData, credentials };
   }
 };
 
@@ -122,6 +142,20 @@ button {
   border-radius: 30px;
   display: flex;
   z-index: 10;
+}
+
+.invalid-credentials {
+  position: absolute;
+  bottom: 37%;
+  color: rgb(201, 8, 8);
+  white-space: nowrap;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .font-icon {
@@ -210,6 +244,7 @@ button {
   padding-right: 3%;
 }
 
+
 .input {
   width: 84%;
   height: 40px;
@@ -293,11 +328,12 @@ h4 {
   margin-top: 15px;
 }
 
-.btn2:hover,
-.btn2:active,
-.btn2:focus {
+.btn2:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  transform: scale(1.1);
+  transform: scale(1.05);
+}
+
+.btn2:active {
   background-color: rgb(40, 161, 163);
 }
 

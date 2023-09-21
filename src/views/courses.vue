@@ -9,8 +9,13 @@
     </div>
     <div class="categories">
       <h3>Choose your favorite course from top category</h3>
-      <div class="grid-container">
-        <categCard v-for="(category, index) in fetchedCategories" :key="index" :category-data="category" />
+      <div>
+        <div class="grid-container" v-if="!loading">
+          <categCard v-for="(category, index) in fetchedCategories" :key="index" :category-data="category" />
+        </div>
+        <div class="grid-container" v-else>
+          <categCardSkeleton v-for="index in 8" :key="index" />
+        </div>
       </div>
     </div>
   </main>
@@ -19,6 +24,7 @@
 <script>
 import lessons from "@/components/lessons.vue";
 import categCard from "@/components/categCard.vue";
+import categCardSkeleton from "@/components/categCardSkeleton.vue";
 //import markCard from "@/components/markCard.vue";
 import axios from 'axios';
 //import Cookies from 'js-cookie';
@@ -26,25 +32,29 @@ export default {
   data() {
     return {
       fetchedCategories: [],
+      loading: true,
     }
   },
   name: "courses",
   components: {
     lessons,
     categCard,
+    categCardSkeleton,
     // markCard,
   },
   mounted() {
-
-
     axios.get('http://localhost:8000/api/categories/all-categories', { withCredentials: true })
       .then(response => {
-        this.fetchedCategories = response.data; // Update the courses data property with the fetched data
-
+        // Simulate a delay of 2 seconds (2000 milliseconds)
+        setTimeout(() => {
+          this.fetchedCategories = response.data;
+          this.loading = false; // Set loading to false after the delay
+        }, 10000); // Adjust the delay time as needed (in milliseconds)
       })
       .catch(error => {
         console.error('Error fetching courses:', error);
-      });
+      })
+
   },
   methods: {
 

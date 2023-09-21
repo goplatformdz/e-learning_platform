@@ -16,8 +16,8 @@
               <span class="input-description "><font-awesome-icon class="font-icon" icon="fa-solid fa-user" /> First Name
               </span>
               <div class="input-wrapper">
-                <input :class="v$.firstname.$error === true ? 'names-input-error' : 'names-input'" type="text"
-                  v-model="formData.firstname.value" />
+                <input :class="(v$.firstname.$error || check.userExists.value) ? 'names-input-error' : 'names-input'"
+                  type="text" v-model="formData.firstname.value" />
                 <span v-for="error in v$.firstname.$errors" :key="error.$uid" class="span-error">
                   {{ error.$message === 'Value is required' ? 'First name is required' : error.$message }} </span>
               </div>
@@ -26,8 +26,9 @@
               <span class="input-description side-spans"><font-awesome-icon class="font-icon" icon="fa-solid fa-user" />
                 Last Name</span>
               <div class="input-wrapper">
-                <input :class="v$.lastname.$error === true ? 'names-input-left-error' : 'names-input-left'" type="text"
-                  v-model="formData.lastname.value" />
+                <input
+                  :class="(v$.lastname.$error || check.userExists.value) ? 'names-input-left-error' : 'names-input-left'"
+                  type="text" v-model="formData.lastname.value" />
                 <span v-for="error in v$.lastname.$errors" :key="error.$uid" class="span-error problem-spans">
                   {{ error.$message === 'Value is required' ? 'Last name is required' : error.$message }} </span>
               </div>
@@ -37,7 +38,7 @@
             <span class="input-description "><font-awesome-icon class="font-icon email-icon"
                 icon="fa-solid fa-envelope" /> Email
               Address</span>
-            <input type="email" :class="v$.email.$error === true ? 'input-error' : 'input'"
+            <input type="email" :class="(v$.email.$error || check.userExists.value) ? 'input-error' : 'input'"
               v-model="formData.email.value" />
             <span v-for="error in v$.email.$errors" :key="error.$uid" class="span-error">
               {{ error.$message === 'Value is required' ? 'Email address is required' : 'Email is not valid' }}
@@ -47,8 +48,8 @@
             <div class="input-container">
               <span class="input-description"><font-awesome-icon icon="fa-solid fa-key" /> Password</span>
               <div class="input-wrapper">
-                <input :class="v$.password.$error === true ? 'names-input-error' : 'names-input'" type="password"
-                  v-model="formData.password.value" />
+                <input :class="(v$.password.$error || check.userExists.value) ? 'names-input-error' : 'names-input'"
+                  type="password" v-model="formData.password.value" />
                 <span v-for="error in v$.password.$errors" :key="error.$uid" class="span-error">
                   {{ error.$message === 'Value is required' ? 'Password is required' : 'Password too short (8 at least)'
                   }}
@@ -59,7 +60,8 @@
               <span class="input-description side-spans"><font-awesome-icon icon="fa-solid fa-key" /> Re-enter
                 password</span>
               <div class="input-wrapper">
-                <input :class="v$.confirmPassword.$error === true ? 'names-input-left-error' : 'names-input-left'"
+                <input
+                  :class="(v$.confirmPassword.$error || check.userExists.value) ? 'names-input-left-error' : 'names-input-left'"
                   type="password" v-model="formData.confirmPassword.value" />
                 <span class="span-error problem-spans">
                   {{ getConfirmPasswordError() }}
@@ -67,6 +69,9 @@
               </div>
             </div>
           </div>
+          <span v-if="check.userExists.value" class="invalid-credentials"> User with the same email is already registered
+          </span>
+
           <div class="btn-center">
             <button class="btn2" @click="submit">Register</button>
           </div>
@@ -94,13 +99,18 @@ export default {
   components: {
     FontAwesomeIcon
   },
-  setup() {
+  setup(props) {
     const formData = {
       firstname: ref(""),
       lastname: ref(""),
       email: ref(""),
       password: ref(""),
       confirmPassword: ref("")
+    }
+
+    const check = {
+      userExists: ref(false),
+
     }
 
     const rules = computed(() => ({
@@ -113,29 +123,45 @@ export default {
 
     const v$ = useVuelidate(rules, formData)
 
-    const submit = () => {
-      const data = {
-        email: formData.email,
-        firstname: formData.firstname,
-        lastname: formData.lastname,
-        password: formData.password,
-        confirmPassword: formData.confirmPassword
+    const submit = async () => {
+      await v$.value.$validate();
+      // Perform client-side validation
+      if (!v$.value.$pending) {
+        if (v$.value.$invalid) {
+          return; // Do not proceed if there are validation errors
+        }
       }
 
-      v$.value.$validate()
-        .then(() => {
-          return axios.post('http://localhost:8000/api/users/registerUser', data)
-        })
-        .then(() => this.getCurrentUser())
-        .then(() => this.toggleSignup())
-        .catch(error => {
-          // Handle any errors here
-          console.log(error)
-        })
-    }
+      const data = {
+        email: formData.email.value,
+        firstname: formData.firstname.value,
+        lastname: formData.lastname.value,
+        password: formData.password.value,
+        confirmPassword: formData.confirmPassword.value,
+      };
+
+      try {
+        await axios.post('http://localhost:8000/api/users/registerUser', data, { withCredentials: true });
+        await props.getCurrentUser();
+        await props.toggleSignup();
+        // Reset form inputs to empty strings after successful submission
+        formData.email.value = '';
+        formData.firstname.value = '';
+        formData.lastname.value = '';
+        formData.password.value = '';
+        formData.confirmPassword.value = '';
+
+      } catch (error) {
+        console.error(error);
+        if (error.response.data.message === "User with the same email is already registered") {
+          check.userExists.value = true;
+        }
+      }
+    };
+
     console.log(v$)
 
-    return { v$, submit, formData }
+    return { v$, submit, formData, check }
 
   },
   methods: {
@@ -167,6 +193,20 @@ template {
 .font-icon {
   color: #000;
   margin-bottom: 1px;
+}
+
+.invalid-credentials {
+  position: absolute;
+  bottom: 20.5%;
+  color: rgb(201, 8, 8);
+  white-space: nowrap;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .email-icon {
@@ -469,7 +509,7 @@ h4 {
 
 .btn2:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .btn2:active {

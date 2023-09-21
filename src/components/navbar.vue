@@ -1,10 +1,11 @@
 <template>
-  <div class="nav">
+  <div v-if="!loading" class="nav">
     <div class="img"><img src="@/assets/logo.png" alt="" /></div>
     <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup"
       :getCurrentUser="getCurrentUser" />
     <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin"
       :getCurrentUser="getCurrentUser" />
+    <dropdown :getCurrentUser="getCurrentUser" :dropOpen="dropOpen" :toggleDropdown="toggleDropdown" />
 
     <ul>
       <li>
@@ -22,14 +23,17 @@
         <router-link to="/search">Search</router-link>
       </li>
     </ul>
-    <div class="user-infos" v-if="firstname">
-      {{ firstname }} {{ lastname }}
+    <div @click="toggleDropdown" class="user-infos" v-if="firstname">
+      {{ firstname }} {{ lastname }} <font-awesome-icon v-if="!dropOpen" class="font-icon"
+        icon="fa-solid fa-chevron-down" />
+      <font-awesome-icon v-else class="font-icon" icon="fa-solid fa-chevron-up" />
     </div>
     <div v-else>
       <button class="login" @click="toggleLogin">Login</button>
       <button class="signup" @click="toggleSignup">Sign Up</button>
     </div>
   </div>
+  <div v-else class="nav"></div>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet" />
@@ -44,6 +48,8 @@
 <script>
 import loginComponent from "./login.vue";
 import signupComponent from "./signup.vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import dropdown from "./dropdown.vue";
 import axios from "axios";
 export default {
   name: "navbar",
@@ -53,7 +59,9 @@ export default {
       isopen: false,
       isopen1: false,
       firstname: "",
-      lastname: ""
+      lastname: "",
+      loading: true,
+      dropOpen: false,
     };
   },
 
@@ -64,22 +72,29 @@ export default {
     toggleSignup() {
       this.isopen1 = !this.isopen1;
     },
+    toggleDropdown() {
+      this.dropOpen = !this.dropOpen;
+    },
     getCurrentUser() {
       axios.get('http://localhost:8000/api/users/getCurrentUser', { withCredentials: true })
         .then(response => {
           this.firstname = response.data.firstname; // Update the courses data property with the fetched data
           this.lastname = response.data.lastname;
-          console.log(this.firstname, this.lastname) // Update the courses data property with the fetched data
+          this.loading = false;
+          console.log(response.status) // Update the courses data property with the fetched data
 
         })
         .catch(error => {
-          console.error('Error fetching user', error);
+          console.log(error)
+          this.loading = false;
         });
     }
   },
   components: {
     loginComponent,
     signupComponent,
+    FontAwesomeIcon,
+    dropdown
   },
   mounted() {
     this.getCurrentUser();
@@ -105,6 +120,21 @@ button {
   line-height: normal;
   color: #fff;
   letter-spacing: 0.15em;
+  background-color: transparent;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+
+.user-infos:hover {
+  color: #333;
+}
+
+.user-infos:active {
+  color: #333;
+}
+
+.user-infos:focus {
+  color: #333;
 }
 
 .img {
@@ -129,6 +159,7 @@ img {
   left: 0;
   z-index: 5;
 }
+
 
 
 .login {
