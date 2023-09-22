@@ -39,8 +39,12 @@
 
         <h4>Subscribe to get our Newsletter</h4>
         <br />
-        <input class="input" type="email" placeholder="Your Email" />
-        <div class="btn">Subscribe</div>
+        <input
+         class="input"
+         type="email"
+         placeholder="Your Email"
+          v-model="email" >
+          <div class="btn" @click="subscribeToNewsletter">Subscribe</div>
         <table class="tab2">
           <tr>
             <td>Careers</td>
@@ -60,10 +64,43 @@
   </div>
 </template>
 <script>
+import axios from 'axios'; // Import Axios
+
 export default {
   name: "footerr",
+  data() {
+    return {
+      email: '', // Store the user's email
+    };
+  },
+  methods: {
+    subscribeToNewsletter() {
+      // Validate email (you can add more thorough validation)
+      if (!this.email.trim()) {
+        alert('Please enter a valid email.');
+        return;
+      }
+
+      // Make an HTTP POST request to your backend API
+      axios
+        .post('http://localhost:8000/api/users/subscribe-newsletter', { email: this.email })
+        .then((response) => {
+          alert(response.data.message); // Show a success message
+          this.email = ''; // Clear the email input
+        })
+        .catch((error) => {
+          console.error(error);
+          alert('Error subscribing to newsletter'); // Show an error message
+        });
+    },
+  },
 };
 </script>
+
+
+
+
+
 
 
 

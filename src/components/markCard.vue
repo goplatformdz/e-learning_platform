@@ -1,5 +1,5 @@
 <template>
-  <div class="markcard">
+  <div class="markcard" @click ="passdatatodetail">
     <div class="img">
       <img src="" alt="" />
     </div>
@@ -24,9 +24,15 @@ export default {
   props: {
     courseData: {
       type: Object,
-      required: true
+      required: false
     }
   },
+  methods:{
+    passdatatodetail(){
+      this.$router.push({ name: 'coursedetail', params: { course_id: this.courseData._id } });
+    }
+  },
+ 
 };
 </script>
 

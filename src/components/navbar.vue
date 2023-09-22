@@ -16,9 +16,6 @@
         <a href="#"><router-link to="/courses">Courses</router-link></a>
       </li>
       <li>
-        <a href="#"><router-link to="/search">Search</router-link></a>
-      </li>
-      <li>
         <a href="#"><router-link to="/blog">Blog</router-link></a>
       </li>
       <li><a href="#">About Us</a></li>
@@ -170,7 +167,7 @@ img {
 }
 ul {
   position: absolute;
-  left: 300px;
+  left: 370px;
   top: 25px;
   margin: 0px;
   padding: 0;

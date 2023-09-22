@@ -46,13 +46,7 @@
       </div>
     </div>
 
-    <div class="recomended">
-      <h4 class="m">Marketing Articles</h4>
-      <p class="s">See all</p>
-      <div class="Rcard">
-        <markCard v-for="index in 4" :key="index" />
-      </div>
-    </div>
+    <recomanded/>
 
     <div class="videocont">
       <div class="textvid">
@@ -98,12 +92,31 @@
 </template>
 
 <script>
-import markCard from "@/components/markCard.vue";
+import axios from 'axios';
+import recomanded from '../components/recomanded.vue';
 export default {
   name: "coursedetail",
   components: {
-    markCard,
+   recomanded ,
   },
+  data() {
+        return {
+          course_id: '',
+            fetchedCourses: [],
+        }
+    },
+    mounted() {
+
+axios.post('http://localhost:8000/api/lessons/all-lessons/', { course_id: this.course_id , withCredentials:true})
+    .then(response => {
+        this.fetchedCourses = response.data; // Update the courses data property with the fetched data
+        console.log(this.fetchedCourses)
+    })
+    .catch(error => {
+        console.error('Error fetching courses:', error);
+    });
+
+},
 };
 </script>
 

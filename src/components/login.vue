@@ -65,8 +65,7 @@ export default {
 
           // localStorage.setItem('token' , response.data.token)
         })
-        .then(() => this.getCurrentUser())
-        .then(() => this.toggleLogin())
+        
         .catch(error => {
           // Handle any errors here
           console.log(error);
