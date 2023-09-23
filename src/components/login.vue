@@ -34,7 +34,12 @@
 
         <span v-if="credentials.invalidCredentials.value" class="invalid-credentials"> Invalid Credentials </span>
 
-        <div class="btn-container">
+        <div v-if="loadings.loading.value" class="btn-container">
+          <button class="btn-loading">
+            <spinner class="spinner" />
+          </button>
+        </div>
+        <div v-else class="btn-container">
           <button class="btn2" @click="fetchData">Login</button>
         </div>
 
@@ -52,6 +57,7 @@ import useVuelidate from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
 import { ref, computed } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import spinner from './spinner.vue'
 
 export default {
   name: "loginComponent",
@@ -62,7 +68,8 @@ export default {
   },*/
   props: ["isopen", "toggleLogin", "isopen1", "toggleSignup", "getCurrentUser"],
   components: {
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    spinner
   },
   setup(props) {
     const formData = {
@@ -72,6 +79,11 @@ export default {
 
     const credentials = {
       invalidCredentials: ref(false)
+    }
+
+    const loadings = {
+      loading: ref(false)
+
     }
 
     const rules = computed(() => ({
@@ -95,12 +107,16 @@ export default {
         password: formData.inputPassword.value,
       };
 
+      loadings.loading.value = true
+
       try {
         await axios.post('http://localhost:8000/api/users/loginUser', data, { withCredentials: true });
         await props.getCurrentUser();
         await props.toggleLogin();
+        loadings.loading.value = false
       } catch (error) {
         console.error(error)
+        loadings.loading.value = false
         if (error.response.data.message === "Invalid Credentials") {
           credentials.invalidCredentials.value = true;
         }
@@ -108,7 +124,7 @@ export default {
     };
 
 
-    return { v$, fetchData, formData, credentials };
+    return { v$, fetchData, formData, credentials, loadings };
   }
 };
 
@@ -319,6 +335,28 @@ h4 {
   background: #49BBBD;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
+}
+
+.btn-loading {
+  margin-top: 30px;
+  width: 40%;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  color: #FFF;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: #49BBBD;
+  border-radius: 36px;
+  cursor: not-allowed;
+  opacity: 0.7;
+  position: relative;
+}
+
+.spinner {
+  margin-left: 42%;
 }
 
 .btn-container {

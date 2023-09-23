@@ -72,8 +72,13 @@
           <span v-if="check.userExists.value" class="invalid-credentials"> User with the same email is already registered
           </span>
 
-          <div class="btn-center">
+          <div v-if="!loadings.loading.value" class="btn-center">
             <button class="btn2" @click="submit">Register</button>
+          </div>
+          <div v-else class="btn-center">
+            <button class="btn-loading">
+              <spinner class="spinner" />
+            </button>
           </div>
         </div>
       </div>
@@ -90,6 +95,8 @@ import { required, email, minLength, sameAs } from '@vuelidate/validators'
 import { ref, computed } from 'vue'
 import axios from 'axios'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import spinner from './spinner.vue'
+
 
 
 
@@ -97,7 +104,8 @@ export default {
   name: "signupComponent",
   props: ["isopen1", "toggleSignup", "isopen", "toggleLogin", "getCurrentUser"],
   components: {
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    spinner
   },
   setup(props) {
     const formData = {
@@ -110,6 +118,11 @@ export default {
 
     const check = {
       userExists: ref(false),
+
+    }
+
+    const loadings = {
+      loading: ref(false)
 
     }
 
@@ -140,6 +153,9 @@ export default {
         confirmPassword: formData.confirmPassword.value,
       };
 
+      loadings.loading.value = true
+
+
       try {
         await axios.post('http://localhost:8000/api/users/registerUser', data, { withCredentials: true });
         await props.getCurrentUser();
@@ -151,8 +167,13 @@ export default {
         formData.password.value = '';
         formData.confirmPassword.value = '';
 
+        loadings.loading.value = true
+
+
       } catch (error) {
         console.error(error);
+        loadings.loading.value = true
+
         if (error.response.data.message === "User with the same email is already registered") {
           check.userExists.value = true;
         }
@@ -161,7 +182,7 @@ export default {
 
     console.log(v$)
 
-    return { v$, submit, formData, check }
+    return { v$, submit, formData, check, loadings }
 
   },
   methods: {
@@ -407,6 +428,28 @@ h4 {
   border-radius: 30px;
   display: flex;
   z-index: 10;
+}
+
+.btn-loading {
+  width: 40%;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  color: #FFF;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 36px;
+  background: #49BBBD;
+  cursor: not-allowed;
+  opacity: 0.7;
+  position: relative;
+}
+
+
+.spinner {
+  margin-left: 42%;
 }
 
 .img {
