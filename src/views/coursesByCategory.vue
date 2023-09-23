@@ -36,14 +36,12 @@ export default {
 
         axios.post('http://localhost:8000/api/courses/coursesByCategory', { categoryName: this.categoryName })
             .then(response => {
-                // Simulate a delay of 2 seconds (2000 milliseconds)
-                setTimeout(() => {
-                    this.fetchedCourses = response.data;
-                    this.loading = false; // Set loading to false after the delay
-                }, 10000); // Adjust the delay time as needed (in milliseconds)
+                this.fetchedCourses = response.data;
+                this.loading = false;
             })
             .catch(error => {
                 console.error('Error fetching courses:', error);
+                this.loading = false;
             });
 
     },

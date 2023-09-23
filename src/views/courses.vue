@@ -1,15 +1,23 @@
 <template>
   <main>
     <div class="searchcont">
-    <div>
-      <input type="search" name="" class="search" placeholder="Search your favourite course" v-model="courseName" />
-      <button class="srchbtn" @click="searchCourse">Search</button>
-      <img src="@/assets/searchimg.png" alt="" />
+      <div>
+        <input type="search" name="" class="search" placeholder="Search courses by name" v-model="courseName" />
+        <button class="srchbtn" @click="searchCourse">Search</button>
+        <img src="@/assets/searchimg.png" alt="" />
+      </div>
     </div>
-  </div>
-  <div class="courses-searched">
-    <markCard v-for=" (course,index) in searchData" :key="index" :course-data="course" />
-  </div>
+    <div v-if="searched" class="courses-searched">
+      <h3>Courses found for '{{ courseName }}'</h3>
+      <div class="grid-container">
+        <markCard v-for=" (course, index) in searchData" :key="index" :course-data="course" />
+      </div>
+    </div>
+    <div v-if="!searched" class="not-searched">
+      <h2>Search courses, you will find them here<font-awesome-icon class="icon" icon="fa-solid fa-magnifying-glass"
+          size="xl" /></h2>
+    </div>
+
     <!-- <div class="yourles">
       <h3>Welcome back, ready for your next lesson?</h3>
       <p class="see">See all</p>
@@ -18,7 +26,7 @@
       </div>
     </div> -->
     <div class="categories">
-      <h3>Choose your favorite course from top category</h3>
+      <h3>Or discover from searching by categories you want</h3>
       <div>
         <div class="grid-container" v-if="!loading">
           <categCard v-for="(category, index) in fetchedCategories" :key="index" :category-data="category" />
@@ -28,24 +36,24 @@
         </div>
       </div>
     </div>
-  <recomanded/>
-  <div class="topoffre">
-    <h4>Top Education offers and deals are listed here</h4>
-    <p>See all</p>
-    <div class="offrecont">
-      <div class="offre" v-for="index in 3" :key="index">
-        <div class="perce">50%</div>
-        <h5>Lorem ipsum dolor</h5>
-        <h6>
-          TOTC’s school management <br />
-          software helps traditional and <br />
-          online schools manage <br />
-          scheduling,
-        </h6>
-        <img src="@/assets/redhair3.png" alt="" />
+    <recomanded />
+    <div class="topoffre">
+      <h4>Top Education offers and deals are listed here</h4>
+      <p>See all</p>
+      <div class="offrecont">
+        <div class="offre" v-for="index in 3" :key="index">
+          <div class="perce">50%</div>
+          <h5>Lorem ipsum dolor</h5>
+          <h6>
+            TOTC’s school management <br />
+            software helps traditional and <br />
+            online schools manage <br />
+            scheduling,
+          </h6>
+          <img src="@/assets/redhair3.png" alt="" />
+        </div>
       </div>
     </div>
-  </div>
   </main>
 </template>
 
@@ -55,7 +63,7 @@ import categCard from "@/components/categCard.vue";
 
 import markCard from "@/components/markCard.vue";
 import recomanded from "../components/recomanded.vue";
-
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import categCardSkeleton from "@/components/categCardSkeleton.vue";
 
 //import markCard from "@/components/markCard.vue";
@@ -68,6 +76,7 @@ export default {
       searchData: [], // Initialize an empty array to store the fetched data
       courseName: "",
       loading: true,
+      searched: false,
     }
   },
   name: "courses",
@@ -77,6 +86,7 @@ export default {
     markCard,
     recomanded,
     categCardSkeleton,
+    FontAwesomeIcon,
   },
   methods: {
     async searchCourse() {
@@ -84,9 +94,11 @@ export default {
       try {
         const response = await axios.post("http://localhost:8000/api/courses/search_course", { courseName: this.courseName })
         this.searchData = response.data.result;
+        this.searched = true;
       }
       catch (error) {
         console.error(error);
+
       }
     },
 
@@ -94,18 +106,16 @@ export default {
   mounted() {
     axios.get('http://localhost:8000/api/categories/all-categories', { withCredentials: true })
       .then(response => {
-        // Simulate a delay of 2 seconds (2000 milliseconds)
-        setTimeout(() => {
-          this.fetchedCategories = response.data;
-          this.loading = false; // Set loading to false after the delay
-        }, 10000); // Adjust the delay time as needed (in milliseconds)
+        this.fetchedCategories = response.data;
+        this.loading = false;
       })
       .catch(error => {
         console.error('Error fetching courses:', error);
+        this.loading = false;
       })
 
   },
- 
+
 };
 </script>
 
@@ -221,10 +231,54 @@ img {
 }
 
 .courses-searched {
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: 4.5%;
+  padding-left: 4.2%;
+  background-color: rgb(197, 220, 245);
+  width: 100%;
+  height: auto;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+  margin-top: -5px;
+  padding-top: 50px;
 }
+
+.courses-searched h3 {
+  margin-left: 30px;
+  margin-bottom: 20px;
+  color: #252641;
+  font-family: Poppins;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.not-searched {
+  margin-top: -5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+  padding-bottom: 40px;
+
+  background-color: #fff
+}
+
+
+.icon {
+  margin-left: 20px;
+}
+
+.not-searched h2 {
+  padding-top: 50px;
+  color: rgba(0, 0, 0, 0.8);
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
 
 .search {
   border-radius: 10px;
@@ -266,13 +320,16 @@ img {
   position: absolute;
   margin-top: 11%;
   margin-left: 46%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.srchbtn:hover {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+.srchbtn:hover,
+.srchbtn:active,
+.srchbtn:focus {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transform: scale(1.1);
-  background-color: rgb(40, 161, 163);
 }
+
 .m {
   margin-top: 20px;
   margin-left: 60px;
@@ -324,7 +381,8 @@ img {
 
 .categories h3 {
   margin-left: 60px;
-  padding-top: 80px;
+  margin-bottom: 20px;
+  padding-top: 10px;
   color: #252641;
   font-family: Poppins;
   font-size: 26px;

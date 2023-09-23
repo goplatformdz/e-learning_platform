@@ -17,6 +17,9 @@
       <li>
         <router-link to="/blog">Blog</router-link>
       </li>
+      <li>
+        <router-link to="/blog">About us</router-link>
+      </li>
     </ul>
     <div @click="toggleDropdown" class="user-infos" v-if="firstname">
       {{ firstname }} {{ lastname }} <font-awesome-icon v-if="!dropOpen" class="font-icon"
@@ -215,7 +218,7 @@ img {
 
 ul {
   position: absolute;
-  left: 370px;
+  left: 480px;
   top: 25px;
   margin: 0px;
   padding: 0;

@@ -1,5 +1,5 @@
 <template>
-  <div class="markcard" @click ="passdatatodetail">
+  <div class="markcard" @click="passdatatodetail">
     <div class="img">
       <img src="" alt="" />
     </div>
@@ -27,12 +27,12 @@ export default {
       required: false
     }
   },
-  methods:{
-    passdatatodetail(){
+  methods: {
+    passdatatodetail() {
       this.$router.push({ name: 'coursedetail', params: { course_id: this.courseData._id } });
     }
   },
- 
+
 };
 </script>
 
@@ -142,6 +142,7 @@ export default {
   flex-direction: column;
   margin-right: 72px;
   position: relative;
+  margin-bottom: 20px;
 }
 
 .markcard:hover {
