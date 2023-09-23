@@ -31,7 +31,7 @@
    axios.get('http://localhost:8000/api/courses/recommended-courses',{ withCredentials: true})
     .then(response => {
         this.fetchedCourses = response.data; // Update the courses data property with the fetched data
-      console.log(response.data)
+      
     })
     .catch(error => {
         console.error('Error fetching courses:', error);

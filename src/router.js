@@ -13,7 +13,7 @@ const routes = [
   { path: "/courses", component: courses },
   { path: "/blogdetail", component: blogdetail },
   { path: "/coursedetail/:course_id", name: "coursedetail", component: coursedetail},
-  { path: "/fullcourse", component: fullcourse },
+  { path: "/fullcourse/:courseId",name:"fullcourse", component: fullcourse },
   { path: "/coursesByCategory/:categoryName", name: "coursesByCategory", component: coursesByCategory },
 
 ];
