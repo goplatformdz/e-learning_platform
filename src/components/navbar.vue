@@ -14,13 +14,8 @@
       <li>
         <router-link to="/courses">Courses</router-link>
       </li>
-      <li><a href="#">Careers</a></li>
       <li>
         <router-link to="/blog">Blog</router-link>
-      </li>
-      <li><a href="#">About Us</a></li>
-      <li>
-        <router-link to="/search">Search</router-link>
       </li>
     </ul>
     <div @click="toggleDropdown" class="user-infos" v-if="firstname">
@@ -220,7 +215,7 @@ img {
 
 ul {
   position: absolute;
-  left: 300px;
+  left: 370px;
   top: 25px;
   margin: 0px;
   padding: 0;

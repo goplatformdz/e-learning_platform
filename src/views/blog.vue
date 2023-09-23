@@ -37,14 +37,7 @@
         <relatedCard v-for="index in 2" :key="index" />
       </div>
     </div>
-
-    <div class="marketing">
-      <h4>Marketing Articles</h4>
-      <p>See all</p>
-      <div class="kcard">
-        <markCard v-for="index in 4" :key="index" />
-      </div>
-    </div>
+   <recomanded />
   </div>
 </template>
 
@@ -53,24 +46,15 @@
 <script>
 import blogCard1 from "@/components/blogCard.vue";
 import relatedCard from "@/components/relatedCard.vue";
-import markCard from "@/components/markCard.vue";
+import recomanded from "../components/recomanded.vue";
 export default {
   name: "blog",
   components: {
     blogCard1,
     relatedCard,
-    markCard,
+    recomanded,
   },
-  data() {
-    return {
-      items: [
-        { title: "UX/UI", img: "../assets/react.png" },
-        // { title: "React", img: "react.png" },
-        // { title: "PHP", img: "php.png" },
-        //{ title: "JavaScript", img: "js.png" },
-      ],
-    };
-  },
+
 };
 </script>
 <style  scoped>

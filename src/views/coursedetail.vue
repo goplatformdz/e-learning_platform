@@ -10,7 +10,12 @@
             Overview
           </button>
         </div>
-        <div class="rate"></div>
+        <div class="rate">
+          <h3 v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].courseName }}</h3>
+          <h3 class="lessonname" v-for="(lesson, index) in fetchedCourses" :key="index" >{{ lesson.lessonName }}</h3>
+
+          
+        </div>
       </div>
       <div class="descripcourse">
         <div class="descriptimg"><img src="@/assets/blogD.png" alt="" /></div>
@@ -21,7 +26,7 @@
         </div>
         <p class="hour11">11 hour left at this price</p>
         <div>
-          <button class="buyn">buy now</button>
+          <button class="buyn" @click="conferm">Enrollment</button>
           <div class="linee"></div>
         </div>
         <h3 class="thiscourse">this course included</h3>
@@ -46,13 +51,16 @@
       </div>
     </div>
 
-    <div class="recomended">
-      <h4 class="m">Marketing Articles</h4>
-      <p class="s">See all</p>
-      <div class="Rcard">
-        <markCard v-for="index in 4" :key="index" />
-      </div>
-    </div>
+    <recomanded/>
+    
+   
+    <confirm :isopen="isopen" :conferm="conferm" :enroll="enroll" :course_id="course_id" />
+
+
+
+
+
+
 
     <div class="videocont">
       <div class="textvid">
@@ -98,16 +106,70 @@
 </template>
 
 <script>
-import markCard from "@/components/markCard.vue";
+import axios from 'axios';
+import confirm from '../components/confirm.vue';
+import recomanded from '../components/recomanded.vue';
 export default {
   name: "coursedetail",
   components: {
-    markCard,
+   recomanded ,
+   confirm,
+   
   },
+  methods: {
+    conferm() {
+      this.isopen = !this.isopen;
+    },
+    enroll(){
+      axios.post(`http://localhost:8000/api/enrollments/enrollInCourse/${this.course_id}`,{} ,{ withCredentials:true })
+    .then(response => {
+        console.log(response.data); // Update the courses data property with the fetched data
+    })
+    .catch(error => {
+        console.error('Error fetching courses:', error);
+    });
+    }
+  },
+  data() {
+        return {
+          course_id: '',
+            fetchedCourses: [],
+            isopen: false,
+            fetchedCourses1: [],
+        }
+    },
+    mounted() {
+
+  axios.get(`http://localhost:8000/api/lessons/all-lessons/${this.course_id}`, { withCredentials:true })
+    .then(response => {
+        this.fetchedCourses = response.data; // Update the courses data property with the fetched data
+    })
+    .catch(error => {
+        console.error('Error fetching courses:', error);
+    });
+
+
+    
+
+
+
+},
+created(){
+  this.course_id = this.$route.params.course_id
+},
 };
+
 </script>
 
 <style scoped>
+.lessonname{
+  color: black;
+ font-size: 20px;
+ font-family: Poppins;
+ font-weight: 600;
+ letter-spacing: 0.60px;
+ word-wrap: break-word
+}
 ul {
   list-style: none;
   padding-left: 0;
