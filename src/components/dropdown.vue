@@ -13,11 +13,17 @@
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import axios from "axios";
+import { useAuthStore } from '../store/auth';
+
 export default {
     name: "dropdown",
-    props: ["dropOpen", "toggleDropdown", "getCurrentUser"],
+    props: ["dropOpen", "toggleDropdown"],
     components: {
         FontAwesomeIcon
+    },
+    setup() {
+        const authStore = useAuthStore()
+        return { authStore }
     },
     methods: {
 
@@ -25,7 +31,7 @@ export default {
             try {
                 const response = await axios.get('http://localhost:8000/api/users/logoutUser', { withCredentials: true });
                 console.log(response);
-                await this.getCurrentUser();
+                await useAuthStore().checkLoginStatus();
                 this.toggleDropdown();
                 this.$router.push("/");
             } catch (error) {
