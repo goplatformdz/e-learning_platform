@@ -5,14 +5,10 @@
     </div>
     <div class="coursedetails">
       <div>
-        <div class="overviewcont">
-          <button class="overview" v-for="index in 4" :key="index">
-            Overview
-          </button>
-        </div>
+       
         <div class="rate">
-          <h3 v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].courseName }}</h3>
-          <h3 class="lessonname" v-for="(lesson, index) in fetchedCourses" :key="index" >{{ lesson.lessonName }}</h3>
+          <h3>description</h3>
+          <h4 class="lessonname" v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.description}}</h4>
 
           
         </div>
@@ -20,11 +16,10 @@
       <div class="descripcourse">
         <div class="descriptimg"><img src="@/assets/blogD.png" alt="" /></div>
         <div class="courseprice">
-          <h3>$49.65</h3>
-          <h4>$99.99</h4>
-          <h4>50% Off</h4>
+          <h3 v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.courseName }}</h3>
+          
         </div>
-        <p class="hour11">11 hour left at this price</p>
+        <p class="hour11" v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.instructor }}</p>
         <div>
           <button class="buyn" @click="conferm">Enrollment</button>
           <div class="linee"></div>
@@ -45,9 +40,7 @@
               <spam class="fa"> Certification of completion</spam>
             </li>
           </ul>
-          <div class="linee"></div>
         </div>
-        <h3 class="thiscourse">Share this course</h3>
       </div>
     </div>
 
@@ -163,13 +156,30 @@ created(){
 
 <style scoped>
 .lessonname{
-  color: black;
- font-size: 20px;
- font-family: Poppins;
- font-weight: 600;
- letter-spacing: 0.60px;
- word-wrap: break-word
+   color: #696984;
+    font-family: Poppins;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 150%;
+    word-wrap: break-word;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 20px;
+
 }
+.rate h3 {
+  color: #2F327D;
+    font-family: Poppins;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 160%;
+    padding-left: 30px;
+    padding-top: 30px;
+
+}
+
 ul {
   list-style: none;
   padding-left: 0;
@@ -231,7 +241,8 @@ li {
   font-weight: 600;
   line-height: normal;
   letter-spacing: 0.4px;
-  margin-left: 80px;
+  margin-left: 33%;
+  
 }
 .courseprice h4 {
   color: rgba(0, 0, 0, 0.5);
@@ -247,7 +258,7 @@ li {
 .courseprice h3 {
   color: #000;
   font-family: Poppins;
-  font-size: 42px;
+  font-size: 30px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -262,13 +273,13 @@ li {
   top: 280px;
   left: 850px;
   width: 350px;
-  height: 855px;
+  height: 680px;
   flex-shrink: 0;
   border-radius: 20px;
   border: 20px solid #FFF;
   background: rgb(255, 255, 255);
   grid-column: 2;
-  margin-bottom: 700px;
+  margin-bottom: 0px;
   display: grid;
   grid-template-rows: 4fr 1.5fr 1fr 2fr 1.5fr 4fr 1.5fr 2fr 1.5fr 1.5fr;
 }
@@ -449,8 +460,7 @@ img {
 .coursedetails {
   width: 100%;
   height: 700px;
-  display: grid;
-  grid-template-columns: 3fr 2fr;
+  
 }
 .overview {
   margin-right: 30px;
@@ -467,9 +477,10 @@ img {
   line-height: normal;
 }
 .rate {
+  margin-top:30px;
   margin-left: 60px;
-  width: 650px;
-  height: 500px;
+  width: 750px;
+  height: 400px;
   border-radius: 20px;
   background: rgba(157, 204, 255, 0.3);
   grid-column: 1;
