@@ -1,11 +1,9 @@
 <template>
   <div v-if="!loading" class="nav">
     <div class="img"><img src="@/assets/logo.png" alt="" /></div>
-    <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup"
-      :getCurrentUser="getCurrentUser" />
-    <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin"
-      :getCurrentUser="getCurrentUser" />
-    <dropdown :getCurrentUser="getCurrentUser" :dropOpen="dropOpen" :toggleDropdown="toggleDropdown" />
+    <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup" />
+    <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin" />
+    <dropdown :dropOpen="dropOpen" :toggleDropdown="toggleDropdown" />
 
     <ul>
       <li>
@@ -21,10 +19,9 @@
         <router-link to="/blog">About us</router-link>
       </li>
     </ul>
-    <div @click="toggleDropdown" class="user-infos" v-if="firstname">
-      {{ firstname }} {{ lastname }} <font-awesome-icon v-if="!dropOpen" class="font-icon"
-        icon="fa-solid fa-chevron-down" />
-      <font-awesome-icon v-else class="font-icon" icon="fa-solid fa-chevron-up" />
+    <div @click="toggleDropdown" class="user-infos" v-if="auth.isLoggedIn">
+      {{ auth.fullName }}
+      <font-awesome-icon :class="{ 'font-icon': true, 'fa-chevron-down': !dropOpen, 'fa-chevron-up': dropOpen }" />
     </div>
     <div v-else>
       <button class="login" @click="toggleLogin">Login</button>
@@ -41,26 +38,27 @@
 </template>
 
 
-  
-
 <script>
 import loginComponent from "./login.vue";
 import signupComponent from "./signup.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import dropdown from "./dropdown.vue";
-import axios from "axios";
+import { useAuthStore } from '../store/auth';
+
 export default {
   name: "navbar",
-
   data() {
     return {
       isopen: false,
       isopen1: false,
-      firstname: "",
-      lastname: "",
       loading: true,
       dropOpen: false,
     };
+  },
+  setup() {
+    const auth = useAuthStore()
+
+    return { auth }
   },
 
   methods: {
@@ -73,32 +71,34 @@ export default {
     toggleDropdown() {
       this.dropOpen = !this.dropOpen;
     },
-    getCurrentUser() {
-      axios.get('http://localhost:8000/api/users/getCurrentUser', { withCredentials: true })
-        .then(response => {
-          this.firstname = response.data.firstname; // Update the courses data property with the fetched data
-          this.lastname = response.data.lastname;
-          this.loading = false;
-          console.log(response.status) // Update the courses data property with the fetched data
-
-        })
-        .catch(error => {
-          console.log(error)
-          this.loading = false;
-        });
-    }
   },
+
   components: {
     loginComponent,
     signupComponent,
     FontAwesomeIcon,
     dropdown
   },
-  mounted() {
-    this.getCurrentUser();
+
+  async mounted() {
+    useAuthStore()
+      .checkLoginStatus()
+      .then(() => {
+        console.log(useAuthStore().fullName);
+      })
+      .catch((error) => {
+        console.error('Error checking login status:', error);
+      })
+      .finally(() => {
+        this.loading = false;
+        // console.log(this.isLoggedIn, this.fullName)
+      });
   }
+
+
 };
 </script>
+
 
 <style  scoped>
 button {
