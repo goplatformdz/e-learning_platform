@@ -5,14 +5,14 @@
         <fa :icon="['fas', 'arrow-left']" style="color: #ffffff" />
       </div>
       <h3>Lessons</h3>
-      <button class="lessonb" v-for="index in 10" :key="index">
+      <button class="lessonb" v-for="(lesson, index) in fetchedCourses" :key="index">
         <fa :icon="['fas', 'book-open']" style="color: #252641" />
-        <h4 class="h3">lesson 01:lesson name</h4>
+        <h4 class="h3">{{lesson.lessonName}}</h4>
       </button>
     </div>
     <div class="lessonvideo">
       <div class="tittle">
-        <h2>Learn about Adobe XD & Prototyping</h2>
+        <h2 v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.courseName }}</h2>
         <h4>Introduction about XD</h4>
       </div>
       <div>
@@ -61,10 +61,32 @@
 
 <script>
 import lessonb from "@/components/lessonbotton.vue";
+import axios from 'axios';
+
 export default {
   componenet: {
     lessonb,
   },
+  data(){
+    return {
+      course_id: '',
+            fetchedCourses: [],
+    }
+  },
+  mounted() {
+   axios.get(`http://localhost:8000/api/lessons/all-lessons/${this.course_id}`, { withCredentials:true })
+  .then(response => {
+      this.fetchedCourses = response.data; 
+      console.log(this.fetchedCourses)// Update the courses data property with the fetched data
+  })
+  .catch(error => {
+      console.error('Error fetching courses:', error);
+  });
+  
+},
+created(){
+this.course_id = this.$route.params.courseId
+},
 };
 </script>
 
