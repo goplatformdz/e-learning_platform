@@ -1,27 +1,41 @@
 <template>
-  <div class="coursedetailpage">
+  <div class="loader" v-if="loading">
+
+    <pencil />
+  </div>
+  <div v-else class="coursedetailpage">
+    <confirm :isopenConf="isopenConf" :toggleLogin="confirmLogin" :conferm="conferm" :enroll="enroll"
+      :course_id="course_id" />
+
+    <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin" />
+
+    <loginComponent :isopen="isopen" :checkIsEnrolled="checkIfEnrolled" :toggleLogin="toggleLogin" :isopen1="isopen1"
+      :toggleSignup="toggleSignup" />
     <div class="imageblog">
       <img src="@/assets/blogD.png" alt="" />
     </div>
     <div class="coursedetails">
       <div>
-       
-        <div class="rate">
-          <h3>description</h3>
-          <h4 class="lessonname" v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.description}}</h4>
 
-          
+        <div class="rate">
+          <h3>Description</h3>
+          <h4 class="lessonname" v-if="fetchedCourses && fetchedCourses.length">{{
+            fetchedCourses[0].course_id.description }}</h4>
+
+
         </div>
       </div>
       <div class="descripcourse">
         <div class="descriptimg"><img src="@/assets/blogD.png" alt="" /></div>
         <div class="courseprice">
           <h3 v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.courseName }}</h3>
-          
+
         </div>
         <p class="hour11" v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.instructor }}</p>
         <div>
-          <button class="buyn" @click="conferm">Enrollment</button>
+          <button class="buyn" v-if="!isEnrolled" @click="conferm">Enroll Now</button>
+          <div class="enrolled" @click="gotocourse()" v-else>Go to course <font-awesome-icon size="xl" class="font-icon"
+              icon="fa-solid fa-book" /> </div>
           <div class="linee"></div>
         </div>
         <h3 class="thiscourse">this course included</h3>
@@ -44,15 +58,7 @@
       </div>
     </div>
 
-    <recomanded/>
-    
-   
-    <confirm :isopen="isopen" :conferm="conferm" :enroll="enroll" :course_id="course_id" />
-
-
-
-
-
+    <recomanded />
 
 
     <div class="videocont">
@@ -102,88 +108,152 @@
 import axios from 'axios';
 import confirm from '../components/confirm.vue';
 import recomanded from '../components/recomanded.vue';
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { useAuthStore } from '../store/auth';
+import loginComponent from "../components/login.vue";
+import signupComponent from "../components/signup.vue";
+import pencil from "../components/pencil.vue";
+
+
+
 export default {
   name: "coursedetail",
+  data() {
+    return {
+      course_id: '',
+      fetchedCourses: [],
+      isopenConf: false,
+      fetchedCourses1: [],
+      isEnrolled: false,
+      isopen: false,
+      isopen1: false,
+      loading: false
+    }
+  },
   components: {
-   recomanded ,
-   confirm,
-   
+    recomanded,
+    confirm,
+    FontAwesomeIcon,
+    loginComponent,
+    signupComponent,
+    pencil
+  },
+  setup() {
+    const auth = useAuthStore()
+
+    return { auth }
   },
   methods: {
     conferm() {
-      this.isopen = !this.isopen;
+      this.isopenConf = !this.isopenConf;
     },
-    enroll(){
-      axios.post(`http://localhost:8000/api/enrollments/enrollInCourse/${this.course_id}`,{} ,{ withCredentials:true })
-    .then(response => {
-        console.log(response.data); // Update the courses data property with the fetched data
-    })
-    .catch(error => {
-        console.error('Error fetching courses:', error);
-    });
+    enroll() {
+      this.loading = true;
+      if (useAuthStore().isLoggedIn) {
+        axios.post(`http://localhost:8000/api/enrollments/enrollInCourse/${this.course_id}`, {}, { withCredentials: true })
+          .then(() => {
+            this.conferm(); // Update the courses data property with the fetched data
+          })
+          .then(() => { this.isEnrolled = true })
+          .then(() => { this.checkIfEnrolled() })
+          .catch(error => {
+            console.error('Error fetching courses:', error);
+          })
+          .finally(() => { this.loading = false; })
+
+      }
+    },
+    gotocourse() {
+      this.$router.push({ name: 'fullcourse', params: { courseId: this.course_id } });
+    },
+    toggleLogin() {
+      this.isopen = !this.isopen
+    },
+    confirmLogin() {
+      this.toggleLogin();
+      this.conferm()
+
+    },
+    toggleSignup() {
+      this.isopen1 = !this.isopen1;
+    },
+    checkIfEnrolled() {
+      this.loading = true;
+      axios.get(`http://localhost:8000/api/lessons/all-lessons-default/${this.course_id}`, { withCredentials: true })
+        .then(response => {
+          this.fetchedCourses = response.data; // Update the courses data property with the fetched data
+        })
+        .then(() => {
+          if (useAuthStore().isLoggedIn) {
+            axios.get('http://localhost:8000/api/enrollments/getCoursesByStudent', { withCredentials: true })
+              .then(response => {
+                const foundCourse = response.data.courses.find(course => course._id === this.course_id);
+                if (foundCourse !== undefined) {
+                  this.isEnrolled = true;
+                }
+              })
+              .finally(() => { this.loading = false; })
+          } else {
+            this.loading = false;
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching lessons:', error);
+        })
+
     }
+
   },
-  data() {
-        return {
-          course_id: '',
-            fetchedCourses: [],
-            isopen: false,
-            fetchedCourses1: [],
-        }
-    },
-    mounted() {
+  async mounted() {
 
-  axios.get(`http://localhost:8000/api/lessons/all-lessons/${this.course_id}`, { withCredentials:true })
-    .then(response => {
-        this.fetchedCourses = response.data; // Update the courses data property with the fetched data
-    })
-    .catch(error => {
-        console.error('Error fetching courses:', error);
-    });
+    this.checkIfEnrolled();
 
-
-    
-
-
-
-},
-created(){
-  this.course_id = this.$route.params.course_id
-},
+  }
+  ,
+  created() {
+    this.course_id = this.$route.params.course_id
+  },
 };
 
 </script>
 
 <style scoped>
-.lessonname{
-   color: #696984;
-    font-family: Poppins;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 150%;
-    word-wrap: break-word;
-    padding-left: 30px;
-    padding-right: 30px;
-    margin-top: 20px;
+.lessonname {
+  color: #696984;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 150%;
+  word-wrap: break-word;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-top: 20px;
 
 }
+
 .rate h3 {
   color: #2F327D;
-    font-family: Poppins;
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 160%;
-    padding-left: 30px;
-    padding-top: 30px;
+  font-family: Poppins;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
+  padding-left: 30px;
+  padding-top: 30px;
 
+}
+
+.font-icon {
+  margin-left: 10px;
+  color: #49BBBD;
 }
 
 ul {
   list-style: none;
   padding-left: 0;
 }
+
 li {
   color: #49BBBD;
   font-family: Poppins;
@@ -209,6 +279,7 @@ li {
   line-height: normal;
   letter-spacing: 0.6px;
 }
+
 .linee {
   margin-top: 30px;
   height: 1px;
@@ -216,6 +287,7 @@ li {
   stroke-width: 1px;
   background-color: #696984;
 }
+
 .buyn {
   margin-top: 10px;
   width: 100%;
@@ -229,10 +301,39 @@ li {
   font-weight: 700;
   line-height: normal;
 }
-.buyn:hover{
-  transform:scale(1.1);
+
+.enrolled {
+  margin-top: 10px;
+  width: 100%;
+  height: 50px;
+  border-radius: 12px;
+  background: #fff;
+  color: #49BBBD;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border: 1.5px solid #49BBBD;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+}
+
+
+
+
+
+
+.buyn:hover {
+  transform: scale(1.1);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
 .hour11 {
   color: #49BBBD;
   font-family: Poppins;
@@ -242,8 +343,17 @@ li {
   line-height: normal;
   letter-spacing: 0.4px;
   margin-left: 33%;
-  
+
 }
+
+.loader {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .courseprice h4 {
   color: rgba(0, 0, 0, 0.5);
   font-family: Poppins;
@@ -255,6 +365,7 @@ li {
   display: inline;
   margin-left: 20px;
 }
+
 .courseprice h3 {
   color: #000;
   font-family: Poppins;
@@ -265,9 +376,11 @@ li {
   letter-spacing: 0.9px;
   display: inline;
 }
+
 .courseprice {
   margin-top: 10px;
 }
+
 .descripcourse {
   position: absolute;
   top: 280px;
@@ -283,11 +396,13 @@ li {
   display: grid;
   grid-template-rows: 4fr 1.5fr 1fr 2fr 1.5fr 4fr 1.5fr 2fr 1.5fr 1.5fr;
 }
+
 .descriptimg {
   width: 100%;
   height: 200px;
   grid-row: 1;
 }
+
 .offre:hover,
 .offre:active,
 .offre:focus {
@@ -304,9 +419,11 @@ li {
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 180%; /* 43.2px */
+  line-height: 180%;
+  /* 43.2px */
   letter-spacing: 0.48px;
 }
+
 .offre h5 {
   margin-left: 30px;
   margin-top: 130px;
@@ -319,6 +436,7 @@ li {
   font-weight: 600;
   line-height: normal;
 }
+
 .perce {
   margin-top: 30px;
   margin-left: 30px;
@@ -337,6 +455,7 @@ li {
   line-height: normal;
   text-align: center;
 }
+
 .topoffre h4 {
   padding-top: 0px;
   margin-left: 60px;
@@ -349,6 +468,7 @@ li {
   grid-row: 1;
   display: inline;
 }
+
 .topoffre p {
   display: inline;
 
@@ -362,14 +482,17 @@ li {
   line-height: normal;
   grid-row: 1;
 }
+
 img {
   width: 100%;
   height: 100%;
 }
+
 .topoffre {
   height: 500px;
   grid-template-rows: 1fr 9fr;
 }
+
 .offre {
   width: 370px;
   height: 320.419px;
@@ -378,12 +501,14 @@ img {
   margin-right: 40px;
   transition: ease-in-out 0.2s;
 }
+
 .offrecont {
   margin-top: 30px;
   margin-left: 60px;
   display: flex;
   grid-row: 2;
 }
+
 .shape22 {
   position: absolute;
   margin-top: 210px;
@@ -395,6 +520,7 @@ img {
   background: #33EFA0;
   z-index: -1;
 }
+
 .shape11 {
   width: 108px;
   height: 108px;
@@ -404,27 +530,33 @@ img {
   position: absolute;
   z-index: -1;
 }
+
 .imgvid1 {
   margin-left: 15px;
   margin-top: 15px;
 }
+
 .textvid {
   margin-top: 50px;
   margin-left: 70px;
 }
+
 .imgvid {
   width: 500px;
   height: 350px;
 }
+
 .textvid p {
   color: #696984;
   font-family: Poppins;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 180%; /* 43.2px */
+  line-height: 180%;
+  /* 43.2px */
   letter-spacing: 0.48px;
 }
+
 .textvid h3 {
   color: #00CBB8;
   font-family: Poppins;
@@ -434,15 +566,18 @@ img {
   line-height: 160%;
   display: inline;
 }
+
 .textvid h4 {
   color: #2F327D;
   font-family: Poppins;
   font-size: 28px;
   font-style: normal;
   font-weight: 500;
-  line-height: 160%; /* 57.6px */
+  line-height: 160%;
+  /* 57.6px */
   display: inline;
 }
+
 .videocont {
   margin-top: 120px;
   margin-left: 60px;
@@ -451,17 +586,20 @@ img {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
 .overviewcont {
   height: 100px;
   margin-left: 60px;
   margin-top: 30px;
   grid-column: 1;
 }
+
 .coursedetails {
   width: 100%;
   height: 700px;
-  
+
 }
+
 .overview {
   margin-right: 30px;
   border-radius: 12px;
@@ -476,8 +614,9 @@ img {
   font-weight: 700;
   line-height: normal;
 }
+
 .rate {
-  margin-top:30px;
+  margin-top: 30px;
   margin-left: 60px;
   width: 750px;
   height: 400px;

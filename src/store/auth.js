@@ -35,7 +35,6 @@ export const useAuthStore = defineStore('auth', {
                 const response = await axios.get('http://localhost:8000/api/users/checkLogin', { withCredentials: true });
                 this.isLoggedIn = response.data.isLoggedIn;
                 this.user = response.data.user;
-                console.log(this.isLoggedIn, this.user);
             } catch (error) {
                 console.error('Error checking login status:', error);
             }

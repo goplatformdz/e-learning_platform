@@ -1,6 +1,7 @@
 <template>
   <div class="signup-page" v-if="isopen1" @click="toggleSignup">
     <div class="signup-vue" @click.stop>
+      <font-awesome-icon @click="toggleSignup" class="cross-icon" icon="fa-solid fa-circle-xmark" size="2xl" />
       <div class="img"><img src="@/assets/child2.png" alt="" /></div>
       <div class="container">
         <div class="header">
@@ -208,11 +209,32 @@ template {
   position: relative;
 }
 
+.cross-icon {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  color: red;
+  background: #fff;
+  border-radius: 50%;
+  transition: color 0.2s, background 0.2s;
+
+}
+
+.cross-icon:hover {
+  color: darkred;
+
+}
+
+.cross-icon:active {
+  color: darkerred;
+  background: #f0f0f0;
+}
+
 .signup-page {
   position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 3;
+  z-index: 10;
 }
 
 .font-icon {

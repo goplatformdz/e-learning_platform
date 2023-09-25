@@ -2,6 +2,7 @@
 <template>
   <div class="login-page" v-if="isopen" @click="toggleLogin">
     <div class="login-vue" @click.stop>
+      <font-awesome-icon @click="toggleLogin" class="cross-icon" icon="fa-solid fa-circle-xmark" size="2xl" />
       <div class="img"><img src="@/assets/child.png" alt="" /></div>
       <div class="container">
         <center>
@@ -68,7 +69,7 @@ export default {
       invalidCredentials: false
     }
   },*/
-  props: ["isopen", "toggleLogin", "isopen1", "toggleSignup"],
+  props: ["isopen", "toggleLogin", "isopen1", "toggleSignup", "checkIsEnrolled"],
   components: {
     FontAwesomeIcon,
     spinner
@@ -117,6 +118,9 @@ export default {
         await axios.post('http://localhost:8000/api/users/loginUser', data, { withCredentials: true });
         await authStore.checkLoginStatus();
         await props.toggleLogin();
+        if (Object.prototype.hasOwnProperty.call(props, 'checkIsEnrolled')) {
+          await props.checkIsEnrolled();
+        }
         loadings.loading.value = false
       } catch (error) {
         console.error(error)
@@ -143,13 +147,33 @@ button {
   border: 0ch;
 }
 
+.cross-icon {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  color: red;
+  background: #fff;
+  border-radius: 50%;
+  transition: color 0.2s, background 0.2s;
+
+}
+
+.cross-icon:hover {
+  color: darkred;
+
+}
+
+.cross-icon:active {
+  color: darkerred;
+  background: #f0f0f0;
+}
 
 
 .login-page {
   position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 3;
+  z-index: 10;
 }
 
 .login-vue {

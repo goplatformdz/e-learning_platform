@@ -6,8 +6,8 @@
       </div>
       <h3>Lessons</h3>
       <button class="lessonb" v-for="(lesson, index) in fetchedCourses" :key="index">
-        <fa :icon="['fas', 'book-open']" style="color: #252641" />
-        <h4 class="h3">{{lesson.lessonName}}</h4>
+        <fa :icon="['fas', 'book-open']" class="book" style="color: #252641" />
+        <h4 class="h3">{{ lesson.lessonName }}</h4>
       </button>
     </div>
     <div class="lessonvideo">
@@ -16,15 +16,10 @@
         <h4>Introduction about XD</h4>
       </div>
       <div>
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/c-6AaS7997w?si=oDyuJdq0SPvRf6wg"
-          title="YouTube video player"
-          frameborder="0"
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/c-6AaS7997w?si=oDyuJdq0SPvRf6wg"
+          title="YouTube video player" frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
+          allowfullscreen></iframe>
       </div>
       <h3 class="tit">O6 Super Coins on the way</h3>
       <p class="text">
@@ -67,26 +62,26 @@ export default {
   componenet: {
     lessonb,
   },
-  data(){
+  data() {
     return {
       course_id: '',
-            fetchedCourses: [],
+      fetchedCourses: [],
     }
   },
   mounted() {
-   axios.get(`http://localhost:8000/api/lessons/all-lessons/${this.course_id}`, { withCredentials:true })
-  .then(response => {
-      this.fetchedCourses = response.data; 
-      console.log(this.fetchedCourses)// Update the courses data property with the fetched data
-  })
-  .catch(error => {
-      console.error('Error fetching courses:', error);
-  });
-  
-},
-created(){
-this.course_id = this.$route.params.courseId
-},
+    axios.get(`http://localhost:8000/api/lessons/all-lessons/${this.course_id}`, { withCredentials: true })
+      .then(response => {
+        this.fetchedCourses = response.data;
+        console.log(this.fetchedCourses)// Update the courses data property with the fetched data
+      })
+      .catch(error => {
+        console.error('Error fetching courses:', error);
+      });
+
+  },
+  created() {
+    this.course_id = this.$route.params.courseId
+  },
 };
 </script>
 
@@ -113,8 +108,9 @@ this.course_id = this.$route.params.courseId
   margin-left: 5%;
   margin-top: 30px;
 }
+
 .tittle h2 {
-  color: #FFF;
+  color: #000;
   font-family: Poppins;
   font-size: 30px;
   font-style: normal;
@@ -122,8 +118,9 @@ this.course_id = this.$route.params.courseId
   line-height: normal;
   margin: 0;
 }
+
 .tittle h4 {
-  color: #FFF;
+  color: black;
   font-family: Poppins;
   font-size: 20px;
   font-style: normal;
@@ -131,12 +128,15 @@ this.course_id = this.$route.params.courseId
   line-height: normal;
   margin: 0;
 }
+
 .tittle {
   width: 100%;
   height: 90px;
-  background-color: rgba(73, 187, 189, 1);
+  background-color: rgb(197, 220, 245);
   text-align: center;
+  margin-top: 50px
 }
+
 iframe {
   margin-left: 5%;
   margin-top: 40px;
@@ -144,6 +144,7 @@ iframe {
   height: 500px;
   border-radius: 20px;
 }
+
 .lessonb {
   margin-left: 20px;
   margin-top: 10px;
@@ -154,6 +155,7 @@ iframe {
   background: rgba(244, 140, 6, 0.3);
   text-align: left;
 }
+
 .h3 {
   color: #252641;
   font-family: Poppins;
@@ -164,20 +166,33 @@ iframe {
   display: inline;
   margin-left: 10px;
 }
+
 .lessonvideo {
   width: 100%;
-  background: #9DCCFF;
+  background: rgb(197, 220, 245);
 }
+
 .container1 {
   margin-top: 80px;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 3fr;
+
 }
+
+.book {
+  margin-left: 10px
+}
+
 .lessonscont {
   width: 100%;
-  height: 700px;
+  height: auto;
+
+  box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.5), 5px 0px 10px rgba(0, 0, 0, 0.5);
+  /* Shadow on top and right sides */
+  z-index: 3
 }
+
 .back {
   width: 30px;
   padding-top: 6px;
@@ -188,6 +203,7 @@ iframe {
   text-align: center;
   border-radius: 5px;
 }
+
 .lessonscont h3 {
   color: #252641;
   font-family: Poppins;

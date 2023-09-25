@@ -19,9 +19,10 @@
         <router-link to="/blog">About us</router-link>
       </li>
     </ul>
-    <div @click="toggleDropdown" class="user-infos" v-if="auth.isLoggedIn">
+    <div @click="toggleDropdown" :class="(!dropOpen) ? 'user-infos' : 'user-infos-active'" v-if="auth.isLoggedIn">
       {{ auth.fullName }}
-      <font-awesome-icon :class="{ 'font-icon': true, 'fa-chevron-down': !dropOpen, 'fa-chevron-up': dropOpen }" />
+      <font-awesome-icon v-if="dropOpen" icon="fa-solid fa-chevron-up" />
+      <font-awesome-icon v-else icon="fa-solid fa-chevron-down" />
     </div>
     <div v-else>
       <button class="login" @click="toggleLogin">Login</button>
@@ -83,9 +84,6 @@ export default {
   async mounted() {
     useAuthStore()
       .checkLoginStatus()
-      .then(() => {
-        console.log(useAuthStore().fullName);
-      })
       .catch((error) => {
         console.error('Error checking login status:', error);
       })
@@ -123,17 +121,29 @@ button {
   cursor: pointer;
 }
 
+.user-infos-active {
+  position: absolute;
+  right: 80px;
+  top: 25px;
+  display: inline-block;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  color: #333;
+  letter-spacing: 0.15em;
+  background-color: transparent;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+
 .user-infos:hover {
   color: #333;
 }
 
-.user-infos:active {
-  color: #333;
-}
 
-.user-infos:focus {
-  color: #333;
-}
 
 .img {
   position: absolute;
