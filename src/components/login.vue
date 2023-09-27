@@ -58,6 +58,8 @@ import { required, email } from '@vuelidate/validators'
 import { ref, computed } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import spinner from './spinner.vue'
+import { useAuthStore } from '../store/auth';
+
 
 export default {
   name: "loginComponent",
@@ -66,7 +68,7 @@ export default {
       invalidCredentials: false
     }
   },*/
-  props: ["isopen", "toggleLogin", "isopen1", "toggleSignup", "getCurrentUser"],
+  props: ["isopen", "toggleLogin", "isopen1", "toggleSignup"],
   components: {
     FontAwesomeIcon,
     spinner
@@ -85,6 +87,8 @@ export default {
       loading: ref(false)
 
     }
+
+    const authStore = useAuthStore()
 
     const rules = computed(() => ({
       inputEmail: { required, email },
@@ -111,7 +115,7 @@ export default {
 
       try {
         await axios.post('http://localhost:8000/api/users/loginUser', data, { withCredentials: true });
-        await props.getCurrentUser();
+        await authStore.checkLoginStatus();
         await props.toggleLogin();
         loadings.loading.value = false
       } catch (error) {
@@ -125,7 +129,7 @@ export default {
 
 
 
-    return { v$, fetchData, formData, credentials, loadings };
+    return { v$, fetchData, formData, credentials, loadings, authStore };
   }
 };
 

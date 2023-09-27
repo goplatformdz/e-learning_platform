@@ -96,13 +96,14 @@ import { ref, computed } from 'vue'
 import axios from 'axios'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import spinner from './spinner.vue'
+import { useAuthStore } from '../store/auth';
 
 
 
 
 export default {
   name: "signupComponent",
-  props: ["isopen1", "toggleSignup", "isopen", "toggleLogin", "getCurrentUser"],
+  props: ["isopen1", "toggleSignup", "isopen", "toggleLogin"],
   components: {
     FontAwesomeIcon,
     spinner
@@ -126,11 +127,14 @@ export default {
 
     }
 
+    const authStore = useAuthStore()
+
+
     const rules = computed(() => ({
       email: { required, email },
       firstname: { required },
       lastname: { required },
-      password: { required, minLength: minLength(10) },
+      password: { required, minLength: minLength(8) },
       confirmPassword: { required, sameAs: sameAs(formData.password.value) },
     }))
 
@@ -158,7 +162,7 @@ export default {
 
       try {
         await axios.post('http://localhost:8000/api/users/registerUser', data, { withCredentials: true });
-        await props.getCurrentUser();
+        await authStore.checkLoginStatus();
         await props.toggleSignup();
         // Reset form inputs to empty strings after successful submission
         formData.email.value = '';
@@ -182,7 +186,7 @@ export default {
 
     console.log(v$)
 
-    return { v$, submit, formData, check, loadings }
+    return { v$, submit, formData, check, loadings, authStore }
 
   },
   methods: {
