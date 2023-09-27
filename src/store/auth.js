@@ -10,6 +10,14 @@ export const useAuthStore = defineStore('auth', {
     }),
 
     getters: {
+        isPending() {
+            return this.user && this.user.status === 'pending';
+        },
+
+        isActive() {
+            return this.user && this.user.status === 'active';
+        },
+
         // Getter to check if the user is an admin
         isAdmin() {
             return this.user && this.user.role === 'admin';
@@ -35,7 +43,6 @@ export const useAuthStore = defineStore('auth', {
                 const response = await axios.get('http://localhost:8000/api/users/checkLogin', { withCredentials: true });
                 this.isLoggedIn = response.data.isLoggedIn;
                 this.user = response.data.user;
-                console.log(this.isLoggedIn, this.user);
             } catch (error) {
                 console.error('Error checking login status:', error);
             }

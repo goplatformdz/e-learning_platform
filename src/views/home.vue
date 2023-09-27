@@ -624,14 +624,14 @@ h4 {
 
 .text1 {
   position: absolute;
-  top: 15%;
+  top: -70%;
   left: 32%;
 }
 
 .text2 {
   position: absolute;
-  top: 9%;
-  left: 25%;
+  top: -44%;
+  left: 16%;
 }
 
 .join-now {
@@ -677,7 +677,7 @@ h4 {
 
 .text3 {
   position: absolute;
-  top: 11%;
+  top: -70%;
   left: 27%;
 }
 
@@ -1166,4 +1166,5 @@ h4 {
   height: 450px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-}</style>
+}
+</style>

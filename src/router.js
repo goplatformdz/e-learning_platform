@@ -11,15 +11,15 @@ const routes = [
   { path: "/", component: home },
   { path: "/blog", component: blog },
   { path: "/courses", component: courses },
-  { path: "/blogdetail", component: blogdetail },
-  { path: "/coursedetail/:course_id", name: "coursedetail", component: coursedetail},
-  { path: "/fullcourse/:courseId",name:"fullcourse", component: fullcourse },
+  { path: "/blogdetail/:id", name: "blogdetail", component: blogdetail },
+  { path: "/coursedetail/:course_id", name: "coursedetail", component: coursedetail },
+  { path: "/fullcourse/:courseId", name: "fullcourse", component: fullcourse },
   { path: "/coursesByCategory/:categoryName", name: "coursesByCategory", component: coursesByCategory },
 
 ];
 const router = createRouter({
   history: createWebHistory(),
-  routes ,
-  
+  routes,
+
 });
 export default router;

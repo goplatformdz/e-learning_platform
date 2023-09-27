@@ -4,61 +4,67 @@
       <img src="@/assets/blogD.png" alt="" />
     </div>
     <div class="blogtext">
-      <h3>Why Swift UI Should Be on the Radar of Every Mobile Developer</h3>
+      <h3>{{ blogData.title }}</h3>
       <p>
-        TOTC is a platform that allows educators to create online classes
-        whereby they can store the course materials online; manage assignments,
-        quizzes and exams; monitor due dates; grade results and provide students
-        with feedback all in one place. TOTC is a platform that allows educators
-        to create online classes whereby they can store the course materials
-        online; manage assignments, quizzes and exams; monitor due dates; grade
-        results and provide students with feedback all in one place. TOTC is a
-        platform that allows educators to create online classes whereby they can
-        store the course materials online; manage assignments, quizzes and
-        exams; monitor due dates; grade results and provide students with
-        feedback all in one place. TOTC is a platform that allows educators to
-        create online classes whereby they can store the course materials
-        online; manage assignments, quizzes and exams; monitor due dates; grade
-        results and provide students with feedback all in one place. TOTC is a
-        platform that allows educators to create online classes whereby they can
-        store the course materials online; manage assignments, quizzes and
-        exams; monitor due dates; grade results and provide students with
-        feedback all in one place. TOTC is a platform that allows educators to
-        create online classes whereby they can store the course materials
-        online; manage assignments, quizzes and exams; monitor due dates; grade
-        results and provide students with feedback all in one place...
+        {{ blogData.content }}
       </p>
-      <div class="btncats">
-        <button class="btncat" v-for="index in 4" :key="index">
-          affordable
-        </button>
-      </div>
-      <center><div class="line"></div></center>
+
+      <center>
+        <div class="line"></div>
+      </center>
       <div class="bloger">
-        <div class="blogerimg"><img src="@/assets/teengirl1.png" alt="" /></div>
+
         <div class="writen">
-          <text>Written by</text>
-          <h2>lina</h2>
+          <h2>Written by: {{ blogData.author }}.<br> Posted the: {{ blogData.date }}.</h2>
+
         </div>
-        <button class="follow">follow</button>
-      </div>
-    </div>
-    <div class="related1">
-      <h4 class="h4">Related Blog</h4>
-      <p class="p">See all</p>
-      <div class="relatedCard1">
-        <relatedCard v-for="index in 2" :key="index" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import relatedCard from "@/components/relatedCard.vue";
+
+import axios from "axios";
+import moment from "moment";
 export default {
+  data() {
+    return {
+      blogData: {
+        title: "",
+        content: "",
+        author: "",
+        date: "",
+        panoramic_image: "",
+      },
+    }
+  },
   name: "blogdetail",
   components: {
-    relatedCard,
+
+  },
+  mounted() {
+    this.blog_id = this.$route.params.id;
+    this.fetchBlogData(); // Call the method to fetch blog data
+  },
+  methods: {
+    fetchBlogData() {
+      axios
+        .get(`http://localhost:8000/api/blog/${this.blog_id}`, {
+          withCredentials: true,
+        })
+        .then((response) => {
+          // Update the blogData object with the response data and format the date
+          this.blogData.title = response.data.title;
+          this.blogData.content = response.data.content;
+          this.blogData.author = response.data.author;
+          // Format the date using Moment.js
+          this.blogData.date = moment(response.data.createdAt).format("MMMM Do YYYY, h:mm a");
+          this.blogData.panoramic_image = response.data.panoramic_image;
+          console.log(this.blogData);
+        })
+        .catch((error) => console.log(error));
+    },
   },
 };
 </script>
@@ -73,6 +79,7 @@ export default {
   grid-column-start: 1;
   grid-column-end: 2;
 }
+
 .related1 {
   width: 100%;
   height: 700px;
@@ -83,6 +90,7 @@ export default {
   grid-template-columns: repeat(2, 1fr);
   gap: 5px;
 }
+
 .related1 .h4 {
   margin-top: 70px;
   margin-left: 60px;
@@ -95,6 +103,7 @@ export default {
   grid-column: 1;
   grid-row: 1;
 }
+
 .related1 .p {
   margin-top: 70px;
   position: absolute;
@@ -108,6 +117,7 @@ export default {
   grid-column: 2;
   grid-row: 1;
 }
+
 .follow {
   border-radius: 10px;
   border: 1px solid #49BBBD;
@@ -124,11 +134,14 @@ export default {
   font-weight: 700;
   line-height: normal;
 }
+
 .bloger {
   display: flex;
 }
+
 .writen h2 {
-  margin: 0;
+  margin-bottom: 40px;
+  margin-left: 43px;
   color: #696984;
   color: #000;
   font-family: Poppins;
@@ -139,6 +152,7 @@ export default {
   letter-spacing: 0.36px;
   grid-row: 2;
 }
+
 .writen text {
   margin-top: 30px;
   color: #696984;
@@ -154,10 +168,10 @@ export default {
 .writen {
   margin-top: 18px;
   margin-left: 20px;
-  width: 70px;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
+  width: 100%;
+  display: flex;
 }
+
 .blogerimg {
   margin-top: 30px;
   margin-left: 60px;
@@ -166,12 +180,14 @@ export default {
   border-radius: 6px;
   background: url(<path-to-image>) lightgray -16.806px -5.738px / 125% 161.839% no-repeat;
 }
+
 .line {
   margin-top: 30px;
   width: 90%;
   height: 0.5px;
   background: #696984;
 }
+
 .btncat {
   margin-top: 20px;
   margin-left: 60px;
@@ -187,9 +203,11 @@ export default {
   font-weight: 400;
   line-height: normal;
 }
+
 .blogtext {
   display: grid;
 }
+
 .blogtext h3 {
   margin-top: 20px;
   color: #2F327D;
@@ -198,8 +216,10 @@ export default {
   font-size: 25px;
   font-style: normal;
   font-weight: 600;
-  line-height: 180%; /* 79.2px */
+  line-height: 180%;
+  /* 79.2px */
 }
+
 .blogtext p {
   margin-left: 60px;
   color: #696984;
@@ -207,9 +227,11 @@ export default {
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
-  line-height: 180%; /* 43.2px */
+  line-height: 180%;
+  /* 43.2px */
   letter-spacing: 0.48px;
 }
+
 .imageblog {
   margin-top: 80px;
   width: 100%;

@@ -1,6 +1,7 @@
 <template>
   <div class="signup-page" v-if="isopen1" @click="toggleSignup">
     <div class="signup-vue" @click.stop>
+      <font-awesome-icon @click="toggleSignup" class="cross-icon" icon="fa-solid fa-circle-xmark" size="2xl" />
       <div class="img"><img src="@/assets/child2.png" alt="" /></div>
       <div class="container">
         <div class="header">
@@ -42,6 +43,18 @@
               v-model="formData.email.value" />
             <span v-for="error in v$.email.$errors" :key="error.$uid" class="span-error">
               {{ error.$message === 'Value is required' ? 'Email address is required' : 'Email is not valid' }}
+            </span>
+          </div>
+          <div class="middle-container">
+            <span class="input-description "><font-awesome-icon class="font-icon email-icon" icon="fa-solid fa-phone" />
+              Phone Number</span>
+            <input type="text" :class="(v$.email.$error || check.userExists.value) ? 'input-error' : 'input'"
+              v-model="formData.phoneNumber.value" />
+            <span v-for="error in v$.phoneNumber.$errors" :key="error.$uid" class="span-error">
+              {{ error.
+                $message ===
+                'Value is required' ? 'Phone number is required' : 'Phone number is not valid (Must contain 10 numbers)'
+              }}
             </span>
           </div>
           <div class="container-two-inputs">
@@ -91,7 +104,7 @@
 
 <script>
 import useVuelidate from '@vuelidate/core'
-import { required, email, minLength, sameAs } from '@vuelidate/validators'
+import { required, email, minLength, sameAs, numeric, maxLength } from '@vuelidate/validators'
 import { ref, computed } from 'vue'
 import axios from 'axios'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -113,6 +126,7 @@ export default {
       firstname: ref(""),
       lastname: ref(""),
       email: ref(""),
+      phoneNumber: ref(""),
       password: ref(""),
       confirmPassword: ref("")
     }
@@ -132,6 +146,9 @@ export default {
 
     const rules = computed(() => ({
       email: { required, email },
+      phoneNumber: {
+        required, numeric, minLength: minLength(10), maxLength: maxLength(10),
+      },
       firstname: { required },
       lastname: { required },
       password: { required, minLength: minLength(8) },
@@ -151,6 +168,7 @@ export default {
 
       const data = {
         email: formData.email.value,
+        phoneNumber: formData.phoneNumber.value,
         firstname: formData.firstname.value,
         lastname: formData.lastname.value,
         password: formData.password.value,
@@ -166,6 +184,7 @@ export default {
         await props.toggleSignup();
         // Reset form inputs to empty strings after successful submission
         formData.email.value = '';
+        formData.phoneNumber.value = '';
         formData.firstname.value = '';
         formData.lastname.value = '';
         formData.password.value = '';
@@ -208,11 +227,32 @@ template {
   position: relative;
 }
 
+.cross-icon {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  color: red;
+  background: #fff;
+  border-radius: 50%;
+  transition: color 0.2s, background 0.2s;
+
+}
+
+.cross-icon:hover {
+  color: darkred;
+
+}
+
+.cross-icon:active {
+  color: darkerred;
+  background: #f0f0f0;
+}
+
 .signup-page {
   position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 3;
+  z-index: 10;
 }
 
 .font-icon {
@@ -249,7 +289,7 @@ template {
 .container {
   position: relative;
   left: 8%;
-  top: 7%;
+  top: 1%;
   width: 35%;
   height: 80%;
   display: flex;
@@ -460,8 +500,8 @@ h4 {
   position: relative;
   height: 91.5%;
   width: 51%;
-  top: 10px;
-  left: 10px;
+  top: 27px;
+  left: 27px;
   border-radius: 30px;
 }
 

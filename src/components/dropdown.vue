@@ -1,5 +1,5 @@
 <template>
-    <div v-if="dropOpen" class="container">
+    <div v-if="dropOpen" @click.stop class="container">
         <div class="profile">
             <span>Profile Settings <font-awesome-icon class="font-icon" icon="fa-solid fa-gear" /></span>
         </div>

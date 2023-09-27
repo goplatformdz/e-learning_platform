@@ -2,6 +2,7 @@
 <template>
   <div class="login-page" v-if="isopen" @click="toggleLogin">
     <div class="login-vue" @click.stop>
+      <font-awesome-icon @click="toggleLogin" class="cross-icon" icon="fa-solid fa-circle-xmark" size="2xl" />
       <div class="img"><img src="@/assets/child.png" alt="" /></div>
       <div class="container">
         <center>
@@ -42,6 +43,8 @@
         <div v-else class="btn-container">
           <button class="btn2" @click="fetchData">Login</button>
         </div>
+        <div class="sign-span">Don't have an account? <span @click="toggleLogin(); toggleSignup();">Sign Up</span></div>
+        <div class="forgot-span">Or<span @click="toggleLogin(); toggleSignup();">Forgot Password</span></div>
 
       </div>
     </div>
@@ -68,7 +71,7 @@ export default {
       invalidCredentials: false
     }
   },*/
-  props: ["isopen", "toggleLogin", "isopen1", "toggleSignup"],
+  props: ["isopen", "toggleLogin", "isopen1", "toggleSignup", "checkIsEnrolled"],
   components: {
     FontAwesomeIcon,
     spinner
@@ -117,6 +120,9 @@ export default {
         await axios.post('http://localhost:8000/api/users/loginUser', data, { withCredentials: true });
         await authStore.checkLoginStatus();
         await props.toggleLogin();
+        if (Object.prototype.hasOwnProperty.call(props, 'checkIsEnrolled')) {
+          await props.checkIsEnrolled();
+        }
         loadings.loading.value = false
       } catch (error) {
         console.error(error)
@@ -143,13 +149,33 @@ button {
   border: 0ch;
 }
 
+.cross-icon {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  color: red;
+  background: #fff;
+  border-radius: 50%;
+  transition: color 0.2s, background 0.2s;
+
+}
+
+.cross-icon:hover {
+  color: darkred;
+
+}
+
+.cross-icon:active {
+  color: darkerred;
+  background: #f0f0f0;
+}
 
 
 .login-page {
   position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 3;
+  z-index: 10;
 }
 
 .login-vue {
@@ -179,6 +205,72 @@ button {
   line-height: normal;
 }
 
+.sign-span {
+  position: absolute;
+  left: 25%;
+  top: 78%;
+  color: #000;
+  display: flex;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  white-space: nowrap;
+
+}
+
+.forgot-span {
+  position: absolute;
+  left: 35%;
+  top: 83%;
+  color: #000;
+  display: flex;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  white-space: nowrap;
+
+}
+
+.sign-span span {
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 4px;
+  color: #6F42C1;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  white-space: nowrap;
+
+}
+
+.forgot-span span {
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 4px;
+  color: #6F42C1;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  white-space: nowrap;
+
+}
+
+.sign-span span:hover {
+  color: #9434F4;
+}
+
+.forgot-span span:hover {
+  color: #9434F4;
+}
+
 .font-icon {
   color: #000;
   margin-bottom: -0.5px;
@@ -188,15 +280,15 @@ button {
   position: relative;
   height: 91.5%;
   width: 51%;
-  top: 10px;
-  left: 10px;
+  top: 27px;
+  left: 27px;
   border-radius: 30px;
 }
 
 .container {
   position: relative;
   left: 8%;
-  top: 15%;
+  top: 9%;
   width: 35%;
   height: 80%;
 }
