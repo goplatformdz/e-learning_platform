@@ -1,7 +1,7 @@
 <template>
   <div class="markcard" @click="passdatatodetail">
     <div class="img">
-      <img src="" alt="" />
+      <img :src="courseData.photo1" alt="" />
     </div>
     <div class="m3d">
       <p class="d">{{ courseData.category.name }}</p>
@@ -27,10 +27,16 @@ export default {
       required: false
     }
   },
+  
+    // You can update the image source dynamically in your methods
+
   methods: {
     passdatatodetail() {
       this.$router.push({ name: 'coursedetail', params: { course_id: this.courseData._id } });
-    }
+      console.log(this.courseData);
+
+    },
+    
   },
 
 };
