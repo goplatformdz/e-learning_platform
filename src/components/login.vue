@@ -43,6 +43,8 @@
         <div v-else class="btn-container">
           <button class="btn2" @click="fetchData">Login</button>
         </div>
+        <div class="sign-span">Don't have an account? <span @click="toggleLogin(); toggleSignup();">Sign Up</span></div>
+        <div class="forgot-span">Or<span @click="toggleLogin(); toggleSignup();">Forgot Password</span></div>
 
       </div>
     </div>
@@ -203,6 +205,72 @@ button {
   line-height: normal;
 }
 
+.sign-span {
+  position: absolute;
+  left: 25%;
+  top: 78%;
+  color: #000;
+  display: flex;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  white-space: nowrap;
+
+}
+
+.forgot-span {
+  position: absolute;
+  left: 35%;
+  top: 83%;
+  color: #000;
+  display: flex;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  white-space: nowrap;
+
+}
+
+.sign-span span {
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 4px;
+  color: #6F42C1;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  white-space: nowrap;
+
+}
+
+.forgot-span span {
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 4px;
+  color: #6F42C1;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  white-space: nowrap;
+
+}
+
+.sign-span span:hover {
+  color: #9434F4;
+}
+
+.forgot-span span:hover {
+  color: #9434F4;
+}
+
 .font-icon {
   color: #000;
   margin-bottom: -0.5px;
@@ -212,15 +280,15 @@ button {
   position: relative;
   height: 91.5%;
   width: 51%;
-  top: 10px;
-  left: 10px;
+  top: 27px;
+  left: 27px;
   border-radius: 30px;
 }
 
 .container {
   position: relative;
   left: 8%;
-  top: 15%;
+  top: 9%;
   width: 35%;
   height: 80%;
 }

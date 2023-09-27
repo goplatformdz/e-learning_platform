@@ -1,102 +1,139 @@
 <template>
-  <div class="card1">
-    <router-link to="/blogdetail">
-      <div class="img">
-        <img src="@/assets/redhair2.png" alt="" />
-      </div>
+  <div class="card1" @click="navigateToBlogDetailPage">
+    <div class="img">
+      <img src="@/assets/redhair2.png" alt="" />
+    </div>
+    <div class="content">
+      <h3>{{ blogData.title }}</h3>
       <h4>
-        Class adds $30 million to its balance sheet for a <br />
-        Zoom-friendly edtech solution
+        By: {{ blogData.author }}<span>{{ formattedDate }}</span> <font-awesome-icon class="font-icon"
+          icon="fa-solid fa-calendar-days" size="xs" />
       </h4>
-      <div class="circle">
-        <img src="@/assets/teengirl1.png" alt="" />
-        <h3>lina</h3>
-      </div>
-      <p>
-        Class, launched less than a year ago by Blackboard co-founder <br />
-        Michael Chasen, integrates exclusively...
-      </p>
+      <p class="content-p">{{ blogData.content }}</p>
       <p><a href="">read more</a></p>
-    </router-link>
+    </div>
+
   </div>
 </template>
 
 <script>
-export default {};
-</script>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import moment from 'moment'; // Import Moment.js
 
-<style scooped>
+export default {
+  name: "relatedCard",
+  data() {
+    return {
+      formattedDate: '', // Store the formatted date
+    };
+  },
+  props: ["blogData"],
+  components: {
+    FontAwesomeIcon
+  },
+  mounted() {
+    // Format the createdAt date using Moment.js
+    this.formattedDate = moment(this.blogData.createdAt).format("YYYY-MM-DD");
+  },
+  methods: {
+    navigateToBlogDetailPage() {
+      this.$router.push({ name: 'blogdetail', params: { id: this.blogData._id } });
+    }
+  }
+};
+</script>
+<style scoped>
 a {
   text-decoration: none;
 }
-.circle {
-  width: 40px;
-  height: 40px;
-  background-color: #D9D9D9;
-  border-radius: 50%;
-  margin-left: 25px;
-  margin-top: 5px;
-  display: flex;
+
+span {
+  margin-left: 7px;
+  font-size: 10px;
 }
-.circle h3 {
+
+.content-p {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* Number of lines to display */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.font-icon {
+  margin-bottom: -0.95px;
+}
+
+.card1 {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 360px;
+  height: auto;
+  border-radius: 20px;
+  background: #FFF;
+  box-shadow: 0px 18.829999923706055px 47.08000183105469px 0px rgba(47, 50, 125, 0.1);
+  margin-bottom: 60px;
+  /* Adjust the margin to reduce space between columns */
+  transition: ease-in-out 0.1s;
+}
+
+.card1:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+.card1 .img {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.card1 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 15px;
+}
+
+h3 {
   color: #000;
   font-family: Poppins;
-  font-size: 15px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   letter-spacing: 0.36px;
-  margin-left: 10px;
-  margin-top: 8px;
+  margin-top: 5px;
 }
+
 .card1 p {
   color: #696984;
   font-family: Poppins;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: 180%; /* 36px */
+  line-height: 180%;
+  /* 36px */
   letter-spacing: 0.4px;
-  margin-left: 15px;
 }
 
-.card1 {
-  margin-right: 150px;
-  width: 450px;
-  height: 480px;
-  flex-shrink: 0;
-  border-radius: 20px;
-  background: #FFF;
-  box-shadow: 0px 18.829999923706055px 47.08000183105469px 0px
-    rgba(47, 50, 125, 0.1);
-  display: grid;
-  grid-template-rows: 4fr 1fr 1fr 1fr 1fr;
-}
-.card1:hover {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  transform: scale(1.1);
-  transition: ease-in-out 0.1s;
-}
 .card1 h4 {
   color: #252641;
   font-family: Poppins;
-  font-size: 16px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 600;
-  line-height: 180%; /* 46.8px */
-  grid-row: 2;
-  margin-left: 15px;
+  line-height: 180%;
+  /* 46.8px */
   margin-top: 5px;
-}
-.img {
-  grid-row: 1;
-  width: 420px;
-  height: 220px;
-  margin-top: 20px;
-  margin-left: 15px;
-}
-img {
-  width: 100%;
-  height: 100%;
 }
 </style>
