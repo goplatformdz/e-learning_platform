@@ -1,7 +1,7 @@
 <template>
   <div class="coursedetailpage">
     <div class="imageblog">
-      <img src="@/assets/blogD.png" alt="" />
+      <img :src="fetchedCourses[0].course_id.photo1" alt="" />
     </div>
     <div class="coursedetails">
       <div>
@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="descripcourse">
-        <div class="descriptimg"><img src="@/assets/blogD.png" alt="" /></div>
+        <div class="descriptimg"><img :src="fetchedCourses[0].course_id.photo1" alt="" /></div>
         <div class="courseprice">
           <h3 v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.courseName }}</h3>
           

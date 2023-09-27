@@ -16,15 +16,7 @@
         <h4>Introduction about XD</h4>
       </div>
       <div>
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/c-6AaS7997w?si=oDyuJdq0SPvRf6wg"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
+        <iframe title="002 Deploying Flutter Apps to an Android Phone" width="560" height="315" src="https://video.igem.org/videos/embed/2e2578e2-2d99-49ea-91c3-3b417f5ed810" frameborder="0" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
       </div>
       <h3 class="tit">O6 Super Coins on the way</h3>
       <p class="text">
