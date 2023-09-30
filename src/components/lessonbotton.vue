@@ -19,16 +19,21 @@ export default {
   },
   computed: {
     formattedDuration() {
-      const duration = this.lesson.duration;
-      if (duration.includes('hours')) {
-        return duration.replace('hours', 'hrs');
-      } else if (duration.includes('minutes')) {
-        return duration.replace('minutes', 'mns');
+      if (this.lesson && this.lesson.duration) {
+        const duration = this.lesson.duration;
+        if (duration.includes('hours')) {
+          return duration.replace('hours', 'hrs');
+        } else if (duration.includes('minutes')) {
+          return duration.replace('minutes', 'mns');
+        } else {
+          return duration; // No change if neither 'hours' nor 'minutes' is found
+        }
       } else {
-        return duration; // No change if neither 'hours' nor 'minutes' is found
+        return ''; // Handle the case when duration is not defined
       }
     }
   },
+
   methods: {
     sendId() {
       this.$router.push({ params: { courseId: this.lesson.course_id._id, id: this.lesson._id } })
