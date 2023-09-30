@@ -38,7 +38,7 @@ export default {
     //recomanded,
   },
   mounted() {
-    axios.get('http://localhost:8000/api/blog/all-blogs', { withCredentials: true })
+    axios.get('http://localhost:8000/api/blogs/all-blogs', { withCredentials: true })
       .then(response => {
         this.fetchedBlogs = response.data;
         this.loading = false;

@@ -1,9 +1,10 @@
 <template>
   <div v-if="!loading" class="nav">
     <div class="img"><img src="@/assets/logo.png" alt="" /></div>
-    <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup" />
+    <loginComponent :isopen="isopen" :forgotPassword="forgotPassword" :toggleForgotPassword="toggleForgotPassword"
+      :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup" />
     <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin" />
-    <dropdown :dropOpen="dropOpen" :toggleDropdown="toggleDropdown" />
+    <dropdown :dropOpen="dropOpen" :toggleDropdown="toggleDropdown" :toggleForgotPassword="toggleForgotPassword" />
 
     <ul>
       <li>
@@ -25,7 +26,7 @@
       <font-awesome-icon v-else icon="fa-solid fa-chevron-down" />
     </div>
     <div v-else>
-      <button class="login" @click="toggleLogin">Login</button>
+      <button class="login" @click="toggleLogin(); toggleForgotPassword();">Login</button>
       <button class="signup" @click="toggleSignup">Sign Up</button>
     </div>
   </div>
@@ -54,6 +55,8 @@ export default {
       isopen1: false,
       loading: true,
       dropOpen: false,
+      forgotPassword: false,
+
     };
   },
   setup() {
@@ -72,6 +75,9 @@ export default {
     toggleDropdown() {
       this.dropOpen = !this.dropOpen;
     },
+    toggleForgotPassword() {
+      this.forgotPassword = !this.forgotPassword;
+    }
   },
 
   components: {

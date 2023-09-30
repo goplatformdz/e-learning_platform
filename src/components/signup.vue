@@ -175,6 +175,8 @@ export default {
         confirmPassword: formData.confirmPassword.value,
       };
 
+
+
       loadings.loading.value = true
 
 

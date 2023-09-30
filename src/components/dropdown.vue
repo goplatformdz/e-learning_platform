@@ -17,7 +17,7 @@ import { useAuthStore } from '../store/auth';
 
 export default {
     name: "dropdown",
-    props: ["dropOpen", "toggleDropdown"],
+    props: ["dropOpen", "toggleDropdown", "toggleForgotPassword"],
     components: {
         FontAwesomeIcon
     },
@@ -33,7 +33,10 @@ export default {
                 console.log(response);
                 await useAuthStore().checkLoginStatus();
                 this.toggleDropdown();
+                this.toggleForgotPassword();
                 this.$router.push("/");
+                //window.location.reload();
+
             } catch (error) {
                 console.error(error);
                 // Handle the error here

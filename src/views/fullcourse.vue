@@ -1,92 +1,135 @@
 <template>
-  <div class="container1">
+  <div v-if="!loading" class="container1">
     <div class="lessonscont">
       <div class="back">
-        <fa :icon="['fas', 'arrow-left']" style="color: #ffffff" />
+        <fa @click="goBack" :icon="['fas', 'arrow-left']" style="color: #ffffff" />
       </div>
       <h3>Lessons</h3>
-      <button class="lessonb" v-for="(lesson, index) in fetchedCourses" :key="index">
-        <fa :icon="['fas', 'book-open']" class="book" style="color: #252641" />
-        <h4 class="h3">{{ lesson.lessonName }}</h4>
-      </button>
+      <lessonb :fetchLesson="fetchLesson" v-for="(lesson, index) in fetchedCourses" :key="index" :lesson="lesson" />
     </div>
     <div class="lessonvideo">
       <div class="tittle">
         <h2 v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.courseName }}</h2>
-        <h4>Introduction about XD</h4>
+        <h4>{{ fetchedLesson.lessonName }}</h4>
       </div>
       <div>
-        <iframe title="002 Deploying Flutter Apps to an Android Phone" width="560" height="315" src="https://video.igem.org/videos/embed/2e2578e2-2d99-49ea-91c3-3b417f5ed810" frameborder="0" allowfullscreen="" sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
+        <iframe width="386" height="687" src="https://www.youtube.com/embed/iqfOH7zUWx0"
+          title="Do you have a Girlfriend? 😂🔥 - Steve Harvey" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+
 
       </div>
-      <h3 class="tit">O6 Super Coins on the way</h3>
+      <h3 class="tit">Description of the lesson</h3>
       <p class="text">
-        Lorem ipsum dolor sit amet, consectetur adi piscing elit, sed do
-        eiusmodadipiscing elit, sed do eiusmodLorem ipsum dolor sit amet,
-        consectetur adipiscing elit, sed do eiusmodadipiscing elit, sed do
-        eiusmodLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-        eiusmodadipiscing elit, sed do eiusmodeiusmodadipiscing elit, sed do
-        eiusmod
+        {{ fetchedLesson.description }}
       </p>
 
-      <h3 class="tit">Who this course is for?</h3>
-      <p class="text">
-        Lorem ipsum dolor sit amet, consectetur adi piscing elit, sed do
-        eiusmodadipiscing elit, sed do eiusmodLorem ipsum dolor sit amet,
-        consectetur adipiscing elit, sed do eiusmodadipiscing elit, sed do
-        eiusmodLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-        eiusmodadipiscing elit, sed do eiusmodeiusmodadipiscing elit, sed do
-        eiusmod
-      </p>
 
-      <h3 class="tit">Archievable</h3>
-      <p class="text">
-        Lorem ipsum dolor sit amet, consectetur adi piscing elit, sed do
-        eiusmodadipiscing elit, sed do eiusmodLorem ipsum dolor sit amet,
-        consectetur adipiscing elit, sed do eiusmodadipiscing elit, sed do
-        eiusmodLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-        eiusmodadipiscing elit, sed do eiusmodeiusmodadipiscing elit, sed do
-        eiusmod
-      </p>
     </div>
+  </div>
+  <div v-else class="loader">
+    <pencil />
   </div>
 </template>
 
 <script>
-import lessonb from "@/components/lessonbotton.vue";
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import lessonb from '../components/lessonbotton.vue'
+import pencil from "../components/pencil.vue";
+import { useRouter, } from 'vue-router'; // Import useRouter and useRoute
+
+
 
 export default {
-  componenet: {
+  components: {
     lessonb,
+    pencil
   },
-  data() {
-    return {
-      course_id: '',
-      fetchedCourses: [],
-    }
-  },
-  mounted() {
-    axios.get(`http://localhost:8000/api/lessons/all-lessons/${this.course_id}`, { withCredentials: true })
-      .then(response => {
-        this.fetchedCourses = response.data;
-        console.log(this.fetchedCourses)// Update the courses data property with the fetched data
-      })
-      .catch(error => {
-        console.error('Error fetching courses:', error);
-      });
+  setup() {
+    // Create reactive refs for course_id, lesson_id, fetchedCourses, and fetchedLesson
+    const course_id = ref('');
+    const lesson_id = ref('');
+    const fetchedCourses = ref([]);
+    const fetchedLesson = ref({
+      lessonName: '',
+      description: '',
+      duration: '',
+      video: '',
+      watched: '',
+    })
 
+
+    const loading = ref(true);
+
+    // Fetch lesson data
+
+    const fetchLesson = () => {
+      axios.get(`http://localhost:8000/api/lessons/${lesson_id.value}`, { withCredentials: true })
+        .then(response => {
+          fetchedLesson.value = response.data
+
+
+        })
+        .catch(error => {
+          console.error('Error fetching lesson:', error);
+        });
+    };
+
+    const router = useRouter(); // Get the router instance
+
+    const goBack = () => {
+      router.push({ name: 'coursedetail', params: { course_id: course_id.value } })
+    }
+
+
+
+
+    onMounted(async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/lessons/all-lessons/${course_id.value}`, { withCredentials: true });
+        fetchedCourses.value = response.data;
+        console.log(fetchedCourses.value);
+        await fetchLesson()
+        loading.value = false;
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+        loading.value = false;
+
+      }
+
+
+    });
+
+
+    return {
+      course_id,
+      lesson_id,
+      fetchedCourses,
+      fetchedLesson,
+      fetchLesson,
+      loading,
+      goBack,
+
+    };
   },
   created() {
-    this.course_id = this.$route.params.courseId
+    this.lesson_id = this.$route.params.id;
+    this.course_id = this.$route.params.courseId;
   },
+  methods: {
+
+  }
 };
 </script>
+
 
 <style scoped>
 .text {
   margin-left: 5%;
   margin-right: 5%;
+  margin-bottom: 8%;
   color: #696984;
   font-family: Poppins;
   font-size: 15px;
@@ -117,6 +160,14 @@ export default {
   margin: 0;
 }
 
+.loader {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .tittle h4 {
   color: black;
   font-family: Poppins;
@@ -143,27 +194,9 @@ iframe {
   border-radius: 20px;
 }
 
-.lessonb {
-  margin-left: 20px;
-  margin-top: 10px;
-  position: relative;
-  width: 90%;
-  height: 45px;
-  border-radius: 12px;
-  background: rgba(244, 140, 6, 0.3);
-  text-align: left;
-}
 
-.h3 {
-  color: #252641;
-  font-family: Poppins;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  display: inline;
-  margin-left: 10px;
-}
+
+
 
 .lessonvideo {
   width: 100%;
@@ -200,7 +233,16 @@ iframe {
   margin-left: 20px;
   text-align: center;
   border-radius: 5px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  /* Add a transition for background-color */
 }
+
+.back:hover {
+  background-color: #388E8E;
+  /* Change the background color on hover */
+}
+
 
 .lessonscont h3 {
   color: #252641;

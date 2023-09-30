@@ -11,7 +11,7 @@
 
     <loginComponent :isopen="isopen" :checkIsEnrolled="checkIfEnrolled" :toggleLogin="toggleLogin" :isopen1="isopen1"
       :toggleSignup="toggleSignup" />
-    <div class="imageblog">
+    <div class="imageblog" v-if="fetchedCourses && fetchedCourses.length">
       <img :src="fetchedCourses[0].course_id.photo1" alt="" />
     </div>
     <div class="coursedetails">
@@ -26,7 +26,8 @@
         </div>
       </div>
       <div class="descripcourse">
-        <div class="descriptimg"><img :src="fetchedCourses[0].course_id.photo1" alt="" /></div>
+        <div class="descriptimg" v-if="fetchedCourses && fetchedCourses.length"><img
+            :src="fetchedCourses[0].course_id.photo1" alt="" /></div>
         <div class="courseprice">
           <h3 v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.courseName }}</h3>
 
@@ -106,13 +107,13 @@
 
 <script>
 import axios from 'axios';
-import confirm from '../components/confirm.vue';
-import recomanded from '../components/recomanded.vue';
+import confirm from '@/components/confirm.vue';
+import recomanded from '@/components/recomanded.vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { useAuthStore } from '../store/auth';
 import loginComponent from "../components/login.vue";
 import signupComponent from "../components/signup.vue";
-import pencil from "../components/pencil.vue";
+import pencil from "@/components/pencil.vue";
 
 
 
@@ -164,7 +165,7 @@ export default {
       }
     },
     gotocourse() {
-      this.$router.push({ name: 'fullcourse', params: { courseId: this.course_id } });
+      this.$router.push({ name: 'fullcourse', params: { courseId: this.course_id, id: this.fetchedCourses[0]._id } });
     },
     toggleLogin() {
       this.isopen = !this.isopen
@@ -181,7 +182,9 @@ export default {
       this.loading = true;
       axios.get(`http://localhost:8000/api/lessons/all-lessons-default/${this.course_id}`, { withCredentials: true })
         .then(response => {
-          this.fetchedCourses = response.data; // Update the courses data property with the fetched data
+          this.fetchedCourses = response.data;
+          console.log(this.fetchedCourses);
+          console.log(this.fetchedCourses[0]._id);
         })
         .then(() => {
           if (useAuthStore().isLoggedIn) {

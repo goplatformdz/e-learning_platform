@@ -8,7 +8,7 @@
       </div>
     </div>
     <div v-if="searched" class="courses-searched">
-      <h3>Courses found for '{{ courseName }}'</h3>
+      <h3>Courses found for "{{ courseName }}"</h3>
       <div class="grid-container">
         <markCard v-for=" (course, index) in searchData" :key="index" :course-data="course" />
       </div>
@@ -62,7 +62,7 @@
 import categCard from "@/components/categCard.vue";
 
 import markCard from "@/components/markCard.vue";
-import recomanded from "../components/recomanded.vue";
+import recomanded from "@/components/recomanded.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import categCardSkeleton from "@/components/categCardSkeleton.vue";
 
@@ -240,7 +240,7 @@ img {
   margin-bottom: 50px;
   padding-bottom: 50px;
   margin-top: -5px;
-  padding-top: 50px;
+  padding-top: 10px;
 }
 
 .courses-searched h3 {
@@ -252,6 +252,7 @@ img {
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  padding-top: -70px;
 }
 
 .not-searched {

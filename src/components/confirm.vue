@@ -3,7 +3,8 @@
     <div class="conferm" @click.stop>
 
       <h3 v-if="!auth.isLoggedIn">Please login first</h3>
-      <h3 v-else-if="auth.isPending">Please wait for your account activation first, you will receive a phone call from
+      <h3 class="activation" v-else-if="auth.isPending">Please wait for your account activation first, you will receive a
+        phone call from
         us soon. </h3>
       <h3 v-else>Are you sure you want to enroll to this course?</h3>
 
@@ -43,6 +44,11 @@ h3 {
   font-weight: 300;
   line-height: normal;
   letter-spacing: 0.44px;
+
+}
+
+.activation {
+  width: 80%;
 
 }
 

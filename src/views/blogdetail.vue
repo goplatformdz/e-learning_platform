@@ -50,7 +50,7 @@ export default {
   methods: {
     fetchBlogData() {
       axios
-        .get(`http://localhost:8000/api/blog/${this.blog_id}`, {
+        .get(`http://localhost:8000/api/blogs/${this.blog_id}`, {
           withCredentials: true,
         })
         .then((response) => {
