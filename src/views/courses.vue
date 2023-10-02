@@ -8,7 +8,6 @@
       </div>
     </div>
     <div v-if="searched" class="courses-searched">
-      <h3>Courses found for "{{ courseName }}"</h3>
       <div class="grid-container">
         <markCard v-for=" (course, index) in searchData" :key="index" :course-data="course" />
       </div>
@@ -68,6 +67,7 @@ import categCardSkeleton from "@/components/categCardSkeleton.vue";
 
 //import markCard from "@/components/markCard.vue";
 import axios from 'axios';
+import { API_BASE_URL } from "../config";
 //import Cookies from 'js-cookie';
 export default {
   data() {
@@ -88,11 +88,12 @@ export default {
     categCardSkeleton,
     FontAwesomeIcon,
   },
+
   methods: {
     async searchCourse() {
       //const courseName = this.courseName;
       try {
-        const response = await axios.post("http://localhost:8000/api/courses/search_course", { courseName: this.courseName })
+        const response = await axios.post(`${API_BASE_URL}/api/courses/search_course`, { courseName: this.courseName })
         this.searchData = response.data.result;
         this.searched = true;
       }
@@ -104,7 +105,17 @@ export default {
 
   },
   mounted() {
-    axios.get('http://localhost:8000/api/categories/all-categories', { withCredentials: true })
+    axios.get(`${API_BASE_URL}/api/categories/all-categories`, { withCredentials: true })
+      .then(response => {
+        this.fetchedCategories = response.data;
+        this.loading = false;
+      })
+      .catch(error => {
+        console.error('Error fetching courses:', error);
+        this.loading = false;
+      })
+
+    axios.get(`${API_BASE_URL}/api/categories/my-courses`, { withCredentials: true })
       .then(response => {
         this.fetchedCategories = response.data;
         this.loading = false;
@@ -327,8 +338,7 @@ img {
 }
 
 .srchbtn:hover,
-.srchbtn:active,
-.srchbtn:focus {
+.srchbtn:active {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transform: scale(1.1);
 }
@@ -375,6 +385,7 @@ img {
 }
 
 .grid-container {
+  padding-top: 60px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   /* Adjust the column width as needed */

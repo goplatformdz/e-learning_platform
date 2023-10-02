@@ -1,7 +1,7 @@
 <template>
   <div class="Bdetail">
     <div class="imageblog">
-      <img src="@/assets/blogD.png" alt="" />
+      <img :src="blogData.panoramic_image" alt="" />
     </div>
     <div class="blogtext">
       <h3>{{ blogData.title }}</h3>
@@ -27,6 +27,7 @@
 
 import axios from "axios";
 import moment from "moment";
+import { API_BASE_URL } from "../config";
 export default {
   data() {
     return {
@@ -50,7 +51,7 @@ export default {
   methods: {
     fetchBlogData() {
       axios
-        .get(`http://localhost:8000/api/blogs/${this.blog_id}`, {
+        .get(`${API_BASE_URL}/api/blogs/${this.blog_id}`, {
           withCredentials: true,
         })
         .then((response) => {
@@ -60,7 +61,7 @@ export default {
           this.blogData.author = response.data.author;
           // Format the date using Moment.js
           this.blogData.date = moment(response.data.createdAt).format("MMMM Do YYYY, h:mm a");
-          this.blogData.panoramic_image = response.data.panoramic_image;
+          this.blogData.panoramic_image = response.data.photo2;
           console.log(this.blogData);
         })
         .catch((error) => console.log(error));

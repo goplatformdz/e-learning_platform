@@ -6,7 +6,7 @@
             <p>{{ blogData.content }}</p>
             <button class="btn-start">Read more</button>
         </div>
-        <div class="img"><img src="@/assets/computer.png" alt="" /></div>
+        <div class="img"><img :src="blogData.photo1" alt="" /></div>
     </div>
 </template>
   
@@ -23,6 +23,7 @@ export default {
     props: ["blogData"],
     mounted() {
         this.formatCreatedAt();
+        console.log(this.blogData)
     },
     methods: {
         formatCreatedAt() {

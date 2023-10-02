@@ -62,6 +62,7 @@ import axios from 'axios'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import spinner from '../components/spinner.vue'
 import { useAuthStore } from '../store/auth';
+import { API_BASE_URL } from '../config';
 
 
 
@@ -116,7 +117,7 @@ export default {
 
 
             try {
-                await axios.patch(`http://localhost:8000/api/users/resetPassword/${token.value}`, data, { withCredentials: true });
+                await axios.patch(`${API_BASE_URL}/api/users/resetPassword/${token.value}`, data, { withCredentials: true });
 
 
 

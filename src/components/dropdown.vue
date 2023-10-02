@@ -14,6 +14,7 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import axios from "axios";
 import { useAuthStore } from '../store/auth';
+import { API_BASE_URL } from "../config";
 
 export default {
     name: "dropdown",
@@ -29,7 +30,7 @@ export default {
 
         async logOut() {
             try {
-                const response = await axios.get('http://localhost:8000/api/users/logoutUser', { withCredentials: true });
+                const response = await axios.get(`${API_BASE_URL}/api/users/logoutUser`, { withCredentials: true });
                 console.log(response);
                 await useAuthStore().checkLoginStatus();
                 this.toggleDropdown();

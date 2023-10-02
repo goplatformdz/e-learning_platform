@@ -23,6 +23,7 @@ import relatedCard from "@/components/relatedCard.vue";
 import relatedCardSkeleton from "@/components/relatedCardSkeleton.vue";
 //import recomanded from "../components/recomanded.vue";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 export default {
   data() {
     return {
@@ -38,15 +39,19 @@ export default {
     //recomanded,
   },
   mounted() {
-    axios.get('http://localhost:8000/api/blogs/all-blogs', { withCredentials: true })
+    axios.get(`${API_BASE_URL}/api/blogs/all-blogs`, { withCredentials: true })
       .then(response => {
         this.fetchedBlogs = response.data;
         this.loading = false;
+        console.log(this.fetchedBlogs[0].photo1, this.fetchedBlogs[0].photo2)
+        console.log(this.fetchedBlogs)
+
       })
       .catch(error => {
         console.error('Error fetching courses:', error);
         this.loading = false;
       })
+
   }
 
 };

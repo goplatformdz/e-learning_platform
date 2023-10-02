@@ -12,7 +12,7 @@
     <loginComponent :isopen="isopen" :checkIsEnrolled="checkIfEnrolled" :toggleLogin="toggleLogin" :isopen1="isopen1"
       :toggleSignup="toggleSignup" />
     <div class="imageblog" v-if="fetchedCourses && fetchedCourses.length">
-      <img :src="fetchedCourses[0].course_id.photo1" alt="" />
+      <img :src="fetchedCourses[0].course_id.photo2" alt="" />
     </div>
     <div class="coursedetails">
       <div>
@@ -21,6 +21,8 @@
           <h3>Description</h3>
           <h4 class="lessonname" v-if="fetchedCourses && fetchedCourses.length">{{
             fetchedCourses[0].course_id.description }}</h4>
+          <h3 class="lessontitles">What you will see</h3>
+          <lessonTitles v-for="(lesson, index) in fetchedCourses" :key="index" :lesson="lesson" />
 
 
         </div>
@@ -39,7 +41,7 @@
               icon="fa-solid fa-book" /> </div>
           <div class="linee"></div>
         </div>
-        <h3 class="thiscourse">this course included</h3>
+        <h3 class="thiscourse">This course included</h3>
         <div>
           <ul>
             <li>
@@ -85,23 +87,7 @@
         <img class="imgvid1" src="@/assets/teacher.png" alt="" />
       </div>
     </div>
-    <div class="topoffre">
-      <h4>Top Education offers and deals are listed here</h4>
-      <p>See all</p>
-      <div class="offrecont">
-        <div class="offre" v-for="index in 3" :key="index">
-          <div class="perce">50%</div>
-          <h5>FOR INSTRUCTORS</h5>
-          <h6>
-            TOTC’s school management <br />
-            software helps traditional and <br />
-            online schools manage <br />
-            scheduling,
-          </h6>
-          <img src="@/assets/redhair3.png" alt="" />
-        </div>
-      </div>
-    </div>
+
   </div>
 </template>
 
@@ -113,7 +99,9 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { useAuthStore } from '../store/auth';
 import loginComponent from "../components/login.vue";
 import signupComponent from "../components/signup.vue";
-import pencil from "@/components/pencil.vue";
+import pencil from "../components/pencil.vue";
+import { API_BASE_URL } from '../config';
+import lessonTitles from '../components/lessonTitles.vue';
 
 
 
@@ -137,7 +125,8 @@ export default {
     FontAwesomeIcon,
     loginComponent,
     signupComponent,
-    pencil
+    pencil,
+    lessonTitles
   },
   setup() {
     const auth = useAuthStore()
@@ -151,7 +140,7 @@ export default {
     enroll() {
       this.loading = true;
       if (useAuthStore().isLoggedIn) {
-        axios.post(`http://localhost:8000/api/enrollments/enrollInCourse/${this.course_id}`, {}, { withCredentials: true })
+        axios.post(`${API_BASE_URL}/api/enrollments/enrollInCourse/${this.course_id}`, {}, { withCredentials: true })
           .then(() => {
             this.conferm(); // Update the courses data property with the fetched data
           })
@@ -180,7 +169,7 @@ export default {
     },
     checkIfEnrolled() {
       this.loading = true;
-      axios.get(`http://localhost:8000/api/lessons/all-lessons-default/${this.course_id}`, { withCredentials: true })
+      axios.get(`${API_BASE_URL}/api/lessons/all-lessons-default/${this.course_id}`, { withCredentials: true })
         .then(response => {
           this.fetchedCourses = response.data;
           console.log(this.fetchedCourses);
@@ -188,7 +177,7 @@ export default {
         })
         .then(() => {
           if (useAuthStore().isLoggedIn) {
-            axios.get('http://localhost:8000/api/enrollments/getCoursesByStudent', { withCredentials: true })
+            axios.get(`${API_BASE_URL}/api/enrollments/getCoursesByStudent`, { withCredentials: true })
               .then(response => {
                 const foundCourse = response.data.courses.find(course => course._id === this.course_id);
                 if (foundCourse !== undefined) {
@@ -233,6 +222,10 @@ export default {
   padding-right: 30px;
   margin-top: 20px;
 
+}
+
+.lessontitles {
+  margin-top: 0;
 }
 
 .rate h3 {
@@ -303,6 +296,8 @@ li {
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
 .enrolled {
@@ -324,7 +319,11 @@ li {
   cursor: pointer;
 
   transition: background-color 0.3s ease, color 0.3s ease;
+}
 
+.enrolled:hover {
+  background-color: #49BBBD;
+  color: #fff;
 }
 
 
@@ -332,8 +331,9 @@ li {
 
 
 
+
 .buyn:hover {
-  transform: scale(1.1);
+  transform: scale(1.04);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -622,9 +622,10 @@ img {
   margin-top: 30px;
   margin-left: 60px;
   width: 750px;
-  height: 400px;
+  height: auto;
   border-radius: 20px;
   background: rgba(157, 204, 255, 0.3);
   grid-column: 1;
+  padding-bottom: 30px;
 }
 </style>

@@ -110,6 +110,7 @@ import axios from 'axios'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import spinner from './spinner.vue'
 import { useAuthStore } from '../store/auth';
+import { API_BASE_URL } from '../config';
 
 
 
@@ -181,7 +182,7 @@ export default {
 
 
       try {
-        await axios.post('http://localhost:8000/api/users/registerUser', data, { withCredentials: true });
+        await axios.post(`${API_BASE_URL}/api/users/registerUser`, data, { withCredentials: true });
         await authStore.checkLoginStatus();
         await props.toggleSignup();
         // Reset form inputs to empty strings after successful submission

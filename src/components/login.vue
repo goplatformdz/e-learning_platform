@@ -105,6 +105,7 @@ import { ref, computed } from 'vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import spinner from './spinner.vue'
 import { useAuthStore } from '../store/auth';
+import { API_BASE_URL } from '../config';
 
 
 export default {
@@ -165,7 +166,7 @@ export default {
       loadings.loading.value = true
 
       try {
-        await axios.post('http://localhost:8000/api/users/loginUser', data, { withCredentials: true });
+        await axios.post(`${API_BASE_URL}/api/users/loginUser`, data, { withCredentials: true });
         await authStore.checkLoginStatus();
         await props.toggleLogin();
         await props.toggleForgotPassword();
@@ -195,7 +196,7 @@ export default {
       loadings.loading.value = true
 
       try {
-        await axios.post('http://localhost:8000/api/users/forgotPassword', data, { withCredentials: true });
+        await axios.post(`${API_BASE_URL}/api/users/forgotPassword`, data, { withCredentials: true });
 
         loadings.loading.value = false;
         credentials.invalidEmail.value = false;

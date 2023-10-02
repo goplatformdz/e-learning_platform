@@ -39,6 +39,7 @@ import axios from 'axios';
 import lessonb from '../components/lessonbotton.vue'
 import pencil from "../components/pencil.vue";
 import { useRouter, } from 'vue-router'; // Import useRouter and useRoute
+import { API_BASE_URL } from '../config';
 
 
 
@@ -66,7 +67,7 @@ export default {
     // Fetch lesson data
 
     const fetchLesson = () => {
-      axios.get(`http://localhost:8000/api/lessons/${lesson_id.value}`, { withCredentials: true })
+      axios.get(`${API_BASE_URL}/api/lessons/${lesson_id.value}`, { withCredentials: true })
         .then(response => {
           fetchedLesson.value = response.data
 
@@ -88,7 +89,7 @@ export default {
 
     onMounted(async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/lessons/all-lessons/${course_id.value}`, { withCredentials: true });
+        const response = await axios.get(`${API_BASE_URL}/api/lessons/all-lessons/${course_id.value}`, { withCredentials: true });
         fetchedCourses.value = response.data;
         console.log(fetchedCourses.value);
         await fetchLesson()

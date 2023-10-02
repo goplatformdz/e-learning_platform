@@ -16,9 +16,7 @@
       <li>
         <router-link to="/blog">Blog</router-link>
       </li>
-      <li>
-        <router-link to="/blog">About us</router-link>
-      </li>
+
     </ul>
     <div @click="toggleDropdown" :class="(!dropOpen) ? 'user-infos' : 'user-infos-active'" v-if="auth.isLoggedIn">
       {{ auth.fullName }}
@@ -234,7 +232,7 @@ img {
 
 ul {
   position: absolute;
-  left: 480px;
+  left: 500px;
   top: 25px;
   margin: 0px;
   padding: 0;
@@ -262,6 +260,8 @@ a {
   display: inline-block;
   padding-left: 20px;
   padding-right: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
   padding-bottom: 5px;
 
   position: inline;

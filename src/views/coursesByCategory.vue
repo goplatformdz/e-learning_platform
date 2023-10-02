@@ -18,6 +18,7 @@ import markCard from "@/components/markCard.vue";
 import markCardSkeleton from "@/components/markCardSkeleton.vue";
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { API_BASE_URL } from "../config";
 export default {
     data() {
         return {
@@ -34,7 +35,7 @@ export default {
     },
     mounted() {
 
-        axios.post('http://localhost:8000/api/courses/coursesByCategory', { categoryName: this.categoryName })
+        axios.post(`${API_BASE_URL}/api/courses/coursesByCategory`, { categoryName: this.categoryName })
             .then(response => {
                 this.fetchedCourses = response.data;
                 this.loading = false;
@@ -67,7 +68,7 @@ export default {
 }
 
 .courses-container h3 {
-    margin-left: 60px;
+    margin-left: 20px;
     padding-bottom: 40px;
     padding-top: 80px;
     color: #252641;

@@ -1,7 +1,7 @@
 <template>
   <div class="card1" @click="navigateToBlogDetailPage">
     <div class="img">
-      <img src="@/assets/redhair2.png" alt="" />
+      <img :src="blogData.photo1" alt="" />
     </div>
     <div class="content">
       <h3>{{ blogData.title }}</h3>
