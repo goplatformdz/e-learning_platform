@@ -27,8 +27,8 @@ export default {
       required: false
     }
   },
-  
-    // You can update the image source dynamically in your methods
+
+  // You can update the image source dynamically in your methods
 
   methods: {
     passdatatodetail() {
@@ -36,7 +36,7 @@ export default {
       console.log(this.courseData);
 
     },
-    
+
   },
 
 };
@@ -149,22 +149,37 @@ export default {
   margin-right: 72px;
   position: relative;
   margin-bottom: 20px;
+  cursor: pointer;
+  transition: ease-in-out 0.2s;
+
 }
 
 .markcard:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transform: scale(1.05);
-  transition: ease-in-out 0.2s;
 }
 
-.markcard .img {
+.img {
   margin-top: 12px;
   margin-left: 5%;
   width: 90%;
   height: 150px;
   grid-row: 1;
-  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
   background-color: #171B41;
+}
+
+
+
+.img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Maintain aspect ratio and cover container */
+  object-position: center center;
+  /* Center the image */
 }
 
 .d {

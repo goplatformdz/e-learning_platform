@@ -58,19 +58,19 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .courses-container {
     width: 100%;
     height: auto;
     margin-bottom: 60px;
-    margin-top: 60px;
+    margin-top: 40px;
     margin-left: 70px;
 }
 
 .courses-container h3 {
     margin-left: 20px;
-    padding-bottom: 40px;
-    padding-top: 80px;
+    padding-bottom: 20px;
+    padding-top: 40px;
     color: #252641;
     font-family: Poppins;
     font-size: 26px;

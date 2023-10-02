@@ -76,6 +76,8 @@ span {
   margin-bottom: 60px;
   /* Adjust the margin to reduce space between columns */
   transition: ease-in-out 0.1s;
+  cursor: pointer;
+
 }
 
 .card1:hover {

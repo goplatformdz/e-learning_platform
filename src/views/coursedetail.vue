@@ -21,7 +21,7 @@
           <h3>Description</h3>
           <h4 class="lessonname" v-if="fetchedCourses && fetchedCourses.length">{{
             fetchedCourses[0].course_id.description }}</h4>
-          <h3 class="lessontitles">What you will see</h3>
+          <h3 class="lessontitles">What you will watch</h3>
           <lessonTitles v-for="(lesson, index) in fetchedCourses" :key="index" :lesson="lesson" />
 
 
@@ -34,11 +34,12 @@
           <h3 v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.courseName }}</h3>
 
         </div>
-        <p class="hour11" v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.instructor }}</p>
+        <p class="hour11" v-if="fetchedCourses && fetchedCourses.length"><font-awesome-icon
+            icon="fa-solid fa-user-graduate" /> {{ fetchedCourses[0].course_id.instructor }}</p>
         <div>
           <button class="buyn" v-if="!isEnrolled" @click="conferm">Enroll Now</button>
-          <div class="enrolled" @click="gotocourse()" v-else>Go to course <font-awesome-icon size="xl" class="font-icon"
-              icon="fa-solid fa-book" /> </div>
+          <div class="enrolled" @click="gotocourse()" v-else>Go to course <font-awesome-icon class="font-icon"
+              icon="fa-solid fa-arrow-right" /> </div>
           <div class="linee"></div>
         </div>
         <h3 class="thiscourse">This course included</h3>
@@ -242,8 +243,10 @@ export default {
 
 .font-icon {
   margin-left: 10px;
-  color: #49BBBD;
+  color: #fff;
 }
+
+
 
 ul {
   list-style: none;
@@ -302,43 +305,40 @@ li {
 
 .enrolled {
   margin-top: 10px;
-  width: 100%;
+  margin-left: 70px;
+  width: 60%;
   height: 50px;
   border-radius: 12px;
-  background: #fff;
-  color: #49BBBD;
+  background: #FFC300;
+  color: #fff;
   font-family: Poppins;
   font-size: 18px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 900;
   line-height: normal;
-  border: 1.5px solid #49BBBD;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: opacity 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .enrolled:hover {
-  background-color: #49BBBD;
   color: #fff;
+  box-shadow: 0 0 10px #FFD700;
+
 }
-
-
-
 
 
 
 
 .buyn:hover {
-  transform: scale(1.04);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  opacity: 0.8;
 }
 
 .hour11 {
-  color: #49BBBD;
+  color: #000;
   font-family: Poppins;
   font-size: 16px;
   font-style: normal;
@@ -400,10 +400,39 @@ li {
   grid-template-rows: 4fr 1.5fr 1fr 2fr 1.5fr 4fr 1.5fr 2fr 1.5fr 1.5fr;
 }
 
+
+.imageblog img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Maintain aspect ratio and cover container */
+  object-position: center center;
+  /* Center the image */
+}
+
+.imageblog {
+  width: 100%;
+  height: 500px;
+  /* Adjust the height as needed */
+  overflow: hidden;
+  position: relative;
+}
+
 .descriptimg {
   width: 100%;
   height: 200px;
   grid-row: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.descriptimg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Maintain aspect ratio and cover container */
+  object-position: center center;
+  /* Center the image */
 }
 
 .offre:hover,
@@ -599,7 +628,8 @@ img {
 
 .coursedetails {
   width: 100%;
-  height: 700px;
+  height: auto;
+  padding-bottom: 30px;
 
 }
 

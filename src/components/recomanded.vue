@@ -1,7 +1,7 @@
 <template>
   <div class="recomended">
-    <h4 class="m">Recomended for you</h4>
-    <p class="s">See all</p>
+    <h4 class="m">Popular Courses</h4>
+
     <div class="Rcard">
       <markCard v-for="(recomended, index) in fetchedCourses" :key="index" :course-Data="recomended" />
     </div>
@@ -44,7 +44,7 @@ export default {
 </script>
 <style scooped>
 .m {
-  margin-top: 20px;
+  margin-top: 30px;
   margin-left: 60px;
   color: rgba(0, 0, 0, 0.8);
   font-family: Poppins;
@@ -68,6 +68,8 @@ export default {
   grid-row: 1;
 }
 
+
+
 .Rcard {
   margin-top: 30px;
   display: flex;
@@ -75,6 +77,7 @@ export default {
   padding-left: 50px;
   grid-row: 2;
 }
+
 
 .recomended {
   margin-top: 50px;
@@ -84,5 +87,7 @@ export default {
   display: grid;
   gap: 0;
   grid-template-rows: 1fr 9fr;
+  padding-top: 10px;
+
 }
 </style>

@@ -92,6 +92,23 @@ export default {
   gap: 5px;
 }
 
+.imageblog {
+  width: 100%;
+  height: 500px;
+  /* Adjust the height as needed */
+  overflow: hidden;
+  position: relative;
+}
+
+.imageblog img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Maintain aspect ratio and cover container */
+  object-position: center center;
+  /* Center the image */
+}
+
 .related1 .h4 {
   margin-top: 70px;
   margin-left: 60px;

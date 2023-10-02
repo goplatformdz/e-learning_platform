@@ -8,13 +8,13 @@
 
     <ul>
       <li>
-        <router-link to="/">Home</router-link>
+        <router-link to="/" exact-active-class="active-link" active-class="active-link">Home</router-link>
       </li>
       <li>
-        <router-link to="/courses">Courses</router-link>
+        <router-link to="/courses" exact-active-class="active-link" active-class="active-link">Courses</router-link>
       </li>
       <li>
-        <router-link to="/blog">Blog</router-link>
+        <router-link to="/blog" exact-active-class="active-link" active-class="active-link">Blog</router-link>
       </li>
 
     </ul>
@@ -258,10 +258,10 @@ a {
   letter-spacing: 0.15em;
 
   display: inline-block;
-  padding-left: 20px;
-  padding-right: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 40px;
+  margin-right: 40px;
   padding-bottom: 5px;
 
   position: inline;
@@ -278,6 +278,12 @@ a:after {
   background: #fff;
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
+}
+
+
+.active-link:after {
+  width: 100%;
+  left: 0;
 }
 
 a:hover:after {

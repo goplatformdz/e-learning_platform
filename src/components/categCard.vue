@@ -72,14 +72,16 @@ img {
   height: 200px;
   border-radius: 20px;
   background: #FFF;
-  box-shadow: 0px 30px 60px 0px rgba(47, 50, 125, 0.1);
+  box-shadow: 0px 60px 60px 0px rgba(47, 50, 125, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-
+  cursor: pointer;
 }
+
+
 
 .main:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);

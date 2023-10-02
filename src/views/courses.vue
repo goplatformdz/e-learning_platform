@@ -7,7 +7,8 @@
         <img src="@/assets/searchimg.png" alt="" />
       </div>
     </div>
-    <div v-if="searched" class="courses-searched">
+    <div v-if="searched && searchData.length" class="courses-searched">
+      <h3>Courses found for " {{ varSearched }} "</h3>
       <div class="grid-container">
         <markCard v-for=" (course, index) in searchData" :key="index" :course-data="course" />
       </div>
@@ -15,6 +16,10 @@
     <div v-if="!searched" class="not-searched">
       <h2>Search courses, you will find them here<font-awesome-icon class="icon" icon="fa-solid fa-magnifying-glass"
           size="xl" /></h2>
+    </div>
+    <div v-if="searched && !searchData.length" class="not-searched">
+      <h2>No courses found for " {{ varSearched }} "<font-awesome-icon class="icon" size="xl"
+          icon="fa-solid fa-magnifying-glass-minus" /></h2>
     </div>
 
     <!-- <div class="yourles">
@@ -25,7 +30,7 @@
       </div>
     </div> -->
     <div class="categories">
-      <h3>Or discover from searching by categories you want</h3>
+      <h3 class="cateH">Or discover from searching by categories you want</h3>
       <div>
         <div class="grid-container" v-if="!loading">
           <categCard v-for="(category, index) in fetchedCategories" :key="index" :category-data="category" />
@@ -36,6 +41,7 @@
       </div>
     </div>
     <recomanded />
+    <myCourses />
     <div class="topoffre">
       <h4>Top Education offers and deals are listed here</h4>
       <p>See all</p>
@@ -62,6 +68,7 @@ import categCard from "@/components/categCard.vue";
 
 import markCard from "@/components/markCard.vue";
 import recomanded from "@/components/recomanded.vue";
+import myCourses from "@/components/myCourses.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import categCardSkeleton from "@/components/categCardSkeleton.vue";
 
@@ -77,6 +84,7 @@ export default {
       courseName: "",
       loading: true,
       searched: false,
+      varSearched: ''
     }
   },
   name: "courses",
@@ -87,6 +95,7 @@ export default {
     recomanded,
     categCardSkeleton,
     FontAwesomeIcon,
+    myCourses
   },
 
   methods: {
@@ -95,7 +104,9 @@ export default {
       try {
         const response = await axios.post(`${API_BASE_URL}/api/courses/search_course`, { courseName: this.courseName })
         this.searchData = response.data.result;
+        this.varSearched = this.courseName
         this.searched = true;
+        console.log(this.searchData)
       }
       catch (error) {
         console.error(error);
@@ -186,6 +197,11 @@ export default {
   text-align: center;
 }
 
+
+.cateH {
+  margin-top: -15px;
+}
+
 .topoffre h4 {
   padding-top: 0px;
   margin-left: 60px;
@@ -250,12 +266,12 @@ img {
   height: auto;
   margin-bottom: 50px;
   padding-bottom: 50px;
-  margin-top: -5px;
+  margin-top: -50px;
   padding-top: 10px;
 }
 
 .courses-searched h3 {
-  margin-left: 30px;
+  margin-left: 20px;
   margin-bottom: 20px;
   color: #252641;
   font-family: Poppins;
@@ -335,12 +351,13 @@ img {
   margin-top: 11%;
   margin-left: 46%;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
 .srchbtn:hover,
 .srchbtn:active {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  transform: scale(1.1);
+  background-color: #388E8E;
 }
 
 .m {
@@ -385,7 +402,7 @@ img {
 }
 
 .grid-container {
-  padding-top: 60px;
+  padding-top: 20px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   /* Adjust the column width as needed */

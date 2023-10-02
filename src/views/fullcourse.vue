@@ -1,8 +1,11 @@
 <template>
   <div v-if="!loading" class="container1">
     <div class="lessonscont">
-      <div class="back">
-        <fa @click="goBack" :icon="['fas', 'arrow-left']" style="color: #ffffff" />
+      <div class="back-course">
+        <div @click="goBack" class="back back-hover">
+          <fa :icon="['fas', 'arrow-left']" style="color: #ffffff" />
+        </div>
+        <span class="back-p ">Go back to course</span>
       </div>
       <h3>Lessons</h3>
       <lessonb :fetchLesson="fetchLesson" v-for="(lesson, index) in fetchedCourses" :key="index" :lesson="lesson" />
@@ -12,13 +15,9 @@
         <h2 v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.courseName }}</h2>
         <h4>{{ fetchedLesson.lessonName }}</h4>
       </div>
-      <div>
-
-
+      <div class="video">
         <iframe :src="fetchedLesson.video" width="640" height="360" frameborder="0"
           allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-
-
       </div>
       <h3 class="tit">Description of the lesson</h3>
       <p class="text">
@@ -140,6 +139,34 @@ export default {
   letter-spacing: 0.36px;
 }
 
+.back-p {
+  font-family: Poppins;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.36px;
+  margin-top: 24px;
+  margin-left: 10px;
+  color: #49BBBD;
+  pointer-events: none;
+}
+
+.video {
+  padding-bottom: 40px;
+  padding-top: 30px;
+}
+
+.video::after {
+  content: "";
+  display: block;
+  border-bottom: 1px solid #000;
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 40px;
+}
+
+
 .tit {
   color: #252641;
   font-family: Poppins;
@@ -148,7 +175,7 @@ export default {
   font-weight: 600;
   line-height: normal;
   margin-left: 5%;
-  margin-top: 30px;
+  margin-top: -10px;
 }
 
 .tittle h2 {
@@ -159,7 +186,9 @@ export default {
   font-weight: 400;
   line-height: normal;
   margin: 0;
+  background-color: rgba(244, 140, 6, 0);
 }
+
 
 .loader {
   height: 100vh;
@@ -177,12 +206,36 @@ export default {
   font-weight: 400;
   line-height: normal;
   margin: 0;
+  background-color: rgba(244, 140, 6, 0);
 }
+
+.tittle h4::after {
+  content: "";
+  display: block;
+  border-bottom: 1px solid #000;
+  width: 0;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  margin-top: 40px;
+  animation: expandLine 1s ease-in-out forwards;
+}
+
+@keyframes expandLine {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 40%;
+    /* Adjust the desired final width */
+  }
+}
+
 
 .tittle {
   width: 100%;
   height: 90px;
-  background-color: rgb(197, 220, 245);
+
   text-align: center;
   margin-top: 50px
 }
@@ -201,7 +254,7 @@ iframe {
 
 .lessonvideo {
   width: 100%;
-  background: rgb(197, 220, 245);
+  background: rgba(244, 140, 6, 0.3);
 }
 
 .container1 {
@@ -239,14 +292,21 @@ iframe {
   /* Add a transition for background-color */
 }
 
-.back:hover {
+.back-course {
+  display: flex;
+  flex-direction: row;
+}
+
+.back-hover:hover {
   background-color: #388E8E;
   /* Change the background color on hover */
 }
 
 
+
+
 .lessonscont h3 {
-  color: #252641;
+  color: #000;
   font-family: Poppins;
   font-size: 22px;
   font-style: normal;

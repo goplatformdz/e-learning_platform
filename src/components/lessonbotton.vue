@@ -66,13 +66,13 @@ export default {
 }
 
 .current-lesson {
-  background-color: rgba(244, 140, 6, 0.5);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-color: #FFC300;
+  box-shadow: 0 0 10px #FFC300;
 }
 
 .lessonb:hover {
-  background-color: rgba(244, 140, 6, 0.5);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-color: #FFC300;
+  box-shadow: 0 0 10px #FFC300;
 }
 
 .duration {

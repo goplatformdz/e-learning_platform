@@ -77,6 +77,8 @@ h5 {
     /* Four rows */
     gap: 0px;
     box-shadow: 0px 30px 60px 0px rgba(47, 50, 125, 0.1);
+    cursor: pointer;
+
 
 }
 
