@@ -190,14 +190,7 @@ export default {
   display: flex;
 }
 
-.blogerimg {
-  margin-top: 30px;
-  margin-left: 60px;
-  width: 80px;
-  height: 80px;
-  border-radius: 6px;
-  background: url(<path-to-image>) lightgray -16.806px -5.738px / 125% 161.839% no-repeat;
-}
+
 
 .line {
   margin-top: 30px;
