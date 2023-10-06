@@ -44,7 +44,6 @@ export default {
         this.fetchedBlogs = response.data;
         this.loading = false;
         console.log(this.fetchedBlogs[0].photo1, this.fetchedBlogs[0].photo2)
-        console.log(this.fetchedBlogs)
 
       })
       .catch(error => {
