@@ -268,4 +268,7 @@ a:hover:after {
   width: 100%;
   left: 0;
 }
+
+/* Media screen */
+@media only screen and (max-width: 846px) {}
 </style>
