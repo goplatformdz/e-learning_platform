@@ -1,34 +1,64 @@
 <template>
   <div v-if="!loading" class="nav">
-    <div class="img"><img src="@/assets/logo.png" alt="" /></div>
-    <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup"
-      :getCurrentUser="getCurrentUser" />
-    <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin"
-      :getCurrentUser="getCurrentUser" />
-    <dropdown :getCurrentUser="getCurrentUser" :dropOpen="dropOpen" :toggleDropdown="toggleDropdown" />
+    <div class="max-width ">
+      <div class="lego-section">
+        <div class="img"><img src="@/assets/logo.png" alt="" /></div>
+        <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup"
+          :getCurrentUser="getCurrentUser" />
+        <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin"
+          :getCurrentUser="getCurrentUser" />
+        <dropdown :getCurrentUser="getCurrentUser" :dropOpen="dropOpen" :toggleDropdown="toggleDropdown" />
+      </div>
 
-    <ul>
-      <li>
-        <router-link to="/">Home</router-link>
-      </li>
-      <li>
-        <router-link to="/courses">Courses</router-link>
-      </li>
-      <li>
-        <router-link to="/blog">Blog</router-link>
-      </li>
-      <li>
-        <router-link to="/blog">About us</router-link>
-      </li>
-    </ul>
-    <div @click="toggleDropdown" class="user-infos" v-if="firstname">
-      {{ firstname }} {{ lastname }} <font-awesome-icon v-if="!dropOpen" class="font-icon"
-        icon="fa-solid fa-chevron-down" />
-      <font-awesome-icon v-else class="font-icon" icon="fa-solid fa-chevron-up" />
-    </div>
-    <div v-else>
-      <button class="login" @click="toggleLogin">Login</button>
-      <button class="signup" @click="toggleSignup">Sign Up</button>
+      <div class="nav-links">
+        <ul>
+          <li>
+            <router-link to="/">Home</router-link>
+          </li>
+          <li>
+            <router-link to="/courses">Courses</router-link>
+          </li>
+          <li>
+            <router-link to="/blog">Blog</router-link>
+          </li>
+          <li>
+            <router-link to="/blog">About us</router-link>
+          </li>
+        </ul>
+      </div>
+
+      <div class="nav-actions">
+        <div @click="toggleDropdown" class="user-infos" v-if="firstname">
+          {{ firstname }} {{ lastname }} <font-awesome-icon v-if="!dropOpen" class="font-icon"
+            icon="fa-solid fa-chevron-down" />
+          <font-awesome-icon v-else class="font-icon" icon="fa-solid fa-chevron-up" />
+        </div>
+
+        <div class="nav-buttons" v-else>
+          <button class="login" @click="toggleLogin">Login</button>
+          <button class="signup" @click="toggleSignup">Sign Up</button>
+        </div>
+
+        <div class="list-items">
+
+          <div class="dropdown">
+            <a class="btn btn-white" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <font-awesome-icon class="font-icon" icon="fa-solid fa-bars" />
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+              <router-link class="dropdown-item" to="/">Home</router-link>
+              <router-link class="dropdown-item" to="/courses">Courses</router-link>
+              <router-link class="dropdown-item" to="/blog">Blog</router-link>
+              <router-link class="dropdown-item" to="/blog">About us</router-link>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-item"><button class="btn btn-primary" @click="toggleLogin">Login</button></div>
+              <div class="dropdown-item"><button class="btn btn-primary" @click="toggleSignup">Sign Up</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div v-else class="nav"></div>
@@ -136,9 +166,9 @@ button {
 }
 
 .img {
-  position: absolute;
-  bottom: 20%;
-  left: 50px;
+  position: block;
+  /* bottom: 20%;
+  left: 50px; */
   width: 70px;
   height: 49px;
 }
@@ -149,22 +179,40 @@ img {
 }
 
 .nav {
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   height: 80px;
   background-color: #49BBBD;
   position: fixed;
-  top: 0%;
-  left: 0;
   z-index: 5;
+}
+
+.lego-section {
+  padding-bottom: 20px;
+}
+
+.nav .max-width {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav .nav-buttons {
+  display: flex;
+  display: block;
+  justify-content: space-between;
+  width: 800px;
 }
 
 
 
-.login {
-  position: absolute;
-  top: 25%;
-  left: 75%;
+.nav .nav-buttons .login {
+  position: block;
   width: 100px;
+  margin-right: 7px;
   padding-top: 6.5px;
   padding-bottom: 6.5px;
   border-radius: 80px;
@@ -178,13 +226,12 @@ img {
   line-height: normal;
   letter-spacing: 0.44px;
   text-align: center;
+  cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.signup {
-  position: absolute;
-  top: 25%;
-  left: 85%;
+.nav .nav-buttons .signup {
+  position: block;
   width: 100px;
   padding-top: 6.5px;
   padding-bottom: 6.5px;
@@ -199,6 +246,7 @@ img {
   line-height: normal;
   letter-spacing: 0.44px;
   text-align: center;
+  cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -217,9 +265,7 @@ img {
 }
 
 ul {
-  position: absolute;
-  left: 480px;
-  top: 25px;
+  position: block;
   margin: 0px;
   padding: 0;
   list-style: none;
@@ -238,7 +284,7 @@ li {
   letter-spacing: 0.44px;
 }
 
-a {
+.nav .nav-links a {
   color: #fff;
   text-decoration: none;
   letter-spacing: 0.15em;
@@ -251,7 +297,7 @@ a {
   position: inline;
 }
 
-a:after {
+.nav .nav-links a:after {
   background: none repeat scroll 0 0 transparent;
   bottom: 0;
   content: "";
@@ -264,11 +310,42 @@ a:after {
   width: 0;
 }
 
-a:hover:after {
+.nav .nav-links a:hover:after {
   width: 100%;
   left: 0;
 }
 
+.nav .list-items {
+  display: none;
+  font-size: large;
+  color: white;
+  cursor: pointer;
+}
+
+.nav .list-items .dropdown {
+  transition: 0.5s ease;
+}
+
+.nav .list-items .dropdown .btn {
+  border: none;
+  color: white;
+
+}
+
+.nav .list-items .dropdown .dropdown-menu {}
+
+
+
 /* Media screen */
-@media only screen and (max-width: 846px) {}
+@media only screen and (max-width: 916px) {
+
+  .nav .nav-buttons,
+  .nav .nav-links {
+    display: none;
+  }
+
+  .nav .list-items {
+    display: block;
+  }
+}
 </style>
