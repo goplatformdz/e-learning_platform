@@ -9,7 +9,6 @@
     </svg>
     <div class="max-width">
       <div class="teen-girl"><img src="@/assets/teen-girl.png" alt=""></div>
-
       <!-- Start header-container -->
       <div class="header-container ">
         <h1 class="orngtext">Studying</h1>
@@ -635,12 +634,6 @@ h4 {
   line-height: 32px;
 }
 
-.head .header-section-1 .k250 .caland {}
-
-.head .header-section-1 .k250 .caland-icon {}
-
-.head .header-section-1 .k250 .text1 {}
-
 .head .header-section-1 .user-exp {
   position: absolute;
   top: 66.5%;
@@ -1242,6 +1235,10 @@ h4 {
 }
 
 @media only screen and (max-width: 954px) {
+  .head {
+    margin-bottom: 350px;
+  }
+
   .head .header-section-1 .k250 {
     top: 26.5%;
     left: 70.6%;
@@ -1266,17 +1263,17 @@ h4 {
   }
 
   .head .header-section-1 .k250 {
-    top: 70.5%;
+    top: 52.5%;
     left: 5.6%;
   }
 
   .head .header-section-2 .congrats {
-    top: 70%;
+    top: 54%;
     left: 35%;
   }
 
   .head .header-section-1 .user-exp {
-    top: 85.5%;
+    top: 68.5%;
     left: 15%;
   }
 
