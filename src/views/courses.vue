@@ -302,7 +302,7 @@ img {
 }
 
 .searchcont {
-  margin-top: 80px;
+  padding-top: 80px;
 }
 
 .srchbtn {

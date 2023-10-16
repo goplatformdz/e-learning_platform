@@ -30,4 +30,18 @@ export default {
   padding: 0 80px;
   margin: auto;
 }
+
+button {
+  border: 0;
+}
+
+h1 {
+  color: #FFF;
+  font-family: Poppins;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: inline;
+}
 </style>

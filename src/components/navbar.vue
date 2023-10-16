@@ -1,15 +1,15 @@
 <template>
   <div v-if="!loading" class="nav">
+    <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup"
+      :getCurrentUser="getCurrentUser" />
+    <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin"
+      :getCurrentUser="getCurrentUser" />
+
     <div class="max-width ">
       <div class="lego-section">
         <div class="img"><img src="@/assets/logo.png" alt="" /></div>
-        <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup"
-          :getCurrentUser="getCurrentUser" />
-        <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin"
-          :getCurrentUser="getCurrentUser" />
         <dropdown :getCurrentUser="getCurrentUser" :dropOpen="dropOpen" :toggleDropdown="toggleDropdown" />
       </div>
-
       <div class="nav-links">
         <ul>
           <li>
