@@ -3,7 +3,7 @@
   <div class="login-page" v-if="isopen" @click="toggleLogin">
     <div class="login-vue" @click.stop>
       <div class="img"><img src="@/assets/child.png" alt="" /></div>
-      <div class="container">
+      <div class="log-container">
         <center>
           <div class="btn">
             <button class="btn-signup" @click="toggleLogin(); toggleSignup();">Signup</button>
@@ -189,7 +189,7 @@ button {
   border-radius: 30px;
 }
 
-.container {
+.log-container {
   position: relative;
   left: 8%;
   top: 15%;

@@ -2,7 +2,7 @@
   <div class="signup-page" v-if="isopen1" @click="toggleSignup">
     <div class="signup-vue" @click.stop>
       <div class="img"><img src="@/assets/child2.png" alt="" /></div>
-      <div class="container">
+      <div class="signup-container">
         <div class="header">
           <div class="btn">
             <button class="btn-signup" @click="toggleLogin(); toggleSignup();">Signup</button>
@@ -242,10 +242,9 @@ template {
   margin-left: 18px;
 }
 
-.container {
+.signup-container {
   position: relative;
   left: 8%;
-  top: 7%;
   width: 35%;
   height: 80%;
   display: flex;
