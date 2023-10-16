@@ -149,16 +149,30 @@ button {
 }
 
 .login-vue {
-  background: #FFFEFC;
   position: fixed;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  background: #FFFEFC;
   top: 10%;
   width: 70%;
-  height: 80%;
+  min-height: 500px;
   left: 15%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   border-radius: 30px;
   display: flex;
   z-index: 10;
+}
+
+.login-vue .img {
+  height: 400px;
+  width: 400px;
+  border-radius: 30px;
+}
+
+.login-vue .log-container {
+  width: 280px;
 }
 
 .invalid-credentials {
@@ -180,22 +194,7 @@ button {
   margin-bottom: -0.5px;
 }
 
-.img {
-  position: relative;
-  height: 91.5%;
-  width: 51%;
-  top: 10px;
-  left: 10px;
-  border-radius: 30px;
-}
 
-.log-container {
-  position: relative;
-  left: 8%;
-  top: 15%;
-  width: 35%;
-  height: 80%;
-}
 
 .btn {
   position: relative;
@@ -379,5 +378,11 @@ h4 {
 img {
   width: 100%;
   height: 100%;
+}
+
+@media only screen and (max-width: 1008px) {
+  .login-vue .img {
+    display: none;
+  }
 }
 </style>

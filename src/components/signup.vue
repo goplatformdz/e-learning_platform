@@ -211,6 +211,36 @@ template {
   z-index: 3;
 }
 
+.signup-vue {
+  position: fixed;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  background: #FFFEFC;
+  top: 10%;
+  width: 70%;
+  height: 80%;
+  left: 15%;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  border-radius: 30px;
+  display: flex;
+  z-index: 10;
+}
+
+.signup-vue .img {
+  height: 400px;
+  width: 400px;
+  border-radius: 30px;
+}
+
+.signup-vue .signup-container {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 52px;
+}
+
 .font-icon {
   color: #000;
   margin-bottom: 1px;
@@ -242,15 +272,7 @@ template {
   margin-left: 18px;
 }
 
-.signup-container {
-  position: relative;
-  left: 8%;
-  width: 35%;
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  padding-top: 52px;
-}
+
 
 .form {
   display: flex;
@@ -416,18 +438,7 @@ h4 {
 }
 
 
-.signup-vue {
-  background: #FFFEFC;
-  position: fixed;
-  top: 10%;
-  width: 70%;
-  height: 80%;
-  left: 15%;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-  border-radius: 30px;
-  display: flex;
-  z-index: 10;
-}
+
 
 .btn-loading {
   width: 40%;
@@ -451,14 +462,7 @@ h4 {
   margin-left: 42%;
 }
 
-.img {
-  position: relative;
-  height: 91.5%;
-  width: 51%;
-  top: 10px;
-  left: 10px;
-  border-radius: 30px;
-}
+
 
 
 .btn {
@@ -561,5 +565,11 @@ h4 {
 img {
   width: 100%;
   height: 100%;
+}
+
+@media only screen and (max-width: 1008px) {
+  .signup-vue .img {
+    display: none;
+  }
 }
 </style>
