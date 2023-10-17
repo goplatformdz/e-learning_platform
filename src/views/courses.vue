@@ -236,8 +236,9 @@ img {
 }
 
 .topoffre {
+  margin-bottom: 40px;
   margin-top: 40px;
-  height: 500px;
+  height: auto;
   grid-template-rows: 1fr 9fr;
 }
 
@@ -333,7 +334,7 @@ img {
 }
 
 .searchcont {
-  margin-top: 80px;
+  padding-top: 80px;
 }
 
 .srchbtn {
