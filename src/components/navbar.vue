@@ -1,6 +1,6 @@
 <template>
   <div v-if="!loading" class="nav">
-    <div class="img"><img src="@/assets/logo.png" alt="" /></div>
+    <div class="img"><img src="@/assets/rifk.png" alt="" /></div>
     <loginComponent :isopen="isopen" :forgotPassword="forgotPassword" :toggleForgotPassword="toggleForgotPassword"
       :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup" />
     <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin" />
@@ -88,6 +88,7 @@ export default {
   async mounted() {
     useAuthStore()
       .checkLoginStatus()
+      .then(() => this.toggleForgotPassword())
       .catch((error) => {
         console.error('Error checking login status:', error);
       })
@@ -151,10 +152,10 @@ button {
 
 .img {
   position: absolute;
-  bottom: 20%;
+  bottom: 15%;
   left: 50px;
-  width: 70px;
-  height: 49px;
+  width: 60px;
+  height: 60px;
 }
 
 img {

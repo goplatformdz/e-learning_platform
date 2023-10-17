@@ -1,1 +1,1 @@
-export const API_BASE_URL = "https://e-learning-platform-back.vercel.app"; 
+export const API_BASE_URL = "https://162.0.228.30:3000"; 

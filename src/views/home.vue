@@ -685,7 +685,7 @@ h4 {
   width: 400px;
   height: 550px;
   position: absolute;
-  top: 21%;
+  top: 26%;
   left: 51%;
 }
 

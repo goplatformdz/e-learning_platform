@@ -40,8 +40,8 @@
         </div>
       </div>
     </div>
-    <recomanded />
     <myCourses />
+    <recomanded />
     <div class="topoffre">
       <h4>Top Education offers and deals are listed here</h4>
       <p>See all</p>
@@ -80,6 +80,7 @@ export default {
   data() {
     return {
       fetchedCategories: [],
+      myCourses: [],
       searchData: [], // Initialize an empty array to store the fetched data
       courseName: "",
       loading: true,
@@ -122,13 +123,13 @@ export default {
         this.loading = false;
       })
       .catch(error => {
-        console.error('Error fetching courses:', error);
+        console.error('Error fetching categories:', error);
         this.loading = false;
       })
 
-    axios.get(`${API_BASE_URL}/api/categories/my-courses`, { withCredentials: true })
+    axios.get(`${API_BASE_URL}/api/courses/my-courses`, { withCredentials: true })
       .then(response => {
-        this.fetchedCategories = response.data;
+        this.myCourses = response.data;
         this.loading = false;
       })
       .catch(error => {

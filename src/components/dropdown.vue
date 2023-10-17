@@ -30,6 +30,7 @@ export default {
 
         async logOut() {
             try {
+
                 const response = await axios.get(`${API_BASE_URL}/api/users/logoutUser`, { withCredentials: true });
                 console.log(response);
                 await useAuthStore().checkLoginStatus();

@@ -111,6 +111,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import spinner from './spinner.vue'
 import { useAuthStore } from '../store/auth';
 import { API_BASE_URL } from '../config';
+import Cookies from 'js-cookie'
 
 
 
@@ -183,6 +184,17 @@ export default {
 
       try {
         await axios.post(`${API_BASE_URL}/api/users/registerUser`, data, { withCredentials: true });
+        const existingAccessToken = await Cookies.get('access-token'); // Retrieve the existing token value
+        if (existingAccessToken) {
+          // If the cookie exists, set it with your desired options
+          Cookies.set('access-token', existingAccessToken, {
+            expires: 1, // Set the cookie to expire in 1 day
+            secure: true, // Ensure it's sent over HTTPS
+            sameSite: 'None',
+            domain: '162.0.228.30', // Match the domain used in the backend
+            path: '/',
+          });
+        }
         await authStore.checkLoginStatus();
         await props.toggleSignup();
         // Reset form inputs to empty strings after successful submission
@@ -469,7 +481,7 @@ h4 {
   position: fixed;
   top: 10%;
   width: 70%;
-  height: 80%;
+  height: 650px;
   left: 15%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   border-radius: 30px;

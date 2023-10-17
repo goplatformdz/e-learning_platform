@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 
 
@@ -40,7 +41,7 @@ export const useAuthStore = defineStore('auth', {
     actions: {
         async checkLoginStatus() {
             try {
-                const response = await axios.get('http://localhost:8000/api/users/checkLogin', { withCredentials: true });
+                const response = await axios.get(`${API_BASE_URL}/api/users/checkLogin`, { withCredentials: true });
                 this.isLoggedIn = response.data.isLoggedIn;
                 this.user = response.data.user;
             } catch (error) {
