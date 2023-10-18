@@ -14,7 +14,7 @@
       </div>
     </div>
     <div v-if="!searched" class="not-searched">
-      <h2>Search courses, you will find them here<font-awesome-icon class="icon" icon="fa-solid fa-magnifying-glass"
+      <h2>Search courses, you will find them here <font-awesome-icon class="icon" icon="fa-solid fa-magnifying-glass"
           size="xl" /></h2>
     </div>
     <div v-if="searched && !searchData.length" class="not-searched">
@@ -154,7 +154,7 @@ export default {
   background-image: url('../assets/searchimg.png');
 }
 
-.searchcont .search {
+.searchcont .search-section .search {
   display: block;
   margin: 0px auto;
   border-radius: 10px;
@@ -174,7 +174,7 @@ export default {
   outline: none;
 }
 
-.searchcont .srchbtn {
+.searchcont .search-section .srchbtn {
   display: block;
   margin: 15px auto;
   color: #FFF;
@@ -190,6 +190,76 @@ export default {
   flex-shrink: 0;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+}
+
+.courses-searched {
+  padding-left: 4.2%;
+  background-color: rgb(197, 220, 245);
+  width: 100%;
+  height: auto;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+  margin-top: -50px;
+  padding-top: 10px;
+}
+
+.courses-searched h3 {
+  margin-left: 20px;
+  margin-bottom: 20px;
+  color: #252641;
+  font-family: Poppins;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding-top: -70px;
+}
+
+.not-searched {
+  margin-top: -5px;
+  text-align: center;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+  padding-bottom: 40px;
+  background-color: #fff
+}
+
+.not-searched h2 {
+  padding-top: 50px;
+  color: rgba(0, 0, 0, 0.8);
+  font-family: Poppins;
+  font-size: 1.8rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.not-searched h2 .icon {
+  margin-left: 20px;
+}
+
+.categories {
+  padding: 0 20px;
+  text-align: center;
+  width: 100%;
+  height: auto;
+  margin-bottom: 60px;
+}
+
+.categories h3 {
+  margin-left: 60px;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  color: #252641;
+  font-family: Poppins;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .offre:hover,
@@ -209,7 +279,6 @@ export default {
   font-style: normal;
   font-weight: 400;
   line-height: 180%;
-  /* 43.2px */
   letter-spacing: 0.48px;
 }
 
@@ -308,58 +377,6 @@ img {
   grid-row: 2;
 }
 
-.courses-searched {
-  padding-left: 4.2%;
-  background-color: rgb(197, 220, 245);
-  width: 100%;
-  height: auto;
-  margin-bottom: 50px;
-  padding-bottom: 50px;
-  margin-top: -50px;
-  padding-top: 10px;
-}
-
-.courses-searched h3 {
-  margin-left: 20px;
-  margin-bottom: 20px;
-  color: #252641;
-  font-family: Poppins;
-  font-size: 26px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  padding-top: -70px;
-}
-
-.not-searched {
-  margin-top: -5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 200px;
-  padding-bottom: 40px;
-
-  background-color: #fff
-}
-
-
-.icon {
-  margin-left: 20px;
-}
-
-.not-searched h2 {
-  padding-top: 50px;
-  color: rgba(0, 0, 0, 0.8);
-  font-family: Poppins;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-
-
 
 
 .srchbtn:hover,
@@ -418,23 +435,7 @@ img {
   /* Adjust the gap between grid items */
 }
 
-.categories h3 {
-  margin-left: 60px;
-  margin-bottom: 20px;
-  padding-top: 10px;
-  color: #252641;
-  font-family: Poppins;
-  font-size: 26px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-}
 
-.categories {
-  width: 100%;
-  height: auto;
-  margin-bottom: 60px;
-}
 
 .see {
   margin-top: 35px;
