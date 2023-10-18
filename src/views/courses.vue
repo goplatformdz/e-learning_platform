@@ -1,10 +1,10 @@
 <template>
   <main>
     <div class="searchcont">
-      <div>
+      <div class="search-section">
         <input type="search" name="" class="search" placeholder="Search courses by name" v-model="courseName" />
         <button class="srchbtn" @click="searchCourse">Search</button>
-        <img src="@/assets/searchimg.png" alt="" />
+        <!-- <img src="@/assets/searchimg.png" alt="" /> -->
       </div>
     </div>
     <div v-if="searched && searchData.length" class="courses-searched">
@@ -145,6 +145,53 @@ export default {
 </script>
 
 <style>
+.searchcont {
+  padding-top: 80px;
+}
+
+.searchcont .search-section {
+  padding: 20px 0;
+  background-image: url('../assets/searchimg.png');
+}
+
+.searchcont .search {
+  display: block;
+  margin: 0px auto;
+  border-radius: 10px;
+  background: #FFF;
+  width: 70%;
+  height: 50px;
+  border: 0;
+  padding-left: 3%;
+  padding-right: 3%;
+  color: rgba(0, 0, 0, 0.6);
+  font-family: Poppins;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.8px;
+  outline: none;
+}
+
+.searchcont .srchbtn {
+  display: block;
+  margin: 15px auto;
+  color: #FFF;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border-radius: 12px;
+  background: #49BBBD;
+  width: 100px;
+  height: 50px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
 .offre:hover,
 .offre:active,
 .offre:focus {
@@ -312,49 +359,8 @@ img {
 }
 
 
-.search {
-  border-radius: 10px;
-  background: #FFF;
-  width: 70%;
-  height: 50px;
-  border: 0;
-  position: absolute;
-  margin-top: 5%;
-  margin-left: 15%;
-  padding-left: 3%;
-  padding-right: 3%;
-  color: rgba(0, 0, 0, 0.6);
-  font-family: Poppins;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 0.8px;
-  outline: none;
-}
 
-.searchcont {
-  padding-top: 80px;
-}
 
-.srchbtn {
-  color: #FFF;
-  font-family: Poppins;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  border-radius: 12px;
-  background: #49BBBD;
-  width: 100px;
-  height: 50px;
-  flex-shrink: 0;
-  position: absolute;
-  margin-top: 11%;
-  margin-left: 46%;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-}
 
 .srchbtn:hover,
 .srchbtn:active {
