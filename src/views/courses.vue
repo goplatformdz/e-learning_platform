@@ -43,8 +43,10 @@
     <myCourses />
     <recomanded />
     <div class="topoffre">
-      <h4>Top Education offers and deals are listed here</h4>
-      <p>See all</p>
+      <div class="topoffre-header">
+        <h4>Top Education offers and deals are listed here</h4>
+        <p>See all</p>
+      </div>
       <div class="offrecont">
         <div class="offre" v-for="index in 3" :key="index">
           <div class="perce">50%</div>
@@ -243,7 +245,6 @@ export default {
 }
 
 .categories {
-  padding: 0 20px;
   text-align: center;
   width: 100%;
   height: auto;
@@ -260,6 +261,44 @@ export default {
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+}
+
+
+.topoffre {
+  margin-bottom: 40px;
+  margin-top: 40px;
+  height: auto;
+  grid-template-rows: 1fr 9fr;
+}
+
+.topoffre .topoffre-header {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.topoffre h4 {
+  color: rgba(0, 0, 0, 0.8);
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  grid-row: 1;
+  margin: 0 3px;
+}
+
+.topoffre p {
+  color: #49BBBD;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  grid-row: 1;
 }
 
 .offre:hover,
@@ -319,44 +358,13 @@ export default {
   margin-top: -15px;
 }
 
-.topoffre h4 {
-  padding-top: 0px;
-  margin-left: 60px;
-  color: rgba(0, 0, 0, 0.8);
-  font-family: Poppins;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  grid-row: 1;
-  display: inline;
-}
 
-.topoffre p {
-  display: inline;
-
-  position: absolute;
-  right: 100px;
-  color: #49BBBD;
-  font-family: Poppins;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  grid-row: 1;
-}
 
 img {
   width: 100%;
   height: 100%;
 }
 
-.topoffre {
-  margin-bottom: 40px;
-  margin-top: 40px;
-  height: auto;
-  grid-template-rows: 1fr 9fr;
-}
 
 .offre {
   width: 370px;
@@ -475,5 +483,12 @@ img {
   font-weight: 600;
   line-height: normal;
   grid-row: 1;
+}
+
+@media only screen and (max-width: 704px) {
+  .topoffre p {
+    margin: 0 auto;
+  }
+
 }
 </style>
