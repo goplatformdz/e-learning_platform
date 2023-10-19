@@ -31,13 +31,14 @@ export default {
     const auth = useAuthStore()
     return { auth }
   },
+
 }
 </script>
 <style scooped>
 h3 {
   margin-top: 80px;
   align-items: center;
-  color: #5B5B5B;
+  color: #000;
   font-family: Poppins;
   font-size: 18px;
   font-style: normal;
@@ -75,7 +76,7 @@ h3 {
   left: 28%;
   width: 600px;
   height: 250px;
-  background: rgb(255, 241, 241);
+  background: #fff;
   z-index: 10;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);

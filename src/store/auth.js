@@ -8,11 +8,12 @@ export const useAuthStore = defineStore('auth', {
     state: () => ({
         isLoggedIn: false,
         user: null,
+        openModal: false,
     }),
 
     getters: {
         isPending() {
-            return this.user && this.user.status === 'pending';
+            return this.user && this.user.status === 'pending'
         },
 
         isActive() {
@@ -48,5 +49,7 @@ export const useAuthStore = defineStore('auth', {
                 console.error('Error checking login status:', error);
             }
         },
+
+
     },
 });

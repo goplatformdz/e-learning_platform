@@ -264,10 +264,13 @@ template {
 }
 
 .signup-page {
-  position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  max-height: 300vh;
+  /* Limit the height to 90% of the viewport height */
+  overflow-y: auto;
+  z-index: 1001;
+  position: fixed;
 }
 
 .font-icon {
@@ -303,7 +306,7 @@ template {
 
 .container {
   position: relative;
-  left: 8%;
+  left: 9%;
   top: 1%;
   width: 35%;
   height: 80%;
@@ -478,7 +481,7 @@ h4 {
 
 .signup-vue {
   background: #FFFEFC;
-  position: fixed;
+  position: relative;
   top: 10%;
   width: 70%;
   height: 650px;
@@ -621,5 +624,67 @@ h4 {
 img {
   width: 100%;
   height: 100%;
+}
+
+/*@media (max-width: 1300px) {
+  
+
+  .sign-span {
+
+    left: 23%
+  }
+
+  .forgot-span {
+
+    left: 33%;
+  }
+}*/
+
+@media (max-width: 1080px) {
+
+  .img {
+    display: none;
+    /* Hide the image */
+  }
+
+  .signup-vue {
+    width: 470px;
+    left: 30%;
+  }
+
+  .container {
+    width: 80%;
+  }
+
+
+
+}
+
+/*@media (max-width: 983px) {
+  .signup-vue {
+
+    left: 23%;
+  }
+}*/
+
+
+@media (max-width: 209px) {
+  .signup-vue {
+    left: 22%;
+  }
+}
+
+
+@media (max-width: 180px) {
+  .signup-vue {
+    left: 20%;
+  }
+}
+
+
+@media (max-width: 170px) {
+  .signup-vue {
+    left: 16%;
+  }
 }
 </style>
