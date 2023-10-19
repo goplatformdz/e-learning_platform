@@ -60,6 +60,7 @@
           <img src="@/assets/redhair3.png" alt="" />
         </div>
       </div>
+
     </div>
   </main>
 </template>
@@ -194,6 +195,12 @@ export default {
   cursor: pointer;
 }
 
+.srchbtn:hover,
+.srchbtn:active {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: #388E8E;
+}
+
 .courses-searched {
   padding-left: 4.2%;
   background-color: rgb(197, 220, 245);
@@ -277,7 +284,7 @@ export default {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 5px;
+  padding: 5px 30px;
 }
 
 .topoffre h4 {
@@ -300,6 +307,29 @@ export default {
   line-height: normal;
   grid-row: 1;
 }
+
+.topoffre .offrecont {
+  width: 95%;
+  margin: 20px auto;
+  background-color: red;
+  display: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.topoffre .offrecont .offre {
+  margin: 20px auto;
+  width: 370px;
+  height: 320.419px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  /* margin-right: 40px;
+  margin-top: 20px; */
+  transition: ease-in-out 0.2s;
+}
+
 
 .offre:hover,
 .offre:active,
@@ -334,7 +364,7 @@ export default {
   line-height: normal;
 }
 
-.perce {
+.topoffre .offrecont .offre .perce {
   margin-top: 30px;
   margin-left: 30px;
   position: absolute;
@@ -365,33 +395,6 @@ img {
   height: 100%;
 }
 
-
-.offre {
-  width: 370px;
-  height: 320.419px;
-  flex-shrink: 0;
-  border-radius: 20px;
-  margin-right: 40px;
-  margin-top: 20px;
-  transition: ease-in-out 0.2s;
-}
-
-.offrecont {
-  display: relative;
-  margin-top: 30px;
-  margin-left: 60px;
-  display: flex;
-  flex-wrap: wrap;
-  grid-row: 2;
-}
-
-
-
-.srchbtn:hover,
-.srchbtn:active {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  background-color: #388E8E;
-}
 
 .m {
   margin-top: 20px;
@@ -490,5 +493,13 @@ img {
     margin: 0 auto;
   }
 
+
+
+}
+
+@media only screen and (max-width: 404px) {
+  .topoffre .offrecont .offre {
+    width: 90%;
+  }
 }
 </style>

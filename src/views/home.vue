@@ -1329,7 +1329,7 @@ h4 {
   }
 
   .head .teen-girl {
-    top: 30%;
+    top: 15%;
     left: -40px;
   }
 
