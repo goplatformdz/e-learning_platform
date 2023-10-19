@@ -1,5 +1,7 @@
 <template>
   <div v-if="!loading" class="nav">
+    <div class="modal-overlay" v-if="isopen || isopen1"></div>
+
     <div class="img"><img src="@/assets/rifk.png" alt="" /></div>
     <loginComponent :isopen="isopen" :forgotPassword="forgotPassword" :toggleForgotPassword="toggleForgotPassword"
       :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup" />
@@ -66,16 +68,21 @@ export default {
   methods: {
     toggleLogin() {
       this.isopen = !this.isopen;
+      this.auth.openModal = !this.auth.openModal
     },
     toggleSignup() {
       this.isopen1 = !this.isopen1;
+      this.auth.openModal = !this.auth.openModal
+
     },
     toggleDropdown() {
       this.dropOpen = !this.dropOpen;
     },
     toggleForgotPassword() {
       this.forgotPassword = !this.forgotPassword;
-    }
+    },
+
+
   },
 
   components: {
@@ -173,7 +180,20 @@ img {
   z-index: 5;
 }
 
-
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  /* Dark background with opacity */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  /* Set the z-index to a value higher than your modal */
+}
 
 .login {
   position: absolute;
@@ -194,6 +214,10 @@ img {
   letter-spacing: 0.44px;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.active-modal {
+  overflow-y: hidden;
 }
 
 .signup {

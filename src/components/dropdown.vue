@@ -35,9 +35,7 @@ export default {
                 console.log(response);
                 await useAuthStore().checkLoginStatus();
                 this.toggleDropdown();
-                this.toggleForgotPassword();
                 this.$router.push("/");
-                //window.location.reload();
 
             } catch (error) {
                 console.error(error);
