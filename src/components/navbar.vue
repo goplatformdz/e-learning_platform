@@ -1,33 +1,64 @@
 <template>
   <div v-if="!loading" class="nav">
-    <div class="modal-overlay" v-if="isopen || isopen1"></div>
+      <div class="modal-overlay" v-if="isopen || isopen1"></div>
 
-    <div class="img"><img src="@/assets/rifk.png" alt="" /></div>
-    <loginComponent :isopen="isopen" :forgotPassword="forgotPassword" :toggleForgotPassword="toggleForgotPassword"
-      :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup" />
-    <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin" />
-    <dropdown :dropOpen="dropOpen" :toggleDropdown="toggleDropdown" :toggleForgotPassword="toggleForgotPassword" />
+    <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup"
+      :getCurrentUser="getCurrentUser" />
+    <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin"
+      :getCurrentUser="getCurrentUser" />
 
-    <ul>
-      <li>
-        <router-link to="/" exact-active-class="active-link" active-class="active-link">Home</router-link>
-      </li>
-      <li>
-        <router-link to="/courses" exact-active-class="active-link" active-class="active-link">Courses</router-link>
-      </li>
-      <li>
-        <router-link to="/blog" exact-active-class="active-link" active-class="active-link">Blog</router-link>
-      </li>
+    <div class="max-width ">
+      <div class="lego-section">
+        <div class="img"><img src="@/assets/rifk.png" alt="" /></div>
+        <dropdown :getCurrentUser="getCurrentUser" :dropOpen="dropOpen" :toggleDropdown="toggleDropdown" />
+      </div>
+      <div class="nav-links">
+        <ul>
+          <li>
+            <router-link to="/">Home</router-link>
+          </li>
+          <li>
+            <router-link to="/courses">Courses</router-link>
+          </li>
+          <li>
+            <router-link to="/blog">Blog</router-link>
+          </li>
+        </ul>
+      </div>
 
-    </ul>
-    <div @click="toggleDropdown" :class="(!dropOpen) ? 'user-infos' : 'user-infos-active'" v-if="auth.isLoggedIn">
-      {{ auth.fullName }}
-      <font-awesome-icon v-if="dropOpen" icon="fa-solid fa-chevron-up" />
-      <font-awesome-icon v-else icon="fa-solid fa-chevron-down" />
-    </div>
-    <div v-else>
-      <button class="login" @click="toggleLogin(); toggleForgotPassword();">Login</button>
-      <button class="signup" @click="toggleSignup">Sign Up</button>
+      <div class="nav-actions">
+        <div @click="toggleDropdown" class="user-infos" v-if="firstname">
+          {{ firstname }} {{ lastname }} <font-awesome-icon v-if="!dropOpen" class="font-icon"
+            icon="fa-solid fa-chevron-down" />
+          <font-awesome-icon v-else class="font-icon" icon="fa-solid fa-chevron-up" />
+        </div>
+
+        <div class="nav-buttons" v-else>
+          <button class="login" @click="toggleLogin">Login</button>
+          <button class="signup" @click="toggleSignup">Sign Up</button>
+        </div>
+
+        <div class="list-items">
+
+          <div class="dropdown">
+            <a class="btn btn-white" @click="toggleDropListdown" href="#" role="button" id="dropdownMenuLink"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <font-awesome-icon class="font-icon" icon="fa-solid fa-bars" />
+            </a>
+
+            <div class="dropdown-menu" v-if="!dropListOpen" aria-labelledby="dropdownMenuLink">
+              <router-link @click="toggleDropListdown" class="dropdown-item" to="/">Home</router-link>
+              <router-link @click="toggleDropListdown" class="dropdown-item" to="/courses">Courses</router-link>
+              <router-link @click="toggleDropListdown" class="dropdown-item" to="/blog">Blog</router-link>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-item"><button class="btn btn-primary" @click="toggleLogin">Login</button></div>
+              <div class="dropdown-item"><button class="btn btn-primary" @click="toggleSignup">Sign
+                  Up</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
   <div v-else class="nav"></div>
@@ -40,29 +71,27 @@
 </template>
 
 
+  
+
 <script>
 import loginComponent from "./login.vue";
 import signupComponent from "./signup.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import dropdown from "./dropdown.vue";
-import { useAuthStore } from '../store/auth';
-
+import axios from "axios";
 export default {
   name: "navbar",
+
   data() {
     return {
       isopen: false,
       isopen1: false,
+      firstname: "",
+      lastname: "",
       loading: true,
       dropOpen: false,
-      forgotPassword: false,
-
+      dropListOpen: true
     };
-  },
-  setup() {
-    const auth = useAuthStore()
-
-    return { auth }
   },
 
   methods: {
@@ -78,37 +107,40 @@ export default {
     toggleDropdown() {
       this.dropOpen = !this.dropOpen;
     },
+    toggleDropListdown() {
+      this.dropListOpen = !this.dropListOpen;
+    },
+    getCurrentUser() {
+      axios.get('http://localhost:8000/api/users/getCurrentUser', { withCredentials: true })
+        .then(response => {
+          this.firstname = response.data.firstname; // Update the courses data property with the fetched data
+          this.lastname = response.data.lastname;
+          this.loading = false;
+          console.log(response.status) // Update the courses data property with the fetched data
+
+        })
+        .catch(error => {
+          console.log(error)
+          this.loading = false;
+        });
+    }
     toggleForgotPassword() {
       this.forgotPassword = !this.forgotPassword;
     },
 
 
   },
-
   components: {
     loginComponent,
     signupComponent,
     FontAwesomeIcon,
     dropdown
   },
-
-  async mounted() {
-    useAuthStore()
-      .checkLoginStatus()
-      .then(() => this.toggleForgotPassword())
-      .catch((error) => {
-        console.error('Error checking login status:', error);
-      })
-      .finally(() => {
-        this.loading = false;
-        // console.log(this.isLoggedIn, this.fullName)
-      });
+  mounted() {
+    this.getCurrentUser();
   }
-
-
 };
 </script>
-
 
 <style  scoped>
 button {
@@ -133,29 +165,17 @@ button {
   cursor: pointer;
 }
 
-.user-infos-active {
-  position: absolute;
-  right: 80px;
-  top: 25px;
-  display: inline-block;
-  text-align: center;
-  font-family: Poppins;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  color: #333;
-  letter-spacing: 0.15em;
-  background-color: transparent;
-  transition: background-color 0.3s, color 0.3s;
-  cursor: pointer;
-}
-
 .user-infos:hover {
   color: #333;
 }
 
+.user-infos:active {
+  color: #333;
+}
 
+.user-infos:focus {
+  color: #333;
+}
 
 .img {
   position: absolute;
@@ -171,15 +191,32 @@ img {
 }
 
 .nav {
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   height: 80px;
   background-color: #49BBBD;
   position: fixed;
-  top: 0%;
-  left: 0;
   z-index: 5;
 }
 
+.lego-section {
+  padding-bottom: 20px;
+}
+
+.nav .max-width {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav .nav-buttons {
+  display: flex;
+  display: block;
+  justify-content: space-between;
+  width: 800px;
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -195,11 +232,12 @@ img {
   /* Set the z-index to a value higher than your modal */
 }
 
-.login {
-  position: absolute;
-  top: 25%;
-  left: 75%;
+
+
+.nav .nav-buttons .login {
+  position: block;
   width: 100px;
+  margin-right: 7px;
   padding-top: 6.5px;
   padding-bottom: 6.5px;
   border-radius: 80px;
@@ -213,9 +251,12 @@ img {
   line-height: normal;
   letter-spacing: 0.44px;
   text-align: center;
+  cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.nav .nav-buttons .signup {
+  position: block;
 body.active-modal {
   overflow-y: hidden;
 }
@@ -238,6 +279,7 @@ body.active-modal {
   line-height: normal;
   letter-spacing: 0.44px;
   text-align: center;
+  cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -256,9 +298,7 @@ body.active-modal {
 }
 
 ul {
-  position: absolute;
-  left: 500px;
-  top: 25px;
+  position: block;
   margin: 0px;
   padding: 0;
   list-style: none;
@@ -277,22 +317,20 @@ li {
   letter-spacing: 0.44px;
 }
 
-a {
+.nav .nav-links a {
   color: #fff;
   text-decoration: none;
   letter-spacing: 0.15em;
 
   display: inline-block;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-left: 40px;
-  margin-right: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
   padding-bottom: 5px;
 
   position: inline;
 }
 
-a:after {
+.nav .nav-links a:after {
   background: none repeat scroll 0 0 transparent;
   bottom: 0;
   content: "";
@@ -305,14 +343,72 @@ a:after {
   width: 0;
 }
 
-
-.active-link:after {
+.nav .nav-links a:hover:after {
   width: 100%;
   left: 0;
 }
 
-a:hover:after {
-  width: 100%;
-  left: 0;
+.nav .list-items {
+  display: none;
+  font-size: large;
+  color: white;
+  cursor: pointer;
+}
+
+.nav .list-items .dropdown {
+  transition: 0.5s ease;
+}
+
+.nav .list-items .dropdown .btn {
+  border: none;
+  color: white;
+
+}
+
+.nav .list-items .dropdown .dropdown-menu {
+  position: absolute;
+  background-color: aliceblue;
+  color: black;
+  padding: 10px 10px;
+  top: 89%;
+  right: 80px;
+  min-width: 140px;
+  border-radius: 5px;
+}
+
+.nav .list-items .dropdown .dropdown-menu .dropdown-item {
+  display: block;
+  font-family: sans-serif;
+  font-size: 16px;
+  color: #333;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.nav .list-items .dropdown .dropdown-menu .dropdown-item:hover {
+  cursor: pointer;
+  background-color: #f1f1f1;
+}
+
+.nav .list-items .dropdown .dropdown-menu .dropdown-item .btn {
+  cursor: pointer;
+  padding: 7px;
+  background-color: cornflowerblue;
+  border-radius: 3px;
+}
+
+
+
+/* Media screen */
+@media only screen and (max-width: 916px) {
+
+  .nav .nav-buttons,
+  .nav .nav-links {
+    display: none;
+  }
+
+  .nav .list-items {
+    display: block;
+  }
 }
 </style>
