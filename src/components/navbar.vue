@@ -1,5 +1,7 @@
 <template>
   <div v-if="!loading" class="nav">
+      <div class="modal-overlay" v-if="isopen || isopen1"></div>
+
     <loginComponent :isopen="isopen" :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup"
       :getCurrentUser="getCurrentUser" />
     <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin"
@@ -56,6 +58,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
   <div v-else class="nav"></div>
@@ -94,9 +97,12 @@ export default {
   methods: {
     toggleLogin() {
       this.isopen = !this.isopen;
+      this.auth.openModal = !this.auth.openModal
     },
     toggleSignup() {
       this.isopen1 = !this.isopen1;
+      this.auth.openModal = !this.auth.openModal
+
     },
     toggleDropdown() {
       this.dropOpen = !this.dropOpen;
@@ -118,6 +124,11 @@ export default {
           this.loading = false;
         });
     }
+    toggleForgotPassword() {
+      this.forgotPassword = !this.forgotPassword;
+    },
+
+
   },
   components: {
     loginComponent,
@@ -206,6 +217,19 @@ nav .nav-buttons {
   display: block;
   justify-content: space-between;
   width: 800px;
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  /* Dark background with opacity */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  /* Set the z-index to a value higher than your modal */
 }
 
 
@@ -233,6 +257,14 @@ nav .nav-buttons {
 
 .nav .nav-buttons .signup {
   position: block;
+body.active-modal {
+  overflow-y: hidden;
+}
+
+.signup {
+  position: absolute;
+  top: 25%;
+  left: 85%;
   width: 100px;
   padding-top: 6.5px;
   padding-bottom: 6.5px;

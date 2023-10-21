@@ -265,7 +265,9 @@ button {
 
 }
 
-
+body {
+  z-index: 1000;
+}
 
 .back-div {
   position: absolute;
@@ -312,27 +314,35 @@ button {
 
 }
 
+body {
+  overflow-y: hidden;
+}
+
 .cross-icon:hover {
   color: darkred;
 
 }
 
 .cross-icon:active {
-  color: darkerred;
+  color: darkred;
   background: #f0f0f0;
 }
 
 
 .login-page {
-  position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  max-height: 300vh;
+  /* Limit the height to 90% of the viewport height */
+  overflow-y: auto;
+  z-index: 1001;
+  position: fixed;
+
 }
 
 .login-vue {
   background: #FFFEFC;
-  position: fixed;
+  position: relative;
   top: 10%;
   width: 70%;
   height: 650px;
@@ -340,7 +350,8 @@ button {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   border-radius: 30px;
   display: flex;
-  z-index: 10;
+  z-index: 1000;
+
 }
 
 .invalid-credentials {
@@ -434,6 +445,10 @@ button {
 
 }
 
+body.active-modal {
+  overflow-y: hidden;
+}
+
 .sign-span span:hover {
   color: #9434F4;
 }
@@ -453,12 +468,14 @@ button {
   width: 51%;
   top: 27px;
   left: 27px;
+  overflow: hidden;
+
   border-radius: 30px;
 }
 
 .container {
   position: relative;
-  left: 8%;
+  left: 9%;
   top: 9%;
   width: 35%;
   height: 80%;
@@ -671,5 +688,98 @@ h4 {
 img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
+
+
+@media (min-width: 1500px) {
+  .login-vue {
+    width: 1000px;
+
+  }
+
+
+}
+
+
+@media (max-width: 1300px) {
+  /*.login-vue {
+    width: 400px;
+
+  }*/
+
+  .sign-span {
+
+    left: 23%
+  }
+
+  .forgot-span {
+
+    left: 33%;
+  }
+}
+
+@media (max-width: 1080px) {
+
+  .img {
+    display: none;
+    /* Hide the image */
+  }
+
+  .login-vue {
+    width: 470px;
+    left: 30%;
+  }
+
+  .container {
+    width: 80%;
+  }
+
+  .sign-span {
+
+    left: 25%
+  }
+
+  .forgot-span {
+
+    left: 35%;
+  }
+
+}
+
+/*@media (max-width: 983px) {
+  .login-vue {
+
+    left: 23%;
+  }
+}
+
+
+@media (max-width: 209px) {
+  .login-vue {
+    left: 22%;
+  }
+}
+
+
+@media (max-width: 180px) {
+  .login-vue {
+    left: 20%;
+  }
+}
+
+
+@media (max-width: 170px) {
+  .login-vue {
+    left: 16%;
+  }
+}
+
+/*
+
+@media (max-width: 560px) {
+  .login-vue {
+    left: 12%;
+  }
+}*/
 </style>

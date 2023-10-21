@@ -4,6 +4,8 @@
     <pencil />
   </div>
   <div v-else class="coursedetailpage">
+    <div class="modal-overlay" v-if="isopen || isopen1 || isopenConf"></div>
+
     <confirm :isopenConf="isopenConf" :toggleLogin="confirmLogin" :conferm="conferm" :enroll="enroll"
       :course_id="course_id" />
 
@@ -137,6 +139,9 @@ export default {
   methods: {
     conferm() {
       this.isopenConf = !this.isopenConf;
+      this.auth.openModal = !this.auth.openModal
+
+
     },
     enroll() {
       this.loading = true;
@@ -251,6 +256,21 @@ export default {
 ul {
   list-style: none;
   padding-left: 0;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  /* Dark background with opacity */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  /* Set the z-index to a value higher than your modal */
 }
 
 li {
