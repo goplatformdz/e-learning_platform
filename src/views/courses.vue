@@ -311,6 +311,7 @@ export default {
 .topoffre .offrecont {
   width: 95%;
   margin: 20px auto;
+  background-color: red;
   display: relative;
   display: flex;
   justify-content: space-between;
