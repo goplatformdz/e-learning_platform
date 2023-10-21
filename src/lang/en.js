@@ -1,0 +1,75 @@
+export default {
+    data() {
+        return {
+            en: {
+                home: "Home",
+                courses: "Courses",
+                blogs: "Blogs",
+                login: "Login",
+                signup: "Sign Up",
+                studying: "Studying",
+                headerTitle: "Online is now much easier",
+                headerParagraph: "TOTC is an interesting platform that will teach you in a more interactive way",
+                headerButton: "Join for free",
+                headerSentance: "Watch how it works",
+                studentNumber: "250K",
+                assistedStudent: "Assisted Student",
+                congrat: "Congratulations",
+                adminship: "Your adminship completed",
+                expClass: "User Experience Class",
+                timeAt12: "Today at 12:00 PM",
+                joinAction: "Join now",
+                // Our Success
+                ourSuccess: "Our Success",
+                ourSuccessParagraph: "Ornare id fames interdum porttitor nulla turpis etiam. Diam vitae sollicitudin at nec nam et pharetra gravida. Adipiscing a quis ultrices eu ornare tristique vel nisl orci.",
+                students: "Students",
+                totalSuccess: "Total Success",
+                mainQuestions: "Main Questions",
+                chiefExpert: "Chief Expert",
+                yearsOfExp: "Years of Experience",
+                // All in One
+                allInOne: "All-In-One",
+                cloudSoftware: "Cloud Software.",
+                allInOneParagraph: "TOTC is one powerful online software suite that combines all the tools needed to run a successful school or office",
+                allInOneCard1Title: "Online Billing, Invoicing, & Contracts",
+                allInOneCard1Paragraph: "Simple and secure control of your organization’s financial and legal transactions. Send customized invoices and contracts",
+                allInOneCard2Title: "Easy Scheduling & Attendance Tracking",
+                allInOneCard2Paragraph: "Schedule and reserve classrooms at one campus or multiple campuses. Keep detailed records of student attendance",
+                allInOneCard3Title: "Customer Tracking",
+                allInOneCard3Paragraph: "Automate and track emails to individuals or groups. Skilline’s built-in system helps organize your organization",
+                // TOTC
+                totcTitle: "What is",
+                totcTitleQ: "TOTC?",
+                totcParagraph: "TOTC is a platform that allows educators to create online classes whereby they can store the course materials online; manage assignments, quizzes, and exams; monitor due dates; grade results and provide students with feedback all in one place.",
+                totcCard1Title: "FOR INSTRUCTORS",
+                totcCard1Paragraph: "Start a class today",
+                totcCard2Title: "FOR STUDENTS",
+                totcCard2Paragraph: "Enter access code",
+                // Everything you can do
+                everythingTitle: "Everything you can do in a physical classroom, ",
+                everythingTitleP2: "you can do with TOTC",
+                everythingTitleParagraph: "TOTC’s school management software helps traditional and online schools manage scheduling, attendance, payments, and virtual classrooms all in one secure cloud-based system.",
+                learnMore: "Learn more",
+                // Courses page
+                searchCoursesByname: "Serch courses by name",
+                searchButton: "Search",
+                searchCourses: "Serch courses, you will find them here",
+                discoverSearch: "Or discover from searching by cotegories you want",
+                popularCourses: "Popular Courses",
+                topListed: "Top Education offers and deals are listed here",
+                seeAll: "See all",
+                // Blogs
+                readingBlogList: "Reading blog list",
+                // Footer
+                virtualClass: "Virtual Class",
+                forZoom: "for Zoom",
+                subscribeAction: "Subscribe to get our Newsletter",
+                yourEmail: "Your Email",
+                subscribe: "Subscribe",
+                Careers: "Careers",
+                PrivacyPolicy: "Privacy Policy",
+                TermsAndConditions: "Terms & Conditions"
+            },
+        };
+    },
+};

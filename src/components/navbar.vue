@@ -13,13 +13,13 @@
       <div class="nav-links">
         <ul>
           <li>
-            <router-link to="/">Home</router-link>
+            <router-link to="/">{{ translate("home") }}</router-link>
           </li>
           <li>
-            <router-link to="/courses">Courses</router-link>
+            <router-link to="/courses">{{ translate("courses") }}</router-link>
           </li>
           <li>
-            <router-link to="/blog">Blog</router-link>
+            <router-link to="/blog">{{ translate("blogs") }}</router-link>
           </li>
         </ul>
       </div>
@@ -32,12 +32,12 @@
         </div>
 
         <div class="nav-buttons" v-else>
-          <button class="login" @click="toggleLogin">Login</button>
-          <button class="signup" @click="toggleSignup">Sign Up</button>
+          <button class="login" @click="toggleLogin">{{ translate("login") }}</button>
+          <button class="signup" @click="toggleSignup">{{ translate("signup") }}</button>
+
         </div>
 
         <div class="list-items">
-
           <div class="dropdown">
             <a class="btn btn-white" @click="toggleDropListdown" href="#" role="button" id="dropdownMenuLink"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -45,17 +45,27 @@
             </a>
 
             <div class="dropdown-menu" v-if="!dropListOpen" aria-labelledby="dropdownMenuLink">
-              <router-link @click="toggleDropListdown" class="dropdown-item" to="/">Home</router-link>
-              <router-link @click="toggleDropListdown" class="dropdown-item" to="/courses">Courses</router-link>
-              <router-link @click="toggleDropListdown" class="dropdown-item" to="/blog">Blog</router-link>
+              <router-link @click="toggleDropListdown" class="dropdown-item" to="/">{{ translate("home") }}</router-link>
+              <router-link @click="toggleDropListdown" class="dropdown-item" to="/courses">{{ translate("courses")
+              }}</router-link>
+              <router-link @click="toggleDropListdown" class="dropdown-item" to="/blog">{{ translate("blogs")
+              }}</router-link>
               <div class="dropdown-divider"></div>
-              <div class="dropdown-item"><button class="btn btn-primary" @click="toggleLogin">Login</button></div>
-              <div class="dropdown-item"><button class="btn btn-primary" @click="toggleSignup">Sign
-                  Up</button></div>
+              <div class="dropdown-item"><button class="btn btn-primary" @click="toggleLogin">{{ translate("login")
+              }}</button></div>
+              <div class="dropdown-item"><button class="btn btn-primary" @click="toggleSignup">{{ translate("signup")
+              }}</button></div>
             </div>
           </div>
         </div>
+        <div>
+          <select name="lang" v-model="lang">
+            <option value="en">Eng</option>
+            <option value="ar">Arb</option>
+          </select>
+        </div>
       </div>
+
     </div>
   </div>
   <div v-else class="nav"></div>
@@ -73,9 +83,12 @@ import signupComponent from "./signup.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import dropdown from "./dropdown.vue";
 import axios from "axios";
+import en from "../lang/en.js";
+import ar from "../lang/ar.js";
+
 export default {
   name: "navbar",
-
+  mixins: [en, ar],
   data() {
     return {
       isopen: false,
@@ -84,7 +97,8 @@ export default {
       lastname: "",
       loading: true,
       dropOpen: false,
-      dropListOpen: true
+      dropListOpen: true,
+      lang: "en"
     };
   },
 
@@ -114,6 +128,9 @@ export default {
           console.log(error)
           this.loading = false;
         });
+    },
+    translate(prop) {
+      return this[this.lang][prop];
     }
   },
   components: {

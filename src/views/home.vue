@@ -10,7 +10,7 @@
       <div class="teen-girl"><img src="@/assets/teen-girl.png" alt=""></div>
       <!-- Start header-container -->
       <div class="header-section">
-        <div class="header-container ">
+        <div class="header-container">
           <h1 class="orngtext">Studying</h1>
           <h1>
             Online is now <br />
@@ -400,8 +400,7 @@
     <div class="what-is-totc">
       <center>
         <h3>what is </h3>
-        <h4>TOTC?
-        </h4>
+        <h4>TOTC?</h4>
       </center>
 
     </div>
