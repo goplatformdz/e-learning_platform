@@ -68,7 +68,84 @@ export default {
                 subscribe: "اشتراك",
                 Careers: "الوظائف",
                 PrivacyPolicy: "سياسة الخصوصية",
-                TermsAndConditions: "الشروط والأحكام"
+                TermsAndConditions: "الشروط والأحكام",
+                // Courses Detail
+                Description: "الوصف",
+                WhatchQ: "ما ستشاهده",
+                EnrollNow: "سجل الآن",
+                GoToC: "انتقل إلى الدورة",
+                IncludedC: "هذه الدورة تشمل",
+                MoneyBG: "ضمان استرداد الأموال",
+                AccessAllD: "الوصول على جميع الأجهزة",
+                CertOfcomp: "شهادة الاكتمال",
+                EveryThingYouCanDo: "كل ما يمكنك فعله في",
+                classroom: "الصف",
+                YouCnDoT: "يمكنك القيام به مع TOTC",
+                toticPL1: "برنامج إدارة المدرسة TOTC يساعد المدارس",
+                toticPL2: "التقليدية والمدارس عبر الإنترنت على إدارة الجداول والحضور،",
+                toticPL3: "المدفوعات والفصول الدراسية الافتراضية في نظام سحابي آمن",
+                toticPL4: "واحد.",
+                // Note: learnMore already exists,
+                // Blog detail
+                WBy: "مكتوب بواسطة: ",
+                PThe: " نشر في: ",
+                // Chat room
+                Chats: "محادثات",
+                Conv: "محادثات",
+                // Full course
+                GoBToC: "عودة إلى الدورة",
+                Lessons: "الدروس",
+                DescLession: "وصف الدرس",
+                // reset pass
+                EnterPass: "أدخل كلمة المرور الجديدة",
+                Pass: "كلمة المرور",
+                ConfirmPass: "تأكيد كلمة المرور",
+                ReEnterPass: "أعد إدخال كلمة المرور",
+                TokExp: "انتهت صلاحية الرمز",
+                PassSecChan: "تم تغيير كلمة المرور بنجاح",
+                Save: "حفظ",
+                Cancel: "إلغاء",
+                // confirm
+                PlsLogF: "الرجاء تسجيل الدخول أولاً",
+                callActivation: "الرجاء الانتظار لتنشيط حسابك، ستتلقى مكالمة هاتفية منا قريبًا",
+                confirmEnroll: "هل أنت متأكد أنك ترغب في التسجيل في هذه الدورة؟",
+                Enroll: "سجل",
+                Ok: "موافق",
+                // dropDown:
+                ProfileSett: "إعدادات الملف الشخصي",
+                // Lession Container
+                GoBackTC: "عودة إلى الدورة",
+                // Lession Name
+                LessionMpfG: "الدرس: إدارة الأعمال",
+                // Lession:
+                AwsCer: "معتمد من AWS Solutions Architect",
+                Lession5of7: "الدرس 5 من 7",
+                // Login page:
+                Signup: "التسجيل",
+                Login: "تسجيل الدخول",
+                LtoToticAcc: "تسجيل الدخول إلى حساب الخاص بك",
+                EmAdd: "عنوان البريد الإلكتروني",
+                LPass: "كلمة المرور",
+                InC: "معلومات اعتماد غير صحيحة",
+                DuHavAcc: "ليس لديك حساب؟",
+                FPass: "هل نسيت كلمة المرور",
+                GoBaToLog: "العودة إلى تسجيل الدخول",
+                RessPass: "إعادة تعيين كلمة المرور",
+                EnterEmailAdress: "أدخل عنوان بريدك الإلكتروني",
+                InvEmail: "بريد إلكتروني غير صالح",
+                ClickAciton: "انقر على الرابط الذي تم إرساله",
+                ClickAcitonS: "إلى بريدك الإلكتروني لإعادة تعيين كلمة المرور",
+                Send: "إرسال",
+                // Sign up:
+                SAndSL: "قم بالتسجيل وابدأ التعلم",
+                FName: "الاسم",
+                LName: "اللقب",
+                UwithSame: "المستخدم بنفس البريد الإلكتروني مسجل بالفعل",
+                Register: "سجل",
+                // my Courses
+                myCourses: "دوراتي",
+                // Popular Courses:
+                PopularCourses: "الدورات الشهيرة",
             },
         };
     },

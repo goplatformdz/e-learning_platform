@@ -68,7 +68,85 @@ export default {
                 subscribe: "Subscribe",
                 Careers: "Careers",
                 PrivacyPolicy: "Privacy Policy",
-                TermsAndConditions: "Terms & Conditions"
+                TermsAndConditions: "Terms & Conditions",
+                // Courses Detail
+                Description: "description",
+                WhatchQ: "What you will watch",
+                EnrollNow: "Enroll Now",
+                GoToC: "Go to course",
+                IncludedC: "This course included",
+                MoneyBG: "Money Back Guarantee",
+                AccessAllD: "Access on all devices",
+                CertOfcomp: "Certification of completion",
+                EveryThingYouCanDo: "Everything you can do in a physical",
+                classroom: "Classroom",
+                YouCnDoT: "you can do with TOTC",
+                toticPL1: "TOTC’s school management software helps traditional",
+                toticPL2: "and online schools manage scheduling, attendance,",
+                toticPL3: "payments and virtual classrooms all in one secure cloud-",
+                toticPL4: "based system.",
+                // Note: learnMore already exist,
+                // Blog detail
+                WBy: "Written by: ",
+                PThe: " Posted the: ",
+                // Chat room
+                Chats: "Chats",
+                Conv: "Conversations",
+                // Full course
+                GoBToC: "Go back to course",
+                Lessons: "Lessons",
+                DescLession: "Description of the lesson",
+                // reset pass
+                EnterPass: "Enter your new Password",
+                Pass: "Password",
+                ConfirmPass: "Confirm your Password",
+                ReEnterPass: "Re-enter password",
+                TokExp: "Token has expired",
+                PassSecChan: "Your password has been successfully changed",
+                Save: "Save",
+                Cancel: "Cancel",
+                // confrim 
+                PlsLogF: "Please login first",
+                callActivation: "Please wait for your account activation first, you will receive a phone call from us soon",
+                confirmEnroll: "Are you sure you want to enroll to this course?",
+                Enroll: "Enroll",
+                Ok: "Ok",
+                // dropDown:
+                ProfileSett: "Profile Settings ",
+                // Lession Container
+                GoBackTC: "Go back to course",
+                // Lession Name
+                LessionMpfG: "lesson :manegmant of buissnes",
+                // Lession:
+                AwsCer: "AWS Certified Solutions Architect",
+                Lession5of7: "Lesson 5 of 7",
+                // Login page:
+                Signup: "Signup",
+                Login: "Login",
+                LtoToticAcc: "Login to your TOTC account",
+                EmAdd: "Email Address",
+                LPass: "Password",
+                InC: "Invalid Credentials",
+                DuHavAcc: "Don't have an account?",
+                FPass: "Forgot Password",
+                GoBaToLog: "Go back to login",
+                RessPass: "Reset Password",
+                EnterEmailAdress: "Enter your email address",
+                InvEmail: "Invalid Email",
+                ClickAciton: "Click on the link that has been sent",
+                ClickAcitonS: "to your email to reset your password",
+                Send: "Send",
+                // Sign up:
+                SAndSL: "Sign up and start learning",
+                FName: "First Name",
+                LName: "Last Name",
+                UwithSame: "User with the same email is already registered",
+                Register: "Register",
+                // my Courses
+                myCourses: "My Courses",
+                // Populair Courses:
+                PopularCourses: "Popular Courses",
+
             },
         };
     },

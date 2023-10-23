@@ -34,7 +34,14 @@
         <div class="nav-buttons" v-else>
           <button class="login" @click="toggleLogin">{{ translate("login") }}</button>
           <button class="signup" @click="toggleSignup">{{ translate("signup") }}</button>
-
+          <div class="language-selector__container">
+            <label>
+              <select class="js_language_selector" name="lang" v-model="lang">
+                <option value="en">E</option>
+                <option value="ar">ع</option>
+              </select>
+            </label>
+          </div>
         </div>
 
         <div class="list-items">
@@ -58,12 +65,8 @@
             </div>
           </div>
         </div>
-        <div>
-          <select name="lang" v-model="lang">
-            <option value="en">Eng</option>
-            <option value="ar">Arb</option>
-          </select>
-        </div>
+
+
       </div>
 
     </div>
@@ -215,21 +218,16 @@ img {
   justify-content: space-between;
 }
 
-nav .nav-buttons {
+.nav .nav-buttons {
   display: flex;
-  display: block;
   justify-content: space-between;
-  width: 800px;
 }
-
 
 
 .nav .nav-buttons .login {
   position: block;
-  width: 100px;
   margin-right: 7px;
-  padding-top: 6.5px;
-  padding-bottom: 6.5px;
+  padding: 6px 15.5px;
   border-radius: 80px;
   background: conic-gradient(from 90deg at 50% 100%, #FFF 0deg, #FFF 360deg);
   box-shadow: 0px 20px 24px 0px rgba(0, 0, 0, 0.03);
@@ -247,6 +245,7 @@ nav .nav-buttons {
 
 .nav .nav-buttons .signup {
   position: block;
+  margin-right: 7px;
   width: 100px;
   padding-top: 6.5px;
   padding-bottom: 6.5px;
@@ -376,6 +375,55 @@ li {
   padding: 7px;
   background-color: cornflowerblue;
   border-radius: 3px;
+}
+
+/* Drop down lang */
+.language-selector__container select {
+  background-color: white;
+  border: 1px solid #c5c5c5;
+  border-radius: 20px;
+  box-sizing: border-box;
+  color: #3e3d40;
+  display: block;
+  font-family: SourceSansPro, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  height: 40px;
+  width: 55px;
+  padding: 0 10px 0 10px;
+  outline: none;
+}
+
+.language-selector__container label {
+  position: relative;
+}
+
+.language-selector__container label:after {
+  content: "";
+  left: 30px;
+  top: 17px;
+  padding: 0 0 2px;
+  position: absolute;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+  border-left: 3.5px solid transparent;
+  border-right: 3.5px solid transparent;
+  border-top: 5px solid #007fd8;
+  z-index: 100;
+}
+
+.language-selector__container label:before {
+  content: "";
+  left: 30px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  position: absolute;
+  pointer-events: none;
+  display: block;
+  z-index: 1;
 }
 
 
