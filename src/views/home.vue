@@ -11,18 +11,16 @@
       <!-- Start header-container -->
       <div class="header-section">
         <div class="header-container">
-          <h1 class="orngtext">Studying</h1>
+          <h1 class="orngtext">{{ translations[currentLanguage].studying }}</h1> &nbsp;
           <h1>
-            Online is now <br />
-            much easier
+            {{ translations[currentLanguage].headerTitle }}
           </h1>
 
           <p class="textp1">
-            TOTC is an interesting platform that will teach <br />
-            you in more an interactive way
+            {{ translations[currentLanguage].headerParagraph }}
           </p>
           <div class="header-container-footer">
-            <button class="joinbtn">join for free</button>
+            <button class="joinbtn">{{ translations[currentLanguage].headerButton }}</button>
             <svg class="playbtn" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"
               fill="none">
               <g filter="url(#filter0_d_10_1082)">
@@ -45,7 +43,7 @@
                 </filter>
               </defs>
             </svg>
-            <p class="textp2">watch how it works</p>
+            <p class="textp2">{{ translations[currentLanguage].headerSentance }}</p>
           </div>
         </div>
 
@@ -104,8 +102,8 @@
               </svg>
             </div>
             <div class="text1">
-              <h3> 250K </h3>
-              <h4>Assisted Student</h4>
+              <h3> {{ translations[currentLanguage].studentNumber }} </h3>
+              <h4>{{ translations[currentLanguage].assistedStudent }}</h4>
             </div>
           </div>
 
@@ -113,9 +111,9 @@
 
           <div class="user-exp">
             <div class="text2">
-              <h3>User Experience Class</h3>
-              <h4>Today at 12.00 PM</h4>
-              <div class="join-now">join now</div>
+              <h3>{{ translations[currentLanguage].expClass }}</h3>
+              <h4>{{ translations[currentLanguage].timeAt12 }}</h4>
+              <div class="join-now">{{ translations[currentLanguage].joinAction }}</div>
             </div>
           </div>
         </div>
@@ -159,8 +157,8 @@
                 fill="white" />
             </svg>
             <div class="text3">
-              <h3>Congratulations</h3>
-              <h4>Your admission completed</h4>
+              <h3>{{ translations[currentLanguage].congrat }}</h3>
+              <h4>{{ translations[currentLanguage].adminship }}</h4>
             </div>
           </div>
         </div>
@@ -463,8 +461,29 @@
 </template>
 
 <script>
+import { computed } from 'vue';
+import { useLanguageStore } from '../store/language';
+import en from '../lang/en.json';
+import ar from '../lang/ar.json';
 
 export default {
+  setup() {
+    const currentLanguage = computed(() => useLanguageStore().currentLanguage);
+    const translations = {
+      en: en,
+      ar: ar
+    };
+
+    return {
+      currentLanguage,
+      translations
+    };
+  },
+  computed: {
+    translatedText() {
+      return this.translations[this.currentLanguage]['someKey'];
+    }
+  },
   name: "home",
 
 };
