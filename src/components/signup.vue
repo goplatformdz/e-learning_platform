@@ -6,15 +6,18 @@
       <div class="container">
         <div class="header">
           <div class="btn">
-            <button class="btn-signup" @click="toggleLogin(); toggleSignup();">Signup</button>
-            <button class="btn-login" @click="toggleLogin(); toggleSignup();">Login</button>
+            <button class="btn-signup" @click="toggleLogin(); toggleSignup();">{{ translations[currentLanguage].Signup
+            }}</button>
+            <button class="btn-login" @click="toggleLogin(); toggleSignup();">{{
+              translations[currentLanguage].Login }}</button>
           </div>
-          <h4>Sign up and start learning</h4>
+          <h4>{{ translations[currentLanguage].SAndSL }}</h4>
         </div>
         <div class="form">
           <div class="container-two-inputs">
             <div class="input-container">
-              <span class="input-description "><font-awesome-icon class="font-icon" icon="fa-solid fa-user" /> First Name
+              <span class="input-description "><font-awesome-icon class="font-icon" icon="fa-solid fa-user" /> {{
+                translations[currentLanguage].FName }}
               </span>
               <div class="input-wrapper">
                 <input :class="(v$.firstname.$error || check.userExists.value) ? 'names-input-error' : 'names-input'"
@@ -25,7 +28,7 @@
             </div>
             <div class="input-container">
               <span class="input-description side-spans"><font-awesome-icon class="font-icon" icon="fa-solid fa-user" />
-                Last Name</span>
+                {{ translations[currentLanguage].LName }}</span>
               <div class="input-wrapper">
                 <input
                   :class="(v$.lastname.$error || check.userExists.value) ? 'names-input-left-error' : 'names-input-left'"
@@ -37,8 +40,7 @@
           </div>
           <div class="middle-container">
             <span class="input-description "><font-awesome-icon class="font-icon email-icon"
-                icon="fa-solid fa-envelope" /> Email
-              Address</span>
+                icon="fa-solid fa-envelope" /> {{ translations[currentLanguage].EmAdd }}</span>
             <input type="email" :class="(v$.email.$error || check.userExists.value) ? 'input-error' : 'input'"
               v-model="formData.email.value" />
             <span v-for="error in v$.email.$errors" :key="error.$uid" class="span-error">
@@ -47,7 +49,7 @@
           </div>
           <div class="middle-container">
             <span class="input-description "><font-awesome-icon class="font-icon email-icon" icon="fa-solid fa-phone" />
-              Phone Number</span>
+              {{ translations[currentLanguage].PhoneNumber }}</span>
             <input type="text" :class="(v$.email.$error || check.userExists.value) ? 'input-error' : 'input'"
               v-model="formData.phoneNumber.value" />
             <span v-for="error in v$.phoneNumber.$errors" :key="error.$uid" class="span-error">
@@ -59,7 +61,8 @@
           </div>
           <div class="container-two-inputs">
             <div class="input-container">
-              <span class="input-description"><font-awesome-icon icon="fa-solid fa-key" /> Password</span>
+              <span class="input-description"><font-awesome-icon icon="fa-solid fa-key" /> {{
+                translations[currentLanguage].LPass }}</span>
               <div class="input-wrapper">
                 <input :class="(v$.password.$error || check.userExists.value) ? 'names-input-error' : 'names-input'"
                   type="password" v-model="formData.password.value" />
@@ -70,8 +73,8 @@
               </div>
             </div>
             <div class="input-container">
-              <span class="input-description side-spans"><font-awesome-icon icon="fa-solid fa-key" /> Re-enter
-                password</span>
+              <span class="input-description side-spans"><font-awesome-icon icon="fa-solid fa-key" /> {{
+                translations[currentLanguage].ReEnterPass }}</span>
               <div class="input-wrapper">
                 <input
                   :class="(v$.confirmPassword.$error || check.userExists.value) ? 'names-input-left-error' : 'names-input-left'"
@@ -86,7 +89,7 @@
           </span>
 
           <div v-if="!loadings.loading.value" class="btn-center">
-            <button class="btn2" @click="submit">Register</button>
+            <button class="btn2" @click="submit">{{ translations[currentLanguage].Register }}</button>
           </div>
           <div v-else class="btn-center">
             <button class="btn-loading">
@@ -113,11 +116,21 @@ import { useAuthStore } from '../store/auth';
 import { API_BASE_URL } from '../config';
 import Cookies from 'js-cookie'
 
+// For multi lang
+import { useLanguageStore } from '../store/language';
+import en from '../lang/en.json';
+import ar from '../lang/ar.json';
+
 
 
 
 export default {
   name: "signupComponent",
+  computed: {
+    translatedText() {
+      return this.translations[this.currentLanguage]['someKey'];
+    }
+  },
   props: ["isopen1", "toggleSignup", "isopen", "toggleLogin"],
   components: {
     FontAwesomeIcon,
@@ -218,9 +231,15 @@ export default {
       }
     };
 
+    const currentLanguage = computed(() => useLanguageStore().currentLanguage);
+    const translations = {
+      en: en,
+      ar: ar
+    };
+
     console.log(v$)
 
-    return { v$, submit, formData, check, loadings, authStore }
+    return { v$, submit, formData, check, loadings, authStore, currentLanguage, translations }
 
   },
   methods: {

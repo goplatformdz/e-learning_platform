@@ -19,8 +19,8 @@
             </td>
             <td>
               <h3>
-                Virtual Class <br />
-                for Zoom
+                {{ translations[currentLanguage].virtualClass }} <br />
+                {{ translations[currentLanguage].forZoom }}
               </h3>
             </td>
           </tr>
@@ -28,21 +28,21 @@
         <br />
         <br />
 
-        <h4>Subscribe to get our Newsletter</h4>
+        <h4>{{ translations[currentLanguage].subscribeAction }}</h4>
         <br />
         <input class="input" type="email" placeholder="Your Email" v-model="email">
-        <div class="btn" @click="subscribeToNewsletter">Subscribe</div>
+        <div class="btn" @click="subscribeToNewsletter">{{ translations[currentLanguage].subscribe }}</div>
         <table class="tab2">
           <tr>
-            <td>Careers</td>
+            <td>{{ translations[currentLanguage].Careers }}</td>
             <td>
               <div class="line2"></div>
             </td>
-            <td>Privacy Policy</td>
+            <td>{{ translations[currentLanguage].PrivacyPolicy }}</td>
             <td>
               <div class="line2"></div>
             </td>
-            <td>Terms & Conditions</td>
+            <td>{{ translations[currentLanguage].TermsAndConditions }}</td>
           </tr>
         </table>
         <h5>© 2021 Class Technologies Inc.</h5>
@@ -52,9 +52,30 @@
 </template>
 <script>
 import axios from 'axios'; // Import Axios
+import { computed } from 'vue';
+import { useLanguageStore } from '../store/language';
+import en from '../lang/en.json';
+import ar from '../lang/ar.json';
 
 export default {
   name: "footerr",
+  setup() {
+    const currentLanguage = computed(() => useLanguageStore().currentLanguage);
+    const translations = {
+      en: en,
+      ar: ar
+    };
+
+    return {
+      currentLanguage,
+      translations
+    };
+  },
+  computed: {
+    translatedText() {
+      return this.translations[this.currentLanguage]['someKey'];
+    }
+  },
   data() {
     return {
       email: '', // Store the user's email

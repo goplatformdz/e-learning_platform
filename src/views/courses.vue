@@ -3,7 +3,7 @@
     <div class="searchcont">
       <div class="search-section">
         <input type="search" name="" class="search" placeholder="Search courses by name" v-model="courseName" />
-        <button class="srchbtn" @click="searchCourse">Search</button>
+        <button class="srchbtn" @click="searchCourse">{{ translations[currentLanguage].searchButton }}</button>
         <!-- <img src="@/assets/searchimg.png" alt="" /> -->
       </div>
     </div>
@@ -14,8 +14,8 @@
       </div>
     </div>
     <div v-if="!searched" class="not-searched">
-      <h2>Search courses, you will find them here <font-awesome-icon class="icon" icon="fa-solid fa-magnifying-glass"
-          size="xl" /></h2>
+      <h2>{{ translations[currentLanguage].searchCourses }}<font-awesome-icon class="icon"
+          icon="fa-solid fa-magnifying-glass" size="xl" /></h2>
     </div>
     <div v-if="searched && !searchData.length" class="not-searched">
       <h2>No courses found for " {{ varSearched }} "<font-awesome-icon class="icon" size="xl"
@@ -30,7 +30,7 @@
       </div>
     </div> -->
     <div class="categories">
-      <h3 class="cateH">Or discover from searching by categories you want</h3>
+      <h3 class="cateH">{{ translations[currentLanguage].discoverSearch }}</h3>
       <div>
         <div class="grid-container" v-if="!loading">
           <categCard v-for="(category, index) in fetchedCategories" :key="index" :category-data="category" />
@@ -44,18 +44,18 @@
     <recomanded />
     <div class="topoffre">
       <div class="topoffre-header">
-        <h4>Top Education offers and deals are listed here</h4>
-        <p>See all</p>
+        <h4>{{ translations[currentLanguage].topListed }}</h4>
+        <p>{{ translations[currentLanguage].seeAll }}</p>
       </div>
       <div class="offrecont">
         <div class="offre" v-for="index in 3" :key="index">
           <div class="perce">50%</div>
           <h5>Lorem ipsum dolor</h5>
           <h6>
-            TOTC’s school management <br />
-            software helps traditional and <br />
-            online schools manage <br />
-            scheduling,
+            {{ translations[currentLanguage].schoolManagementSoftware1 }} <br />
+            {{ translations[currentLanguage].schoolManagementSoftware2 }}<br />
+            {{ translations[currentLanguage].schoolManagementSoftware3 }} <br />
+            {{ translations[currentLanguage].schoolManagementSoftware4 }}
           </h6>
           <img src="@/assets/redhair3.png" alt="" />
         </div>
@@ -66,6 +66,11 @@
 </template>
 
 <script>
+// import language requarement
+import { computed } from 'vue';
+import { useLanguageStore } from '../store/language';
+import en from '../lang/en.json';
+import ar from '../lang/ar.json';
 // import lessons from "@/components/lessons.vue";
 import categCard from "@/components/categCard.vue";
 
@@ -79,7 +84,25 @@ import categCardSkeleton from "@/components/categCardSkeleton.vue";
 import axios from 'axios';
 import { API_BASE_URL } from "../config";
 //import Cookies from 'js-cookie';
+
 export default {
+  setup() {
+    const currentLanguage = computed(() => useLanguageStore().currentLanguage);
+    const translations = {
+      en: en,
+      ar: ar
+    };
+
+    return {
+      currentLanguage,
+      translations
+    };
+  },
+  computed: {
+    translatedText() {
+      return this.translations[this.currentLanguage]['someKey'];
+    }
+  },
   data() {
     return {
       fetchedCategories: [],

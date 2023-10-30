@@ -180,9 +180,8 @@
     <div class="max-width">
       <div class="our-succes">
         <center>
-          <h2 class="our"> Our Success</h2>
-          <p class="ornane">Ornare id fames interdum porttitor nulla turpis etiam. Diam vitae sollicitudin at nec <br>
-            nam et pharetra gravida. Adipiscing a quis ultrices eu ornare tristique vel nisl orci. </p>
+          <h2 class="our">{{ translations[currentLanguage].ourSuccess }}</h2>
+          <p class="ornane">{{ translations[currentLanguage].ourSuccessParagraph }}</p>
         </center>
       </div>
 
@@ -190,23 +189,23 @@
         <div class="succes-cards">
           <div class="succes-item">
             <h2>15k+</h2>
-            <p>Students</p>
+            <p>{{ translations[currentLanguage].students }}</p>
           </div>
           <div class="succes-item">
             <h2>75% </h2>
-            <p>Total success</p>
+            <p>{{ translations[currentLanguage].totalSuccess }}</p>
           </div>
           <div class="succes-item">
             <h2>35</h2>
-            <p>Main questions</p>
+            <p>{{ translations[currentLanguage].mainQuestions }}</p>
           </div>
           <div class="succes-item">
             <h2>26</h2>
-            <p>Chief expert </p>
+            <p>{{ translations[currentLanguage].chiefExpert }} </p>
           </div>
           <div class="succes-item">
             <h2>16</h2>
-            <p>Years of experience</p>
+            <p>{{ translations[currentLanguage].yearsOfExp }}</p>
           </div>
         </div>
       </div>
@@ -219,10 +218,11 @@
   <div class="all-in-one">
     <div class="max-width">
       <center>
-        <h2> All-In-One <h2 class="cloud">Cloud Software.</h2>
+        <h2> {{ translations[currentLanguage].allInOne }} <h2 class="cloud">{{ translations[currentLanguage].cloudSoftware
+        }}</h2>
         </h2>
-        <p>TOTC is one powerful online software suite that combines all the tools <br>
-          needed to run a successful school or office.</p>
+        <p>{{ translations[currentLanguage].allInOneParagraph }} <br>
+          {{ translations[currentLanguage].allInOneCard1Title }}</p>
       </center>
     </div>
   </div>
@@ -264,13 +264,9 @@
         </svg>
         <div class="online">
           <h3 class="on">
-            Online Billing, <br>
-            Invoicing, & Contracts
+            {{ translations[currentLanguage].allInOneCard1Title }}
           </h3>
-          <p class="in">Simple and secure control of your <br>
-            organization’s financial and legal <br>
-            transactions. Send customized <br>
-            invoices and contracts</p>
+          <p class="in">{{ translations[currentLanguage].allInOneCard1Paragraph }}</p>
 
         </div>
       </div>
@@ -341,14 +337,10 @@
         </svg>
         <div class="easy">
           <h3 class="on">
-            Easy Scheduling & <br>
-            Attendance Tracking
+            {{ translations[currentLanguage].allInOneCard2Title }}
           </h3>
           <p class="in">
-            Schedule and reserve classrooms at <br>
-            one campus or multiple campuses <br>
-            . Keep detailed records of student <br>
-            attendance
+            {{ translations[currentLanguage].allInOneCard2Paragraph }}
           </p>
         </div>
       </div>
@@ -379,13 +371,10 @@
         </svg>
         <div class="customer">
           <h3 class="on">
-            Customer Tracking
+            {{ translations[currentLanguage].allInOneCard3Title }}
           </h3>
           <p class="in">
-            Automate and track emails to <br>
-            individuals or groups. Skilline’s <br>
-            built-in system helps organize <br>
-            your organization
+            {{ translations[currentLanguage].allInOneCard3Paragraph }}
           </p>
 
         </div>
@@ -397,8 +386,8 @@
   <div class="max-width">
     <div class="what-is-totc">
       <center>
-        <h3>what is </h3>
-        <h4>TOTC?</h4>
+        <h3>{{ translations[currentLanguage].totcTitle }} </h3>&nbsp;
+        <h4>{{ translations[currentLanguage].totcTitleQ }}</h4>
       </center>
 
     </div>
@@ -406,9 +395,7 @@
     <div class="text-what">
       <center>
         <p>
-          TOTC is a platform that allows educators to create online classes whereby they can <br>
-          store the course materials online; manage assignments, quizzes and exams; monitor <br>
-          due dates; grade results and provide students with feedback all in one place.
+          {{ translations[currentLanguage].totcParagraph }}
         </p>
       </center>
     </div>
@@ -417,15 +404,15 @@
       <div class="inst-contaienr">
         <div class="inst-card">
           <div class="instructors">
-            <h3>FOR INSTRUCTORS</h3>
-            <div class="start-class">Start a class today</div>
+            <h3>{{ translations[currentLanguage].totcCard1Title }}</h3>
+            <div class="start-class">{{ translations[currentLanguage].totcCard1Paragraph }}</div>
             <img src="@/assets/red-hair.png" alt="">
           </div>
         </div>
         <div class="inst-card">
           <div class="students">
-            <h3>FOR STUDENTS</h3>
-            <div class="acces-code">Enter access code</div>
+            <h3>{{ translations[currentLanguage].totcCard2Title }}</h3>
+            <div class="acces-code">{{ translations[currentLanguage].totcCard2Paragraph }}</div>
             <img src="@/assets/students.png" alt="">
           </div>
         </div>
@@ -437,18 +424,15 @@
     <div class="videocont">
       <div class="textvid">
         <h4>
-          Everything you can do in a physical <br />
-          classroom,
-        </h4>
-        <h3>you can do with TOTC</h3>
+          {{ translations[currentLanguage].everythingTitle }} <br />
+          {{ translations[currentLanguage].classrom }}
+        </h4>&nbsp;
+        <h3>{{ translations[currentLanguage].everythingTitleP2 }} </h3>
         <p>
-          TOTC’s school management software helps traditional <br />
-          and online schools manage scheduling, attendance, <br />
-          payments and virtual classrooms all in one secure cloud- <br />
-          based system.
+          {{ translations[currentLanguage].everythingTitleParagraph }}
           <br />
           <br />
-          <a href="">learn more</a>
+          <a href="">{{ translations[currentLanguage].learnMore }}</a>
         </p>
       </div>
       <div class="imgvid">
@@ -1196,6 +1180,10 @@ h4 {
 }
 
 /* End totic section */
+
+.textvid {
+  width: 600px;
+}
 
 .textvid p {
   color: #696984;

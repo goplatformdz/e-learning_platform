@@ -8,12 +8,15 @@
       <div v-if="!forgotPassword" class="container">
         <center>
           <div class="btn">
-            <button class="btn-signup" @click="toggleLogin(); toggleSignup();">Signup</button>
-            <button class="btn-login" @click="toggleLogin(); toggleSignup();">Login</button>
+            <button class="btn-signup" @click="toggleLogin(); toggleSignup();">{{ translations[currentLanguage].Signup
+            }}</button>
+            <button class="btn-login" @click="toggleLogin(); toggleSignup();">{{ translations[currentLanguage].Login
+            }}</button>
           </div>
-          <h4>Login to your TOTC account</h4>
+          <h4>{{ translations[currentLanguage].LtoToticAcc }}</h4>
         </center>
-        <h3><font-awesome-icon class="font-icon email-icon" icon="fa-solid fa-envelope" /> Email Address </h3>
+        <h3><font-awesome-icon class="font-icon email-icon" icon="fa-solid fa-envelope" /> {{
+          translations[currentLanguage].EmAdd }}</h3>
 
         <div class="input-wrapper">
 
@@ -25,7 +28,8 @@
 
         </div>
         <br />
-        <h3><font-awesome-icon class="font-icon email-icon" icon="fa-solid fa-key" /> Password</h3>
+        <h3><font-awesome-icon class="font-icon email-icon" icon="fa-solid fa-key" /> {{
+          translations[currentLanguage].LPass }}</h3>
         <div class="input-wrapper">
           <input :class="(v$.inputEmail.$error || credentials.invalidCredentials.value) ? 'input-error' : 'input'"
             type="password" v-model="formData.inputPassword.value" />
@@ -34,7 +38,8 @@
           </span>
         </div>
 
-        <span v-if="credentials.invalidCredentials.value" class="invalid-credentials"> Invalid Credentials </span>
+        <span v-if="credentials.invalidCredentials.value" class="invalid-credentials"> {{
+          translations[currentLanguage].LPass }} </span>
 
         <div v-if="loadings.loading.value" class="btn-container">
           <button class="btn-loading">
@@ -42,10 +47,14 @@
           </button>
         </div>
         <div v-else class="btn-container">
-          <button class="btn2" @click="fetchData();">Login</button>
+          <button class="btn2" @click="fetchData();">{{
+            translations[currentLanguage].Login }}</button>
         </div>
-        <div class="sign-span">Don't have an account? <span @click="toggleLogin(); toggleSignup();">Sign Up</span></div>
-        <div class="forgot-span">Or<span @click="toggleForgotPassword">Forgot Password</span></div>
+        <div class="sign-span">{{ translations[currentLanguage].DuHavAcc }} <span
+            @click="toggleLogin(); toggleSignup();">{{ translations[currentLanguage].Signup }} </span></div>
+        <div class="forgot-span">{{ translations[currentLanguage].Or }}<span @click="toggleForgotPassword">{{
+          translations[currentLanguage].FPass }} </span>
+        </div>
 
       </div>
       <div v-else class="container">
@@ -108,10 +117,20 @@ import { useAuthStore } from '../store/auth';
 import { API_BASE_URL } from '../config';
 import Cookies from 'js-cookie';
 
+// For multi languages
+import { useLanguageStore } from '../store/language';
+import en from '../lang/en.json';
+import ar from '../lang/ar.json';
+
 
 
 export default {
   name: "loginComponent",
+  computed: {
+    translatedText() {
+      return this.translations[this.currentLanguage]['someKey'];
+    }
+  },
   /*data() {
     return {
       invalidCredentials: false
@@ -232,10 +251,13 @@ export default {
       }
     }
 
+    const currentLanguage = computed(() => useLanguageStore().currentLanguage);
+    const translations = {
+      en: en,
+      ar: ar
+    };
 
-
-
-    return { v$, fetchData, formData, credentials, loadings, authStore, sendNewPassword };
+    return { v$, fetchData, formData, credentials, loadings, authStore, sendNewPassword, currentLanguage, translations };
   }
 };
 
