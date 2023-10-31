@@ -7,6 +7,7 @@ import coursedetail from "@/views/coursedetail.vue";
 import fullcourse from "@/views/fullcourse.vue";
 import coursesByCategory from "@/views/coursesByCategory.vue";
 import resetPassword from "@/views/resetPassword.vue";
+import PdfView from "@/views/PdfView.vue";
 
 const routes = [
   { path: "/", name: "home", component: home },
@@ -17,6 +18,7 @@ const routes = [
   { path: "/fullcourse/:courseId/:id", name: "fullcourse", component: fullcourse },
   { path: "/api/users/resetPassword/:token", name: "resetPassword", component: resetPassword },
   { path: "/coursesByCategory/:categoryName", name: "coursesByCategory", component: coursesByCategory },
+  { path: "/pdf", component: PdfView },
 
 ];
 const router = createRouter({

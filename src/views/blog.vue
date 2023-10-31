@@ -10,8 +10,6 @@
         <relatedCardSkeleton v-for="index in 6" :key="index" />
       </div>
     </div>
-
-
   </div>
 </template>
 
