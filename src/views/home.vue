@@ -9,7 +9,7 @@
     <div class="max-width">
       <div class="teen-girl"><img src="@/assets/teen-girl.png" alt=""></div>
       <!-- Start header-container -->
-      <div class="header-section">
+      <div class="header-section" :style="{ 'direction': currentLanguage === 'ar' ? 'rtl' : 'ltr' }">
         <div class="header-container">
           <h1 class="orngtext">{{ translations[currentLanguage].studying }}</h1> &nbsp;
           <h1>
@@ -186,7 +186,7 @@
       </div>
 
       <div class="succes">
-        <div class="succes-cards">
+        <div class="succes-cards" :style="{ 'direction': currentLanguage === 'ar' ? 'rtl' : 'ltr' }">
           <div class="succes-item">
             <h2>15k+</h2>
             <p>{{ translations[currentLanguage].students }}</p>
@@ -421,7 +421,7 @@
   </div>
 
   <div class="max-width">
-    <div class="videocont">
+    <div class="videocont" :style="{ 'direction': currentLanguage === 'ar' ? 'rtl' : 'ltr' }">
       <div class="textvid">
         <h4>
           {{ translations[currentLanguage].everythingTitle }} <br />
@@ -509,7 +509,6 @@ h4 {
   z-index: 0;
   margin-bottom: 150px;
 }
-
 
 .head .blue-background {
   width: 100%;

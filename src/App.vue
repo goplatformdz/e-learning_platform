@@ -76,4 +76,13 @@ h1 {
   display: inline;
 
 }
+
+.ltr {
+  flex-direction: row;
+}
+
+/* Right-to-left (for Arabic) */
+.rtl {
+  flex-direction: row-reverse;
+}
 </style>

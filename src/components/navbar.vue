@@ -11,7 +11,7 @@
         <dropdown :getCurrentUser="getCurrentUser" :dropOpen="dropOpen" :toggleDropdown="toggleDropdown" />
       </div>
       <div class="nav-links">
-        <ul>
+        <ul :style="{ 'direction': currentLanguage === 'ar' ? 'rtl' : 'ltr' }">
           <li>
             <router-link to="/">{{ translations[currentLanguage].home }}</router-link>
           </li>
@@ -115,7 +115,10 @@ export default {
       set(value) {
         useLanguageStore().changeLanguage(value);
       }
-    }
+    },
+    directionClass() {
+      return this.selectedLanguage === "ar" ? "rtl" : "ltr";
+    },
   },
 
   data() {
@@ -127,6 +130,7 @@ export default {
       loading: true,
       dropOpen: false,
       dropListOpen: true,
+      direction: "ltr", // Default to left-to-right
     };
   },
 
@@ -218,6 +222,8 @@ img {
   height: 100%;
 }
 
+/* Left-to-right (default) */
+
 .nav {
   display: flex;
   justify-content: center;
@@ -301,11 +307,11 @@ img {
 }
 
 ul {
+  display: flex;
   position: block;
   margin: 0px;
   padding: 0;
   list-style: none;
-  display: inline;
   text-align: center;
 }
 

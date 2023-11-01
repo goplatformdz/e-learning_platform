@@ -2,7 +2,7 @@
   <main>
     <div class="searchcont">
       <div class="search-section">
-        <input type="search" name="" class="search" placeholder="Search courses by name" v-model="courseName" />
+        <input type="search" name="" class="search" :placeholder="placeholderText" v-model="courseName" />
         <button class="srchbtn" @click="searchCourse">{{ translations[currentLanguage].searchButton }}</button>
         <!-- <img src="@/assets/searchimg.png" alt="" /> -->
       </div>
@@ -43,7 +43,7 @@
     <myCourses />
     <recomanded />
     <div class="topoffre">
-      <div class="topoffre-header">
+      <div class="topoffre-header" :style="{ 'direction': currentLanguage === 'ar' ? 'rtl' : 'ltr' }">
         <h4>{{ translations[currentLanguage].topListed }}</h4>
         <p>{{ translations[currentLanguage].seeAll }}</p>
       </div>
@@ -101,7 +101,14 @@ export default {
   computed: {
     translatedText() {
       return this.translations[this.currentLanguage]['someKey'];
-    }
+    },
+    placeholderText() {
+      if (this.currentLanguage === 'ar') {
+        return this.translations[this.currentLanguage].searchCoursesByname;
+      } else {
+        return this.translations[this.currentLanguage].searchCoursesByname;
+      }
+    },
   },
   data() {
     return {
