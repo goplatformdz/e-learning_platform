@@ -19,11 +19,11 @@ const routes = [
   { path: "/api/users/resetPassword/:token", name: "resetPassword", component: resetPassword },
   { path: "/coursesByCategory/:categoryName", name: "coursesByCategory", component: coursesByCategory },
   { path: "/pdf", component: PdfView },
-
 ];
+
 const router = createRouter({
   history: createWebHistory(),
   routes,
-
 });
+
 export default router;
