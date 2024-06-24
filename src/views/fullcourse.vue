@@ -13,8 +13,7 @@
     </div>
 
     <div class="lessonvideo">
-      <div @click="openLessons" class="lessonsTag"><font-awesome-icon :icon="['fas', 'list']" /> Lessons
-      </div>
+
       <div class="tittle">
         <h2 v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.courseName }}</h2>
         <h4>{{ fetchedLesson.lessonName }}</h4>
@@ -44,7 +43,7 @@ import lessonb from '../components/lessonbotton.vue'
 import pencil from "../components/pencil.vue";
 import { useRouter, } from 'vue-router'; // Import useRouter and useRoute
 import { API_BASE_URL } from '../config';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+//import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 
 
@@ -52,7 +51,7 @@ export default {
   components: {
     pencil,
     //lessonContainer,
-    FontAwesomeIcon,
+    //FontAwesomeIcon,
     lessonb
   },
   setup() {
@@ -327,7 +326,7 @@ iframe {
 }
 
 .container1 {
-  margin-top: 80px;
+  padding-top: 80px;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 3fr;

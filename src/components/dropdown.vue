@@ -51,6 +51,7 @@ export default {
 <style scoped >
 .container {
     height: 120px;
+    position: absolute;
     width: 200px;
     display: flex;
     justify-content: center;
@@ -59,8 +60,8 @@ export default {
     border-radius: 9px;
     background: #F0F0F0;
     box-shadow: 0px 30px 60px 0px rgba(47, 50, 125, 0.3);
-    margin-left: 71.5%;
-    margin-top: 55px
+    right: 80px;
+    top: 80px;
 }
 
 .profile {

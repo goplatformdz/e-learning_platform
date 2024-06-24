@@ -184,10 +184,7 @@ export default {
         await props.toggleLogin();
         await props.toggleForgotPassword();
 
-        if (this.$router.name === "courses") {
 
-          window.location.reload();
-        }
 
 
         if (Object.prototype.hasOwnProperty.call(props, 'checkIsEnrolled')) {
@@ -332,21 +329,21 @@ body {
 .login-page {
   width: 100%;
   height: 100%;
-  max-height: 300vh;
   /* Limit the height to 90% of the viewport height */
-  overflow-y: auto;
   z-index: 1001;
   position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
 }
 
 .login-vue {
   background: #FFFEFC;
-  position: relative;
-  top: 10%;
+  position: fixed;
+  top: 4%;
   width: 70%;
   height: 650px;
-  left: 15%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   border-radius: 30px;
   display: flex;
@@ -371,7 +368,7 @@ body {
 .valid-credentials {
   position: absolute;
   bottom: 37%;
-  color: #49BBBD;
+  color: #00A9FF;
   white-space: nowrap;
   left: 50%;
   transform: translateX(-50%);
@@ -487,7 +484,7 @@ body.active-modal {
   height: 40px;
   flex-shrink: 0;
   border-radius: 33px;
-  background: rgba(73, 187, 189, 0.6);
+  background: #66CCFF;
   margin-bottom: 25px;
 }
 
@@ -506,7 +503,7 @@ body.active-modal {
   font-weight: 400;
   line-height: normal;
   border-radius: 33px;
-  background: #49BBBD;
+  background: #00A9FF;
   transition: background-color 0.3s;
 
 }
@@ -532,7 +529,7 @@ body.active-modal {
 }
 
 .btn-signup:hover {
-  background-color: rgba(73, 187, 189, 0.8);
+  background-color: #00A9FF;
 }
 
 .input-error {
@@ -550,7 +547,7 @@ body.active-modal {
   width: 84%;
   height: 40px;
   border-radius: 40px;
-  border: 1px solid #49BBBD;
+  border: 1px solid #00A9FF;
   background: #FFF;
   padding-left: 3%;
   padding-right: 3%;
@@ -615,9 +612,9 @@ h4 {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  background: #49BBBD;
+  background: #00A9FF;
   border-radius: 36px;
-  background: #49BBBD;
+  background: #00A9FF;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
 }
@@ -625,15 +622,15 @@ h4 {
 .btn-loading {
   margin-top: 30px;
   width: 40%;
-  padding-top: 3%;
-  padding-bottom: 3%;
+  padding-top: 4%;
+  padding-bottom: 4%;
   color: #FFF;
   font-family: Poppins;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  background: #49BBBD;
+  background: #00A9FF;
   border-radius: 36px;
   cursor: not-allowed;
   opacity: 0.7;
@@ -643,15 +640,15 @@ h4 {
 .btn-loading-send {
   margin-top: 5px;
   width: 40%;
-  padding-top: 3%;
-  padding-bottom: 3%;
+  padding-top: 3.5%;
+  padding-bottom: 3.5%;
   color: #FFF;
   font-family: Poppins;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  background: #49BBBD;
+  background: #00A9FF;
   border-radius: 36px;
   cursor: not-allowed;
   opacity: 0.7;
@@ -659,7 +656,7 @@ h4 {
 }
 
 .spinner {
-  margin-left: 42%;
+  margin-left: 42.5%;
 }
 
 .btn-container {
@@ -692,7 +689,7 @@ img {
 }
 
 
-@media (min-width: 1500px) {
+@media (min-width: 1400px) {
   .login-vue {
     width: 1000px;
 
@@ -702,22 +699,10 @@ img {
 }
 
 
-@media (max-width: 1300px) {
-  /*.login-vue {
-    width: 400px;
 
-  }*/
 
-  .sign-span {
 
-    left: 23%
-  }
 
-  .forgot-span {
-
-    left: 33%;
-  }
-}
 
 @media (max-width: 1080px) {
 
@@ -728,7 +713,6 @@ img {
 
   .login-vue {
     width: 470px;
-    left: 30%;
   }
 
   .container {
@@ -747,10 +731,32 @@ img {
 
 }
 
+
+
+@media (max-width: 740px) {
+  .login-vue {
+    width: 400px;
+  }
+}
+
+@media (max-width: 550px) {
+  .login-vue {
+    width: 350px;
+  }
+
+}
+
 /*@media (max-width: 983px) {
   .login-vue {
 
     left: 23%;
+  }
+}
+
+@media (max-width: 740px) {
+  .login-vue {
+
+    left: 18%;
   }
 }
 
@@ -775,7 +781,6 @@ img {
   }
 }
 
-/*
 
 @media (max-width: 560px) {
   .login-vue {

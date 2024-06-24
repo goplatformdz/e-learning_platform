@@ -58,11 +58,13 @@ export default {
 <style  scoped>
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   /* Display two columns */
-  gap: 0px;
+  gap: 30px;
   /* Adjust the gap between grid items */
   margin-top: 20px;
+  overflow: wrap;
+
   /* Add margin to separate from the content above */
 }
 
@@ -225,5 +227,11 @@ p {
 img {
   width: 100%;
   height: 100%;
+}
+
+@media only screen and (max-width: 879px) {
+  .grid-container {
+    padding-left: 20%;
+  }
 }
 </style>

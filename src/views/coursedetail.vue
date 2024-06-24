@@ -32,64 +32,29 @@
       <div class="descripcourse">
         <div class="descriptimg" v-if="fetchedCourses && fetchedCourses.length"><img
             :src="fetchedCourses[0].course_id.photo1" alt="" /></div>
-        <div class="courseprice">
-          <h3 v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.courseName }}</h3>
+        <div class="course-content">
+          <div class="courseprice">
+            <h3 v-if="fetchedCourses && fetchedCourses.length">{{ fetchedCourses[0].course_id.courseName }}</h3>
 
+          </div>
+          <p class="hour11" v-if="fetchedCourses && fetchedCourses.length"><font-awesome-icon
+              icon="fa-solid fa-user-graduate" /> {{ fetchedCourses[0].course_id.instructor }}</p>
+          <div>
+            <button class="buyn" v-if="!isEnrolled" @click="conferm">Enroll Now</button>
+            <div class="enrolled" @click="gotocourse()" v-else>Go to course <font-awesome-icon class="font-icon"
+                icon="fa-solid fa-arrow-right" /> </div>
+
+          </div>
         </div>
-        <p class="hour11" v-if="fetchedCourses && fetchedCourses.length"><font-awesome-icon
-            icon="fa-solid fa-user-graduate" /> {{ fetchedCourses[0].course_id.instructor }}</p>
-        <div>
-          <button class="buyn" v-if="!isEnrolled" @click="conferm">Enroll Now</button>
-          <div class="enrolled" @click="gotocourse()" v-else>Go to course <font-awesome-icon class="font-icon"
-              icon="fa-solid fa-arrow-right" /> </div>
-          <div class="linee"></div>
-        </div>
-        <h3 class="thiscourse">This course included</h3>
-        <div>
-          <ul>
-            <li>
-              <fa :icon="['fas', 'sun']" />
-              <spam class="fa"> Money Back Guarantee</spam>
-            </li>
-            <li>
-              <fa :icon="['fas', 'camera']" />
-              <spam class="fa"> Access on all devices</spam>
-            </li>
-            <li>
-              <fa :icon="['fas', 'file']" />
-              <spam class="fa"> Certification of completion</spam>
-            </li>
-          </ul>
-        </div>
+
+
       </div>
     </div>
 
     <recomanded />
 
 
-    <div class="videocont">
-      <div class="textvid">
-        <h4>
-          Everything you can do in a physical <br />
-          classroom,
-        </h4>
-        <h3>you can do with TOTC</h3>
-        <p>
-          TOTC’s school management software helps traditional <br />
-          and online schools manage scheduling, attendance, <br />
-          payments and virtual classrooms all in one secure cloud- <br />
-          based system.
-          <br />
-          <br />
-          <a href="">learn more</a>
-        </p>
-      </div>
-      <div class="imgvid">
-        <div class="shape11"></div>
-        <div class="shape22"></div>
-        <img class="imgvid1" src="@/assets/teacher.png" alt="" />
-      </div>
-    </div>
+
 
   </div>
 </template>
@@ -245,6 +210,8 @@ export default {
   padding-top: 30px;
 
 }
+
+
 
 .font-icon {
   margin-left: 10px;
@@ -677,5 +644,143 @@ img {
   background: rgba(157, 204, 255, 0.3);
   grid-column: 1;
   padding-bottom: 30px;
+}
+
+@media (min-width: 1300px) {
+  .descripcourse {
+    left: 950px;
+  }
+
+  .rate {
+    width: 820px;
+  }
+
+
+}
+
+@media (min-width: 1420px) {
+  .descripcourse {
+    left: 1010px;
+  }
+
+  .rate {
+    width: 850px;
+  }
+
+
+}
+
+@media (min-width: 1500px) {
+  .descripcourse {
+    left: 1100px;
+  }
+
+  .rate {
+    width: 1000px;
+  }
+
+
+}
+
+@media (max-width: 1216px) {
+  .descripcourse {
+    display: flex;
+    top: 500px;
+    left: 50px;
+    width: 80%;
+    height: 280px;
+    margin-top: -30px;
+  }
+
+  .rate {
+    margin-top: 300px;
+    margin-left: 60px;
+    width: 80%;
+    height: auto;
+    border-radius: 20px;
+    background: rgba(157, 204, 255, 0.3);
+    grid-column: 1;
+    padding-bottom: 30px;
+  }
+
+  .hour11 {
+    color: #000;
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.4px;
+    margin-left: 10%;
+
+  }
+
+  .courseprice h3 {
+    color: #000;
+    font-family: Poppins;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.9px;
+    display: inline;
+  }
+
+  .descriptimg {
+    width: 400px;
+    height: 240px;
+    grid-row: 1;
+    overflow: hidden;
+    position: relative;
+    margin-right: 30px;
+    border-radius: 8px;
+
+  }
+
+  .descriptimg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Maintain aspect ratio and cover container */
+    object-position: center center;
+    /* Center the image */
+  }
+
+
+  .hour11 {
+    color: #000;
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.4px;
+    margin-left: 0px;
+    margin-top: 15px;
+
+  }
+
+  .buyn {
+    margin-top: 20px;
+    width: 40%;
+    height: 50px;
+    border-radius: 12px;
+    background: #49BBBD;
+    color: #FFF;
+    font-family: Poppins;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  .course-content {
+    width: 70%;
+  }
+
+
+
 }
 </style>

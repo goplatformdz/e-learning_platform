@@ -105,6 +105,7 @@ export default {
   font-weight: 700;
   line-height: normal;
   margin-left: 17px;
+  margin-right: 17px;
   grid-row: 3;
   grid-column: 1;
   display: -webkit-box;
@@ -146,9 +147,10 @@ export default {
   box-shadow: 0px 18.829999923706055px 47.08000183105469px 0px rgba(47, 50, 125, 0.1);
   display: flex;
   flex-direction: column;
-  margin-right: 72px;
+  margin-left: 40px;
+  margin-right: 50px;
+  margin-bottom: 50px;
   position: relative;
-  margin-bottom: 20px;
   cursor: pointer;
   transition: ease-in-out 0.2s;
 
@@ -195,5 +197,16 @@ export default {
 .m3d {
   display: flex;
   flex-direction: row;
+}
+
+@media only screen and (max-width: 650px) {
+
+  .markcard {
+    width: 200px;
+    height: 300px;
+  }
+
+
+
 }
 </style>

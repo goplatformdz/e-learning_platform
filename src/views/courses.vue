@@ -1,15 +1,13 @@
 <template>
   <main>
-    <div class="searchcont">
-      <div class="search-section">
-        <input type="search" name="" class="search" placeholder="Search courses by name" v-model="courseName" />
-        <button class="srchbtn" @click="searchCourse">Search</button>
-        <!-- <img src="@/assets/searchimg.png" alt="" /> -->
-      </div>
+    <div class="search-section">
+      <div class="img-search"><img src="@/assets/searchimg.png" alt="" /></div>
+      <input type="search" name="" class="search" placeholder="Search courses by name" v-model="courseName" />
+      <button class="srchbtn" @click="searchCourse">Search</button>
     </div>
     <div v-if="searched && searchData.length" class="courses-searched">
       <h3>Courses found for " {{ varSearched }} "</h3>
-      <div class="grid-container">
+      <div class="grid-container-searched">
         <markCard v-for=" (course, index) in searchData" :key="index" :course-data="course" />
       </div>
     </div>
@@ -147,17 +145,29 @@ export default {
 };
 </script>
 
-<style>
-.searchcont {
-  padding-top: 80px;
+<style scoped>
+.search-section {
+  width: 100%;
+  height: 200px;
+
 }
 
-.searchcont .search-section {
-  padding: 20px 0;
-  background-image: url('../assets/searchimg.png');
+.img-search {
+  width: 100%;
+  height: 100%;
+  /* Adjust the height as needed */
+  overflow: hidden;
 }
 
-.searchcont .search-section .search {
+.img-search img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Maintain aspect ratio and cover container */
+  object-position: center center;
+}
+
+.search-section .search {
   display: block;
   margin: 0px auto;
   border-radius: 10px;
@@ -177,7 +187,7 @@ export default {
   outline: none;
 }
 
-.searchcont .search-section .srchbtn {
+.search-section .srchbtn {
   display: block;
   margin: 15px auto;
   color: #FFF;
@@ -187,7 +197,7 @@ export default {
   font-weight: 700;
   line-height: normal;
   border-radius: 12px;
-  background: #49BBBD;
+  background: #00A9FF;
   width: 100px;
   height: 50px;
   flex-shrink: 0;
@@ -202,18 +212,15 @@ export default {
 }
 
 .courses-searched {
-  padding-left: 4.2%;
-  background-color: rgb(197, 220, 245);
   width: 100%;
   height: auto;
-  margin-bottom: 50px;
-  padding-bottom: 50px;
-  margin-top: -50px;
-  padding-top: 10px;
+  background-color: rgb(197, 220, 245);
+
+
 }
 
 .courses-searched h3 {
-  margin-left: 20px;
+  margin-left: 5%0px;
   margin-bottom: 20px;
   color: #252641;
   font-family: Poppins;
@@ -221,7 +228,6 @@ export default {
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  padding-top: -70px;
 }
 
 .not-searched {
@@ -232,7 +238,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 200px;
+  height: 250px;
   padding-bottom: 40px;
   background-color: #fff
 }
@@ -241,7 +247,7 @@ export default {
   padding-top: 50px;
   color: rgba(0, 0, 0, 0.8);
   font-family: Poppins;
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -256,12 +262,17 @@ export default {
   width: 100%;
   height: auto;
   margin-bottom: 60px;
+  position: relative;
 }
 
 .categories h3 {
-  margin-left: 60px;
-  margin-bottom: 20px;
-  padding-top: 10px;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 30px;
+  margin-bottom: 30px;
   color: #252641;
   font-family: Poppins;
   font-size: 26px;
@@ -311,7 +322,7 @@ export default {
 .topoffre .offrecont {
   width: 95%;
   margin: 20px auto;
-  background-color: red;
+  background-color: #fff;
   display: relative;
   display: flex;
   justify-content: space-between;
@@ -385,7 +396,10 @@ export default {
 
 
 .cateH {
+  position: absolute;
   margin-top: -15px;
+  margin-bottom: 15px;
+  left: 10px;
 }
 
 
@@ -438,7 +452,7 @@ img {
 }
 
 .grid-container {
-  padding-top: 20px;
+  padding-top: 90px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   /* Adjust the column width as needed */
@@ -446,6 +460,14 @@ img {
   /* Adjust the gap between grid items */
 }
 
+.grid-container-searched {
+  padding-top: 10px;
+  padding-left: 2%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  /* Adjust the column width as needed */
+  gap: 0px;
+}
 
 
 .see {
@@ -488,6 +510,26 @@ img {
   grid-row: 1;
 }
 
+main {
+  width: 100%;
+}
+
+@media only screen and (max-width: 751px) {
+  .categories h3 {
+
+    font-size: 22px;
+
+  }
+
+  .grid-container {
+
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    /* Adjust the column width as needed */
+    gap: 20px;
+    /* Adjust the gap between grid items */
+  }
+}
+
 @media only screen and (max-width: 704px) {
   .topoffre p {
     margin: 0 auto;
@@ -497,9 +539,38 @@ img {
 
 }
 
+@media only screen and (max-width: 618px) {
+
+  .grid-container-searched {
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+
+  }
+}
+
+@media only screen and (max-width: 519px) {
+
+  .grid-container {
+    padding-left: 10%;
+  }
+}
+
+
+
 @media only screen and (max-width: 404px) {
   .topoffre .offrecont .offre {
     width: 90%;
+  }
+}
+
+@media only screen and (max-width: 370px) {
+  .categories h3 {
+
+    font-size: 19px;
+
+  }
+
+  .grid-container {
+    padding-left: 5%;
   }
 }
 </style>
