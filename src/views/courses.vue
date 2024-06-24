@@ -1,20 +1,18 @@
 <template>
   <main>
-    <div class="searchcont">
-      <div>
-        <input type="search" name="" class="search" placeholder="Search courses by name" v-model="courseName" />
-        <button class="srchbtn" @click="searchCourse">Search</button>
-        <img src="@/assets/searchimg.png" alt="" />
-      </div>
+    <div class="search-section">
+      <div class="img-search"><img src="@/assets/searchimg.png" alt="" /></div>
+      <input type="search" name="" class="search" placeholder="Search courses by name" v-model="courseName" />
+      <button class="srchbtn" @click="searchCourse">Search</button>
     </div>
     <div v-if="searched && searchData.length" class="courses-searched">
       <h3>Courses found for " {{ varSearched }} "</h3>
-      <div class="grid-container">
+      <div class="grid-container-searched">
         <markCard v-for=" (course, index) in searchData" :key="index" :course-data="course" />
       </div>
     </div>
     <div v-if="!searched" class="not-searched">
-      <h2>Search courses, you will find them here<font-awesome-icon class="icon" icon="fa-solid fa-magnifying-glass"
+      <h2>Search courses, you will find them here <font-awesome-icon class="icon" icon="fa-solid fa-magnifying-glass"
           size="xl" /></h2>
     </div>
     <div v-if="searched && !searchData.length" class="not-searched">
@@ -43,8 +41,10 @@
     <myCourses />
     <recomanded />
     <div class="topoffre">
-      <h4>Top Education offers and deals are listed here</h4>
-      <p>See all</p>
+      <div class="topoffre-header">
+        <h4>Top Education offers and deals are listed here</h4>
+        <p>See all</p>
+      </div>
       <div class="offrecont">
         <div class="offre" v-for="index in 3" :key="index">
           <div class="perce">50%</div>
@@ -58,6 +58,7 @@
           <img src="@/assets/redhair3.png" alt="" />
         </div>
       </div>
+
     </div>
   </main>
 </template>
@@ -144,7 +145,203 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.search-section {
+  width: 100%;
+  height: 200px;
+
+}
+
+.img-search {
+  width: 100%;
+  height: 100%;
+  /* Adjust the height as needed */
+  overflow: hidden;
+}
+
+.img-search img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Maintain aspect ratio and cover container */
+  object-position: center center;
+}
+
+.search-section .search {
+  display: block;
+  margin: 0px auto;
+  border-radius: 10px;
+  background: #FFF;
+  width: 70%;
+  height: 50px;
+  border: 0;
+  padding-left: 3%;
+  padding-right: 3%;
+  color: rgba(0, 0, 0, 0.6);
+  font-family: Poppins;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.8px;
+  outline: none;
+}
+
+.search-section .srchbtn {
+  display: block;
+  margin: 15px auto;
+  color: #FFF;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border-radius: 12px;
+  background: #00A9FF;
+  width: 100px;
+  height: 50px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.srchbtn:hover,
+.srchbtn:active {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: #388E8E;
+}
+
+.courses-searched {
+  width: 100%;
+  height: auto;
+  background-color: rgb(197, 220, 245);
+
+
+}
+
+.courses-searched h3 {
+  margin-left: 5%0px;
+  margin-bottom: 20px;
+  color: #252641;
+  font-family: Poppins;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.not-searched {
+  margin-top: -5px;
+  text-align: center;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 250px;
+  padding-bottom: 40px;
+  background-color: #fff
+}
+
+.not-searched h2 {
+  padding-top: 50px;
+  color: rgba(0, 0, 0, 0.8);
+  font-family: Poppins;
+  font-size: 1.2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.not-searched h2 .icon {
+  margin-left: 20px;
+}
+
+.categories {
+  text-align: center;
+  width: 100%;
+  height: auto;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.categories h3 {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 30px;
+  margin-bottom: 30px;
+  color: #252641;
+  font-family: Poppins;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+
+.topoffre {
+  margin-bottom: 40px;
+  margin-top: 40px;
+  height: auto;
+  grid-template-rows: 1fr 9fr;
+}
+
+.topoffre .topoffre-header {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 30px;
+}
+
+.topoffre h4 {
+  color: rgba(0, 0, 0, 0.8);
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  grid-row: 1;
+  margin: 0 3px;
+}
+
+.topoffre p {
+  color: #49BBBD;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  grid-row: 1;
+}
+
+.topoffre .offrecont {
+  width: 95%;
+  margin: 20px auto;
+  background-color: #fff;
+  display: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.topoffre .offrecont .offre {
+  margin: 20px auto;
+  width: 370px;
+  height: 320.419px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  /* margin-right: 40px;
+  margin-top: 20px; */
+  transition: ease-in-out 0.2s;
+}
+
+
 .offre:hover,
 .offre:active,
 .offre:focus {
@@ -162,7 +359,6 @@ export default {
   font-style: normal;
   font-weight: 400;
   line-height: 180%;
-  /* 43.2px */
   letter-spacing: 0.48px;
 }
 
@@ -179,7 +375,7 @@ export default {
   line-height: normal;
 }
 
-.perce {
+.topoffre .offrecont .offre .perce {
   margin-top: 30px;
   margin-left: 30px;
   position: absolute;
@@ -200,166 +396,19 @@ export default {
 
 
 .cateH {
-  margin-top: -15px;
-}
-
-.topoffre h4 {
-  padding-top: 0px;
-  margin-left: 60px;
-  color: rgba(0, 0, 0, 0.8);
-  font-family: Poppins;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  grid-row: 1;
-  display: inline;
-}
-
-.topoffre p {
-  display: inline;
-
   position: absolute;
-  right: 100px;
-  color: #49BBBD;
-  font-family: Poppins;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  grid-row: 1;
+  margin-top: -15px;
+  margin-bottom: 15px;
+  left: 10px;
 }
+
+
 
 img {
   width: 100%;
   height: 100%;
 }
 
-.topoffre {
-  margin-top: 40px;
-  height: 500px;
-  grid-template-rows: 1fr 9fr;
-}
-
-.offre {
-  width: 370px;
-  height: 320.419px;
-  flex-shrink: 0;
-  border-radius: 20px;
-  margin-right: 40px;
-  margin-top: 20px;
-  transition: ease-in-out 0.2s;
-}
-
-.offrecont {
-  display: relative;
-  margin-top: 30px;
-  margin-left: 60px;
-  display: flex;
-  flex-wrap: wrap;
-  grid-row: 2;
-}
-
-.courses-searched {
-  padding-left: 4.2%;
-  background-color: rgb(197, 220, 245);
-  width: 100%;
-  height: auto;
-  margin-bottom: 50px;
-  padding-bottom: 50px;
-  margin-top: -50px;
-  padding-top: 10px;
-}
-
-.courses-searched h3 {
-  margin-left: 20px;
-  margin-bottom: 20px;
-  color: #252641;
-  font-family: Poppins;
-  font-size: 26px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  padding-top: -70px;
-}
-
-.not-searched {
-  margin-top: -5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 200px;
-  padding-bottom: 40px;
-
-  background-color: #fff
-}
-
-
-.icon {
-  margin-left: 20px;
-}
-
-.not-searched h2 {
-  padding-top: 50px;
-  color: rgba(0, 0, 0, 0.8);
-  font-family: Poppins;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-
-.search {
-  border-radius: 10px;
-  background: #FFF;
-  width: 70%;
-  height: 50px;
-  border: 0;
-  position: absolute;
-  margin-top: 5%;
-  margin-left: 15%;
-  padding-left: 3%;
-  padding-right: 3%;
-  color: rgba(0, 0, 0, 0.6);
-  font-family: Poppins;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 0.8px;
-  outline: none;
-}
-
-.searchcont {
-  margin-top: 80px;
-}
-
-.srchbtn {
-  color: #FFF;
-  font-family: Poppins;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  border-radius: 12px;
-  background: #49BBBD;
-  width: 100px;
-  height: 50px;
-  flex-shrink: 0;
-  position: absolute;
-  margin-top: 11%;
-  margin-left: 46%;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-}
-
-.srchbtn:hover,
-.srchbtn:active {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  background-color: #388E8E;
-}
 
 .m {
   margin-top: 20px;
@@ -403,7 +452,7 @@ img {
 }
 
 .grid-container {
-  padding-top: 20px;
+  padding-top: 90px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   /* Adjust the column width as needed */
@@ -411,23 +460,15 @@ img {
   /* Adjust the gap between grid items */
 }
 
-.categories h3 {
-  margin-left: 60px;
-  margin-bottom: 20px;
+.grid-container-searched {
   padding-top: 10px;
-  color: #252641;
-  font-family: Poppins;
-  font-size: 26px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
+  padding-left: 2%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  /* Adjust the column width as needed */
+  gap: 0px;
 }
 
-.categories {
-  width: 100%;
-  height: auto;
-  margin-bottom: 60px;
-}
 
 .see {
   margin-top: 35px;
@@ -467,5 +508,69 @@ img {
   font-weight: 600;
   line-height: normal;
   grid-row: 1;
+}
+
+main {
+  width: 100%;
+}
+
+@media only screen and (max-width: 751px) {
+  .categories h3 {
+
+    font-size: 22px;
+
+  }
+
+  .grid-container {
+
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    /* Adjust the column width as needed */
+    gap: 20px;
+    /* Adjust the gap between grid items */
+  }
+}
+
+@media only screen and (max-width: 704px) {
+  .topoffre p {
+    margin: 0 auto;
+  }
+
+
+
+}
+
+@media only screen and (max-width: 618px) {
+
+  .grid-container-searched {
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+
+  }
+}
+
+@media only screen and (max-width: 519px) {
+
+  .grid-container {
+    padding-left: 10%;
+  }
+}
+
+
+
+@media only screen and (max-width: 404px) {
+  .topoffre .offrecont .offre {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 370px) {
+  .categories h3 {
+
+    font-size: 19px;
+
+  }
+
+  .grid-container {
+    padding-left: 5%;
+  }
 }
 </style>

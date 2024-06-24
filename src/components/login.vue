@@ -184,10 +184,7 @@ export default {
         await props.toggleLogin();
         await props.toggleForgotPassword();
 
-        if (this.$router.name === "courses") {
 
-          window.location.reload();
-        }
 
 
         if (Object.prototype.hasOwnProperty.call(props, 'checkIsEnrolled')) {
@@ -265,7 +262,9 @@ button {
 
 }
 
-
+body {
+  z-index: 1000;
+}
 
 .back-div {
   position: absolute;
@@ -312,35 +311,44 @@ button {
 
 }
 
+body {
+  overflow-y: hidden;
+}
+
 .cross-icon:hover {
   color: darkred;
 
 }
 
 .cross-icon:active {
-  color: darkerred;
+  color: darkred;
   background: #f0f0f0;
 }
 
 
 .login-page {
-  position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  /* Limit the height to 90% of the viewport height */
+  z-index: 1001;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 
 .login-vue {
   background: #FFFEFC;
   position: fixed;
-  top: 10%;
+  top: 4%;
   width: 70%;
   height: 650px;
-  left: 15%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   border-radius: 30px;
   display: flex;
-  z-index: 10;
+  z-index: 1000;
+
 }
 
 .invalid-credentials {
@@ -360,7 +368,7 @@ button {
 .valid-credentials {
   position: absolute;
   bottom: 37%;
-  color: #49BBBD;
+  color: #00A9FF;
   white-space: nowrap;
   left: 50%;
   transform: translateX(-50%);
@@ -434,6 +442,10 @@ button {
 
 }
 
+body.active-modal {
+  overflow-y: hidden;
+}
+
 .sign-span span:hover {
   color: #9434F4;
 }
@@ -453,12 +465,14 @@ button {
   width: 51%;
   top: 27px;
   left: 27px;
+  overflow: hidden;
+
   border-radius: 30px;
 }
 
 .container {
   position: relative;
-  left: 8%;
+  left: 9%;
   top: 9%;
   width: 35%;
   height: 80%;
@@ -470,7 +484,7 @@ button {
   height: 40px;
   flex-shrink: 0;
   border-radius: 33px;
-  background: rgba(73, 187, 189, 0.6);
+  background: #66CCFF;
   margin-bottom: 25px;
 }
 
@@ -489,7 +503,7 @@ button {
   font-weight: 400;
   line-height: normal;
   border-radius: 33px;
-  background: #49BBBD;
+  background: #00A9FF;
   transition: background-color 0.3s;
 
 }
@@ -515,7 +529,7 @@ button {
 }
 
 .btn-signup:hover {
-  background-color: rgba(73, 187, 189, 0.8);
+  background-color: #00A9FF;
 }
 
 .input-error {
@@ -533,7 +547,7 @@ button {
   width: 84%;
   height: 40px;
   border-radius: 40px;
-  border: 1px solid #49BBBD;
+  border: 1px solid #00A9FF;
   background: #FFF;
   padding-left: 3%;
   padding-right: 3%;
@@ -598,9 +612,9 @@ h4 {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  background: #49BBBD;
+  background: #00A9FF;
   border-radius: 36px;
-  background: #49BBBD;
+  background: #00A9FF;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
 }
@@ -608,15 +622,15 @@ h4 {
 .btn-loading {
   margin-top: 30px;
   width: 40%;
-  padding-top: 3%;
-  padding-bottom: 3%;
+  padding-top: 4%;
+  padding-bottom: 4%;
   color: #FFF;
   font-family: Poppins;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  background: #49BBBD;
+  background: #00A9FF;
   border-radius: 36px;
   cursor: not-allowed;
   opacity: 0.7;
@@ -626,15 +640,15 @@ h4 {
 .btn-loading-send {
   margin-top: 5px;
   width: 40%;
-  padding-top: 3%;
-  padding-bottom: 3%;
+  padding-top: 3.5%;
+  padding-bottom: 3.5%;
   color: #FFF;
   font-family: Poppins;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  background: #49BBBD;
+  background: #00A9FF;
   border-radius: 36px;
   cursor: not-allowed;
   opacity: 0.7;
@@ -642,7 +656,7 @@ h4 {
 }
 
 .spinner {
-  margin-left: 42%;
+  margin-left: 42.5%;
 }
 
 .btn-container {
@@ -671,5 +685,106 @@ h4 {
 img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
+
+
+@media (min-width: 1400px) {
+  .login-vue {
+    width: 1000px;
+
+  }
+
+
+}
+
+
+
+
+
+
+
+@media (max-width: 1080px) {
+
+  .img {
+    display: none;
+    /* Hide the image */
+  }
+
+  .login-vue {
+    width: 470px;
+  }
+
+  .container {
+    width: 80%;
+  }
+
+  .sign-span {
+
+    left: 25%
+  }
+
+  .forgot-span {
+
+    left: 35%;
+  }
+
+}
+
+
+
+@media (max-width: 740px) {
+  .login-vue {
+    width: 400px;
+  }
+}
+
+@media (max-width: 550px) {
+  .login-vue {
+    width: 350px;
+  }
+
+}
+
+/*@media (max-width: 983px) {
+  .login-vue {
+
+    left: 23%;
+  }
+}
+
+@media (max-width: 740px) {
+  .login-vue {
+
+    left: 18%;
+  }
+}
+
+
+@media (max-width: 209px) {
+  .login-vue {
+    left: 22%;
+  }
+}
+
+
+@media (max-width: 180px) {
+  .login-vue {
+    left: 20%;
+  }
+}
+
+
+@media (max-width: 170px) {
+  .login-vue {
+    left: 16%;
+  }
+}
+
+
+@media (max-width: 560px) {
+  .login-vue {
+    left: 12%;
+  }
+}*/
 </style>

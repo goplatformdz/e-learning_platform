@@ -82,12 +82,14 @@ export default {
 .recomended {
   margin-top: 50px;
   width: 100%;
-  padding-bottom: 40px;
+  height: 540px;
   background-color: rgb(197, 220, 245);
   display: grid;
   gap: 0;
   grid-template-rows: 1fr 9fr;
   padding-top: 10px;
+  overflow-x: auto;
+
 
 }
 </style>

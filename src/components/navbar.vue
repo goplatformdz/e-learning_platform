@@ -1,31 +1,65 @@
 <template>
   <div v-if="!loading" class="nav">
-    <div class="img"><img src="@/assets/rifk.png" alt="" /></div>
+    <div class="modal-overlay" v-if="isopen || isopen1"></div>
+    <dropdown :dropOpen="dropOpen" :toggleDropdown="toggleDropdown" :toggleForgotPassword="toggleForgotPassword" />
+
     <loginComponent :isopen="isopen" :forgotPassword="forgotPassword" :toggleForgotPassword="toggleForgotPassword"
       :toggleLogin="toggleLogin" :isopen1="isopen1" :toggleSignup="toggleSignup" />
     <signupComponent :isopen1="isopen1" :toggleSignup="toggleSignup" :isopen="isopen" :toggleLogin="toggleLogin" />
-    <dropdown :dropOpen="dropOpen" :toggleDropdown="toggleDropdown" :toggleForgotPassword="toggleForgotPassword" />
 
-    <ul>
-      <li>
-        <router-link to="/" exact-active-class="active-link" active-class="active-link">Home</router-link>
-      </li>
-      <li>
-        <router-link to="/courses" exact-active-class="active-link" active-class="active-link">Courses</router-link>
-      </li>
-      <li>
-        <router-link to="/blog" exact-active-class="active-link" active-class="active-link">Blog</router-link>
-      </li>
+    <div class="max-width ">
+      <div class="lego-section">
+        <div class="img"><img src="@/assets/rifk.png" alt="" /></div>
+      </div>
 
-    </ul>
-    <div @click="toggleDropdown" :class="(!dropOpen) ? 'user-infos' : 'user-infos-active'" v-if="auth.isLoggedIn">
-      {{ auth.fullName }}
-      <font-awesome-icon v-if="dropOpen" icon="fa-solid fa-chevron-up" />
-      <font-awesome-icon v-else icon="fa-solid fa-chevron-down" />
-    </div>
-    <div v-else>
-      <button class="login" @click="toggleLogin(); toggleForgotPassword();">Login</button>
-      <button class="signup" @click="toggleSignup">Sign Up</button>
+      <ul class="nav-links">
+        <li>
+          <router-link to="/">Home</router-link>
+        </li>
+        <li>
+          <router-link to="/courses">Courses</router-link>
+        </li>
+        <li>
+          <router-link to="/blog">Blog</router-link>
+        </li>
+      </ul>
+
+
+      <div class="nav-actions">
+        <div @click="toggleDropdown" :class="(!dropOpen) ? 'user-infos' : 'user-infos-active'" v-if="auth.isLoggedIn">
+          {{ auth.fullName }}
+          <font-awesome-icon v-if="dropOpen" icon="fa-solid fa-chevron-up" />
+          <font-awesome-icon v-else icon="fa-solid fa-chevron-down" />
+        </div>
+
+        <div class="nav-buttons" v-else>
+          <button class="login" @click="toggleLogin(); toggleForgotPassword();">Login</button>
+          <button class="signup" @click="toggleSignup">Sign Up</button>
+        </div>
+
+        <div class="list-items">
+
+          <div class="dropdown">
+            <a class="btn btn-white" @click="toggleDropListdown" href="#" role="button" id="dropdownMenuLink"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <font-awesome-icon class="menu-icon" icon="fa-solid fa-bars" />
+            </a>
+
+            <div class="dropdown-menu" v-if="!dropListOpen" aria-labelledby="dropdownMenuLink">
+              <router-link @click="toggleDropListdown" class="dropdown-item" to="/">Home</router-link>
+              <router-link @click="toggleDropListdown" class="dropdown-item" to="/courses">Courses</router-link>
+              <router-link @click="toggleDropListdown" class="dropdown-item" to="/blog">Blog</router-link>
+              <div class="dropdown-divider"></div>
+              <div v-if="!auth.isLoggedIn" class="dropdown-item"><button class="btn btn-primary"
+                  @click="toggleLogin(); toggleForgotPassword();">Login</button></div>
+              <div v-if="!auth.isLoggedIn" class="dropdown-item"><button class="btn btn-primary"
+                  @click="toggleSignup">Sign
+                  Up</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
   <div v-else class="nav"></div>
@@ -38,23 +72,28 @@
 </template>
 
 
+  
+
 <script>
 import loginComponent from "./login.vue";
 import signupComponent from "./signup.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import dropdown from "./dropdown.vue";
-import { useAuthStore } from '../store/auth';
+import { useAuthStore } from "../store/auth";
 
 export default {
   name: "navbar",
+
   data() {
     return {
       isopen: false,
       isopen1: false,
+      firstname: "",
+      lastname: "",
       loading: true,
       dropOpen: false,
+      dropListOpen: true,
       forgotPassword: false,
-
     };
   },
   setup() {
@@ -66,25 +105,23 @@ export default {
   methods: {
     toggleLogin() {
       this.isopen = !this.isopen;
+      this.auth.openModal = !this.auth.openModal
     },
     toggleSignup() {
       this.isopen1 = !this.isopen1;
+      this.auth.openModal = !this.auth.openModal
+
     },
     toggleDropdown() {
       this.dropOpen = !this.dropOpen;
     },
+    toggleDropListdown() {
+      this.dropListOpen = !this.dropListOpen;
+    },
     toggleForgotPassword() {
       this.forgotPassword = !this.forgotPassword;
-    }
+    },
   },
-
-  components: {
-    loginComponent,
-    signupComponent,
-    FontAwesomeIcon,
-    dropdown
-  },
-
   async mounted() {
     useAuthStore()
       .checkLoginStatus()
@@ -96,8 +133,13 @@ export default {
         this.loading = false;
         // console.log(this.isLoggedIn, this.fullName)
       });
-  }
-
+  },
+  components: {
+    loginComponent,
+    signupComponent,
+    FontAwesomeIcon,
+    dropdown
+  },
 
 };
 </script>
@@ -107,6 +149,7 @@ export default {
 button {
   border: 0ch;
 }
+
 
 .user-infos {
   position: absolute;
@@ -148,12 +191,24 @@ button {
   color: #333;
 }
 
-
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  /* Dark background with opacity */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+}
 
 .img {
   position: absolute;
   bottom: 15%;
-  left: 50px;
+  left: 30px;
   width: 60px;
   height: 60px;
 }
@@ -166,19 +221,24 @@ img {
 .nav {
   width: 100%;
   height: 80px;
-  background-color: #49BBBD;
+  background-color: #00A9FF;
   position: fixed;
   top: 0%;
   left: 0;
   z-index: 5;
 }
 
+.btn-primary {
+  margin-left: 30px;
+  background: #49BBBD;
+  border-radius: 20px;
 
+}
 
 .login {
   position: absolute;
   top: 25%;
-  left: 75%;
+  left: 73%;
   width: 100px;
   padding-top: 6.5px;
   padding-bottom: 6.5px;
@@ -201,6 +261,7 @@ img {
   top: 25%;
   left: 85%;
   width: 100px;
+
   padding-top: 6.5px;
   padding-bottom: 6.5px;
   border-radius: 80px;
@@ -216,6 +277,8 @@ img {
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+
 
 .login:hover,
 .login:active,
@@ -242,6 +305,14 @@ ul {
   text-align: center;
 }
 
+.dropdown-divider {
+  border: 0.7px solid #000;
+  width: 90%;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 li {
   display: table-cell;
   position: relative;
@@ -259,10 +330,9 @@ a {
   letter-spacing: 0.15em;
 
   display: inline-block;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-left: 40px;
-  margin-right: 40px;
+  margin-left: 30px;
+  margin-right: 30px;
+
   padding-bottom: 5px;
 
   position: inline;
@@ -281,6 +351,11 @@ a:after {
   width: 0;
 }
 
+.nav-links {
+  position: absolute;
+  left: 30%;
+}
+
 
 .active-link:after {
   width: 100%;
@@ -290,5 +365,76 @@ a:after {
 a:hover:after {
   width: 100%;
   left: 0;
+}
+
+.nav .list-items {
+  display: none;
+  font-size: large;
+  color: white;
+  cursor: pointer;
+}
+
+.nav .list-items .dropdown {
+  transition: 0.5s ease;
+}
+
+.nav .list-items .dropdown .btn {
+  border: none;
+  color: white;
+
+}
+
+.menu-icon {
+  position: absolute;
+  right: 20px;
+  top: 30px;
+}
+
+.nav .list-items .dropdown .dropdown-menu {
+  position: absolute;
+  background-color: aliceblue;
+  color: black;
+  padding: 10px 10px;
+  top: 89%;
+  right: 7px;
+  min-width: 140px;
+  border-radius: 5px;
+}
+
+.nav .list-items .dropdown .dropdown-menu .dropdown-item {
+  display: block;
+  font-family: sans-serif;
+  font-size: 16px;
+  color: #333;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.nav .list-items .dropdown .dropdown-menu .dropdown-item:hover {
+  cursor: pointer;
+  background-color: #f1f1f1;
+}
+
+.nav .list-items .dropdown .dropdown-menu .dropdown-item .btn {
+  cursor: pointer;
+  padding: 7px;
+  background-color: cornflowerblue;
+  border-radius: 3px;
+}
+
+@media only screen and (max-width: 916px) {
+
+  a::after {
+    display: none;
+  }
+
+  .nav .nav-buttons,
+  .nav .nav-links {
+    display: none;
+  }
+
+  .nav .list-items {
+    display: block;
+  }
 }
 </style>

@@ -7,6 +7,7 @@ import coursedetail from "@/views/coursedetail.vue";
 import fullcourse from "@/views/fullcourse.vue";
 import coursesByCategory from "@/views/coursesByCategory.vue";
 import resetPassword from "@/views/resetPassword.vue";
+import accountActivation from "@/views/accountActivation.vue";
 
 const routes = [
   { path: "/", name: "home", component: home },
@@ -16,6 +17,7 @@ const routes = [
   { path: "/coursedetail/:course_id", name: "coursedetail", component: coursedetail },
   { path: "/fullcourse/:courseId/:id", name: "fullcourse", component: fullcourse },
   { path: "/api/users/resetPassword/:token", name: "resetPassword", component: resetPassword },
+  { path: "/account-activation", name: "accountActivation", component: accountActivation },
   { path: "/coursesByCategory/:categoryName", name: "coursesByCategory", component: coursesByCategory },
 
 ];

@@ -1,15 +1,13 @@
 <template>
-    <main>
-        <div class="courses-container">
-            <h3>{{ categoryName }} Courses</h3>
-            <div v-if="!loading" class="grid-container">
-                <markCard v-for="(course, index) in fetchedCourses" :key="index" :course-data="course" />
-            </div>
-            <div v-else class="grid-container">
-                <markCardSkeleton v-for="index in 4" :key="index" />
-            </div>
+    <div class="courses-container">
+        <h3>{{ categoryName }} Courses</h3>
+        <div v-if="!loading" class="grid-container">
+            <markCard v-for="(course, index) in fetchedCourses" :key="index" :course-data="course" />
         </div>
-    </main>
+        <div v-else class="grid-container">
+            <markCardSkeleton v-for="index in 4" :key="index" />
+        </div>
+    </div>
 </template>
 
 <script>
@@ -63,7 +61,7 @@ export default {
     width: 100%;
     height: auto;
     margin-bottom: 60px;
-    margin-top: 40px;
+    padding-top: 40px;
     margin-left: 70px;
 }
 

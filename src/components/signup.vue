@@ -19,7 +19,7 @@
               <div class="input-wrapper">
                 <input :class="(v$.firstname.$error || check.userExists.value) ? 'names-input-error' : 'names-input'"
                   type="text" v-model="formData.firstname.value" />
-                <span v-for="error in v$.firstname.$errors" :key="error.$uid" class="span-error">
+                <span v-for="error in v$.firstname.$errors" :key="error.$uid" class="span-error left-errors">
                   {{ error.$message === 'Value is required' ? 'First name is required' : error.$message }} </span>
               </div>
             </div>
@@ -63,7 +63,7 @@
               <div class="input-wrapper">
                 <input :class="(v$.password.$error || check.userExists.value) ? 'names-input-error' : 'names-input'"
                   type="password" v-model="formData.password.value" />
-                <span v-for="error in v$.password.$errors" :key="error.$uid" class="span-error">
+                <span v-for="error in v$.password.$errors" :key="error.$uid" class="span-error left-errors">
                   {{ error.$message === 'Value is required' ? 'Password is required' : 'Password too short (8 at least)'
                   }}
                 </span>
@@ -263,11 +263,20 @@ template {
   background: #f0f0f0;
 }
 
+.left-errors {
+  position: absolute;
+  left: 2px
+}
+
 .signup-page {
-  position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  /* Limit the height to 90% of the viewport height */
+  z-index: 1001;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .font-icon {
@@ -303,7 +312,7 @@ template {
 
 .container {
   position: relative;
-  left: 8%;
+  left: 9%;
   top: 1%;
   width: 35%;
   height: 80%;
@@ -351,7 +360,7 @@ h4 {
   padding-right: 3%;
   height: 40px;
   border-radius: 40px;
-  border: 1px solid #49BBBD;
+  border: 1px solid #00A9FF;
   background: #FFF;
   margin: 0;
 
@@ -361,7 +370,7 @@ h4 {
   width: 95%;
   height: 40px;
   border-radius: 40px;
-  border: 1px solid #49BBBD;
+  border: 1px solid #00A9FF;
   background: #FFF;
   padding-left: 5%;
   padding-right: 3%;
@@ -423,7 +432,7 @@ h4 {
   width: 100%;
   height: 40px;
   border-radius: 40px;
-  border: 1px solid #49BBBD;
+  border: 1px solid #00A9FF;
   background: #FFF;
   padding-left: 3%;
   padding-right: 3%;
@@ -479,10 +488,9 @@ h4 {
 .signup-vue {
   background: #FFFEFC;
   position: fixed;
-  top: 10%;
+  top: 4%;
   width: 70%;
   height: 650px;
-  left: 15%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   border-radius: 30px;
   display: flex;
@@ -491,8 +499,8 @@ h4 {
 
 .btn-loading {
   width: 40%;
-  padding-top: 3%;
-  padding-bottom: 3%;
+  padding-top: 3.5%;
+  padding-bottom: 3.5%;
   color: #FFF;
   font-family: Poppins;
   font-size: 12px;
@@ -500,7 +508,7 @@ h4 {
   font-weight: 400;
   line-height: normal;
   border-radius: 36px;
-  background: #49BBBD;
+  background: #00A9FF;
   cursor: not-allowed;
   opacity: 0.7;
   position: relative;
@@ -508,7 +516,7 @@ h4 {
 
 
 .spinner {
-  margin-left: 42%;
+  margin-left: 42.5%;
 }
 
 .img {
@@ -517,6 +525,8 @@ h4 {
   width: 51%;
   top: 27px;
   left: 27px;
+  overflow: hidden;
+
   border-radius: 30px;
 }
 
@@ -527,7 +537,7 @@ h4 {
   height: 40px;
   flex-shrink: 0;
   border-radius: 33px;
-  background: rgba(73, 187, 189, 0.6);
+  background: #66CCFF;
   margin-bottom: 25px;
   /* border: solid 1px rgba(73, 187, 189, 0.6);
   background: #FFF;*/
@@ -554,7 +564,7 @@ h4 {
 }
 
 .btn-login:hover {
-  background-color: rgba(73, 187, 189, 0.8);
+  background-color: #00A9FF;
   /*color: #FFF;*/
 }
 
@@ -566,7 +576,7 @@ h4 {
   padding-top: 3%;
   padding-bottom: 2%;
   flex-shrink: 0;
-  background: #49BBBD;
+  background: #00A9FF;
   color: #FFF;
   font-family: Poppins;
   font-size: 12px;
@@ -603,7 +613,7 @@ h4 {
   font-weight: 400;
   line-height: normal;
   border-radius: 36px;
-  background: #49BBBD;
+  background: #00A9FF;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
 }
@@ -621,5 +631,91 @@ h4 {
 img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
+
+/*@media (max-width: 1300px) {
+  
+
+  .sign-span {
+
+    left: 23%
+  }
+
+  .forgot-span {
+
+    left: 33%;
+  }
+}*/
+
+@media (min-width: 1400px) {
+  .signup-vue {
+    width: 1000px;
+
+  }
+
+
+}
+
+@media (max-width: 1080px) {
+
+  .img {
+    display: none;
+    /* Hide the image */
+  }
+
+  .signup-vue {
+    width: 470px;
+  }
+
+  .container {
+    width: 80%;
+  }
+
+
+
+}
+
+@media (max-width: 740px) {
+  .signup-vue {
+    width: 400px;
+  }
+}
+
+@media (max-width: 550px) {
+  .signup-vue {
+    width: 350px;
+  }
+
+}
+
+/*
+
+@media (max-width: 983px) {
+  .signup-vue {
+
+    left: 23%;
+  }
+}
+
+
+@media (max-width: 209px) {
+  .signup-vue {
+    left: 22%;
+  }
+}
+
+
+@media (max-width: 180px) {
+  .signup-vue {
+    left: 20%;
+  }
+}
+
+
+@media (max-width: 170px) {
+  .signup-vue {
+    left: 16%;
+  }
+}*/
 </style>
